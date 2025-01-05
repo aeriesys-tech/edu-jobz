@@ -993,6 +993,7 @@ function List() {
                         </div>
                     </div>
                 </div>
+                <DashFooter/>
                             </div>
                             </div>
                             </div>
