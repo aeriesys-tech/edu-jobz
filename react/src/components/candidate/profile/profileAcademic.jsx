@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom"
-import SideBar from "./dashboardslidebar"
-import DashFooter from "./footer"
-import DashHeader from "./header"
+import SideBar from "../dashboardslidebar"
+import DashFooter from "../footer"
+import DashHeader from "../header"
+import MenuBar from "./profilemenu"
 
 
 function ProfileActivity() {
@@ -40,7 +41,7 @@ function ProfileActivity() {
                                                                         <a
                                                                             class="btn btn-icon btn-trigger"
                                                                             data-bs-toggle="modal" href="#education"><em
-                                                                                class="icon ni ni-edit"></em></a>
+                                                                                class="icon ni ni-plus-alt"></em></a>
                                                                             {/* <a
                                                                                 class="btn btn-icon btn-trigger"
                                                                                 data-bs-toggle="modal" data-target="#education"><em
@@ -109,59 +110,118 @@ function ProfileActivity() {
                                                                         </div>
                                                                         </div>
                                                            
-                                                            <div class="row">
-                                                                <div class="card">
-                                                                    <div class="card-inner">
-                                                                        <div class="project mt-3">
-                                                                            <div class="project-head">
-                                                                                <Link to="/" class="project-title">
-                                                                                    <div class="user-avatar sq bg-purple"><span>DD</span></div>
-                                                                                    <div class="project-info">
-                                                                                        <h6 class="title">MIT Manipal</h6>
-                                                                                        <span class="sub-text">B Tech College</span>
-                                                                                    </div>
-                                                                                </Link>                <div class="drodown">
-                                                                                    <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                                                        <ul class="link-list-opt no-bdr">
-                                                                                            <li><a href="#"><em class="icon ni ni-edit"></em><span>Update</span></a></li>
-                                                                                            <li><a href="#"><em class="icon ni ni-delete"></em><span>Delete</span></a></li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="project-details">
-                                                                                <p></p>
-                                                                                <div class="card-body">
-                                                                                    <div class='d-flex justify-content-between'>
-                                                                                    <p><strong>Field of Study:</strong> <span id="display-field">Computer Science</span></p>
-                                                                                    <p><strong>Activities and Societies:</strong> <span id="display-activities">IIt Events Runner Up</span></p>
-                                                                                    </div>
-                                                                                    <div class='d-flex justify-content-between'>
-                                                                                    <p><strong>From Date:</strong> <span id="display-from-date">2018</span></p>
-                                                                                    <p><strong>To Date:</strong> <span id="display-to-date">2022</span></p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="project-meta">
-                                                                                <ul class="project-users g-1">
-                                                                                    <li>
-                                                                                        <div class="user-avatar sm bg-primary"><span>A</span></div>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <div class="user-avatar sm bg-blue"><img src="/demo2/images/avatar/b-sm.jpg" alt="" /></div>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <div class="user-avatar bg-light sm"><span>+12</span></div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                                <span class="badge badge-dim bg-warning"><em class="icon ni ni-clock"></em><span>5 Days Left</span></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div></div>
-
+                                                                        <div class="card mt-4">
+                                                    <div class="card-inner">
+                                                        <div class="project">
+                                                            <div class="project-head">
+                                                                <a href="#" class="project-title">
+                                                                    <div class="user-avatar sq bg-purple">
+                                                                        <span>DD</span>
+                                                                    </div>
+                                                                    <div class="project-info">
+                                                                        <h6 class="title">MIT Manipal</h6>
+                                                                            <span class="sub-text mt-1">B.Tech Collage
+                                                                                Manipal</span>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="drodown">
+                                                                    <a href="#"
+                                                                        class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1"
+                                                                        data-bs-toggle="dropdown">
+                                                                        <em class="icon ni ni-more-h"></em>
+                                                                    </a>
+                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                        <ul class="link-list-opt no-bdr">                                                                          
+                                                                            <li><a href="#"><em
+                                                                                        class="icon ni ni-edit"></em><span>Update</span></a>
+                                                                            </li>
+                                                                            <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+                                                            <div class="project-details d-flex justify-content-between">
+                                                                <div class="project-info mt-3">
+                                                                    <h6 class="title">Field of Study</h6>
+                                                                    <span class="sub-text">Computer Science</span>
+                                                                </div>
+                                                                <div class="project-info mt-3">
+                                                                    <h6 class="title">Activities and Societies</h6>
+                                                                    <span class="sub-text">IIT Events Runner Up
+                                                                        Winner</span>
+                                                                </div>
+                                                                <div class="project-info mt-3">
+                                                                    <h6 class="title me-1">From Date: </h6>
+                                                                    <span class="sub-text">2021</span>
+                                                                </div>
+                                                                <div class="mt-3">
+                                                                    <div class="project-info">
+                                                                        <h6 class="title me-1">To Date: </h6>
+                                                                        <span class="sub-text">2023</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card mt-4">
+                                                    <div class="card-inner">
+                                                        <div class="project">
+                                                            <div class="project-head">
+                                                                <a href="#" class="project-title">
+                                                                    <div class="user-avatar sq bg-purple">
+                                                                        <span>MT</span>
+                                                                    </div>
+                                                                    <div class="project-info">
+                                                                        <h6 class="title">MIT Mysore
+                                                                            </h6>
+                                                                        
+                                                                            <span class="sub-text mt-1">B.Tech Collage
+                                                                                Manipal</span>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="drodown">
+                                                                    <a href="#"
+                                                                        class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1"
+                                                                        data-bs-toggle="dropdown">
+                                                                        <em class="icon ni ni-more-h"></em>
+                                                                    </a>
+                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                        <ul class="link-list-opt no-bdr">                                                                          
+                                                                            <li><a href="#"><em
+                                                                                        class="icon ni ni-edit"></em><span>Update</span></a>
+                                                                            </li>
+                                                                            <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="project-details d-flex justify-content-between">
+                                                                <div class="project-info mt-3">
+                                                                    <h6 class="title">Field of Study</h6>
+                                                                    <span class="sub-text">Computer Science</span>
+                                                                </div>
+                                                                <div class="project-info mt-3">
+                                                                    <h6 class="title">Activities and Societies</h6>
+                                                                    <span class="sub-text">IIT Events Runner Up
+                                                                        Winner</span>
+                                                                </div>
+                                                                <div class="project-info mt-3">
+                                                                    <h6 class="title me-1">From Date: </h6>
+                                                                    <span class="sub-text">2018</span>
+                                                                </div>
+                                                                <div class="mt-3">
+                                                                    <div class="project-info">
+                                                                        <h6 class="title me-1">To Date: </h6>
+                                                                        <span class="sub-text">2022</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                 
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                         </div>
                                                         <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg"
                                                             data-content="userAside" data-toggle-screen="lg"
@@ -202,24 +262,7 @@ function ProfileActivity() {
                                                             </div>
                                                         </div>
                                                     </div> */}
-                                                                <div class="card-inner p-0">
-                                                                    <ul class="link-list-menu">
-                                                                        <li><Link class="" to="/candidate/profile"><em
-                                                                            class="icon ni ni-user-fill-c"></em><span>Personal
-                                                                                Infomation</span></Link></li>
-                                                                        <li><Link
-                                                                            to="/candidate/socialmedia"><em
-                                                                                class="icon ni ni-bell-fill"></em><span>Social Media</span></Link>
-                                                                        </li>
-                                                                        <li><Link to="/candidate/academic"><em class="icon ni ni-medal-fill"></em><span>Education</span></Link></li>
-                                                                        <li><Link to="/candidate/skill"><em
-                                                                            class="icon ni ni-activity-round-fill"></em><span>Skill</span></Link></li>
-                                                                        <li><Link to="/candidate/setting"><em
-                                                                            class="icon ni ni-lock-alt-fill"></em><span>Security
-                                                                                Settings</span></Link></li>
-                                                                        <li><Link to="/candidate/resume"><em class="icon ni ni-briefcase-fill"></em><span>Resume</span></Link></li>
-                                                                    </ul>
-                                                                </div>
+                                                                <MenuBar/>
                                                                 <div class="card-inner">
                                                                     <div class="user-account-info py-0">
                                                                         <h6 class="overline-title-alt">Last Login</h6>

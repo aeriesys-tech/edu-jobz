@@ -45,12 +45,12 @@ function SideBar(){
                                     </Link>
                                 </li>
                                 <li class="nk-menu-item">
-                                    <Link to="#" class="nk-menu-link">
+                                    <Link to="/candidate/dashboard/subscription" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em
                                                 class="icon ni ni-calendar-booking"></em></span><span
                                             class="nk-menu-text">Subscriptions</span>
                                     </Link>
-                                </li>
+                                </li>   
                                 <li class="nk-menu-item">
                                     <Link to="/candidate/list" class="nk-menu-link">
                                         <span class="nk-menu-icon">
@@ -89,6 +89,12 @@ function SideBar(){
                                         <span class="nk-menu-icon"><em
                                                 class="icon ni ni-user-group-fill"></em></span><span
                                             class="nk-menu-text">Job Fair</span>
+                                    </Link>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <Link to="/candidate/message" class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-bell"></em></span><span
+                                            class="nk-menu-text">Messages</span>
                                     </Link>
                                 </li>
                                 <li class="nk-menu-item">

@@ -5783,7 +5783,9 @@ fieldset:disabled .dual-listbox .dual-listbox__button {
     --bs-alert-border-color: var(--bs-dark-border-subtle);
     --bs-alert-link-color: var(--bs-dark-text-emphasis)
 }
-
+th,td{
+    border-bottom: none;
+}
 .alert-gray {
     --bs-alert-color: var(--bs-gray-text-emphasis);
     --bs-alert-bg: var(--bs-gray-bg-subtle);

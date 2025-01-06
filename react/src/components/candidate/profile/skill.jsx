@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom"
-import SideBar from "./dashboardslidebar"
-import DashFooter from "./footer"
-import DashHeader from "./header"
+import SideBar from "../dashboardslidebar"
+import DashFooter from "../footer"
+import DashHeader from "../header"
+import MenuBar from "./profilemenu"
 
 function Skills() {
     $('#exampleModal').on('show.bs.modal', function (event) {
@@ -102,83 +103,116 @@ function Skills() {
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" mt-4 d-flex">
-                                                                <div class="card col-sm-6 me-4 ">
-                                                                    <div class="card-inner">
-                                                                        <div class="project">
-                                                                            <div class="project-head">
-                                                                                <Link to="/" class="project-title">
-                                                                                    <div class="user-avatar sq bg-purple"><span>Java</span></div>
-                                                                                    <div class="project-info">
-                                                                                        <h6 class="title">Java</h6>
-                                                                                        <span class="sub-text">Udemy</span>
-                                                                                    </div>
-                                                                                </Link>                <div class="drodown">
-                                                                                    <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                                                        <ul class="link-list-opt no-bdr">
-                                                                                            <li><a href="#"><em class="icon ni ni-edit"></em><span>Update</span></a></li>
-                                                                                            <li><a href="#"><em class="icon ni ni-delete"></em><span>Delete</span></a></li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
+                                                            <div class="d-flex">
+                                                    <div class="col-lg-6 ">
+                                                        <div class="card mt-4 w-100">
+                                                            <div class="card-inner">
+                                                                <div class="project">
+                                                                    <div class="project-head">
+                                                                        <a href="#" class="project-title">
+                                                                            <div class="user-avatar sq bg-purple">
+                                                                                <span>DD</span>
                                                                             </div>
-                                                                            <div class="project-details">
-                                                                                <div class="card-body ">
-                                                                                    <div class="d-flex justify-content-between mb-3">
-                                                                                        <p><strong>Top Skills :</strong> <span id="display-school">Java Classes</span></p>
-                                                                                    </div>
-                                                                                    <div class="d-flex justify-content-between mb-3"> <p><strong>Level :</strong> <span id="display-level">8.0</span></p>
-                                                                                    </div>
-                                                                                    <div class="d-flex justify-content-between mb-3"> <p><strong>Skills Description :</strong> <span id="display-field">Security purpose</span></p>
-                                                                                    </div>
-                                                                                    <p><strong>Activities and Societies:</strong> <span id="display-activities">Hackathon</span></p></div>
-
+                                                                            <div class="project-info">
+                                                                                <h6 class="title">Java</h6>
+                                                                                    <span
+                                                                                        class="sub-text mt-1">Udemy</span>
                                                                             </div>
-
-
-
+                                                                        </a>
+                                                                        <div class="drodown">
+                                                                            <a href="#"
+                                                                                class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1"
+                                                                                data-bs-toggle="dropdown">
+                                                                                <em class="icon ni ni-more-h"></em>
+                                                                            </a>
+                                                                            <div
+                                                                                class="dropdown-menu dropdown-menu-end">
+                                                                                <ul class="link-list-opt no-bdr">
+                                                                                    <li><a href="#"><em
+                                                                                                class="icon ni ni-edit"></em><span>Update</span></a>
+                                                                                    </li>
+                                                                                    <li><a href="#"><em
+                                                                                                class="icon ni ni-trash"></em><span>Delete</span></a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
                                                                         </div>
-                                                                    </div></div>
-                                                                <div class="card col-sm-6 ml-3">
-                                                                    <div class="card-inner">
-                                                                        <div class="project">
-                                                                            <div class="project-head">
-                                                                                <Link to="/" class="project-title">
-                                                                                    <div class="user-avatar sq bg-purple"><span>J S</span></div>
-                                                                                    <div class="project-info">
-                                                                                        <h6 class="title">React JS</h6>
-                                                                                        <span class="sub-text">Udemy</span>
-                                                                                    </div>
-                                                                                </Link>                <div class="drodown">
-                                                                                    <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                                                        <ul class="link-list-opt no-bdr">
-                                                                                            <li><a href="#"><em class="icon ni ni-edit"></em><span>Update</span></a></li>
-                                                                                            <li><a href="#"><em class="icon ni ni-delete"></em><span>Delete</span></a></li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="project-details">
-                                                                                <div class="card-body ">
-                                                                                    <div class="d-flex justify-content-between mb-3">
-                                                                                        <p><strong>Top Skills :</strong> <span id="display-school">React with Bootstrap</span></p>
-                                                                                    </div>
-                                                                                    <div class="d-flex justify-content-between mb-3"> <p><strong>Level :</strong> <span id="display-level">8.0</span></p>
-                                                                                    </div>
-                                                                                    <div class="d-flex justify-content-between mb-3"> <p><strong>Skills Description :</strong> <span id="display-field">UI Design</span></p>
-                                                                                    </div>
-                                                                                    <p><strong>Activities and Societies:</strong> <span id="display-activities">CRUD Operations</span></p></div>
-
-                                                                            </div>
-
-
-
+                                                                    </div>
+                                                                    <div class="project-details">
+                                                                        <div class="project-info mt-3">
+                                                                            <h6 class="title">Top Skills</h6>
+                                                                            <span class="sub-text"> Html CSS JS
+                                                                                Java</span>
                                                                         </div>
-                                                                    </div></div>
-
+                                                                        <div class="project-info mt-3">
+                                                                            <h6 class="title me-1">Skills Descriptions
+                                                                            </h6>
+                                                                            <span class="sub-text">Security Perpose</span>
+                                                                        </div>
+                                                                        <div class="project-info mt-3">
+                                                                            <h6 class="title">Levels</h6>
+                                                                            <span class="sub-text">9.0</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 ps-2">
+                                                        <div class="card mt-4 w-100">
+                                                            <div class="card-inner">
+                                                                <div class="project">
+                                                                    <div class="project-head">
+                                                                        <a href="#" class="project-title">
+                                                                            <div class="user-avatar sq bg-purple">
+                                                                                <span>DD</span>
+                                                                            </div>
+                                                                            <div class="project-info">
+                                                                                <h6 class="title">React Js</h6>
+                                                                                    <span
+                                                                                        class="sub-text mt-1">Udemy</span>
+                                                                            </div>
+                                                                        </a>
+                                                                        <div class="drodown">
+                                                                            <a href="#"
+                                                                                class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1"
+                                                                                data-bs-toggle="dropdown">
+                                                                                <em class="icon ni ni-more-h"></em>
+                                                                            </a>
+                                                                            <div
+                                                                                class="dropdown-menu dropdown-menu-end">
+                                                                                <ul class="link-list-opt no-bdr">
+                                                                                    <li><a href="#"><em
+                                                                                                class="icon ni ni-edit"></em><span>Update</span></a>
+                                                                                    </li>
+                                                                                    <li><a href="#"><em
+                                                                                                class="icon ni ni-trash"></em><span>Delete</span></a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="project-details">
+                                                                        <div class="project-info mt-3">
+                                                                            <h6 class="title">Top Skills</h6>
+                                                                            <span class="sub-text"> Html CSS JS
+                                                                                Java</span>
+                                                                        </div>
+                                                                        <div class="project-info mt-3">
+                                                                            <h6 class="title me-1">Skills Descriptions
+                                                                            </h6>
+                                                                            <span class="sub-text">Security Perpose</span>
+                                                                        </div>
+                                                                        <div class="project-info mt-3">
+                                                                            <h6 class="title">Levels</h6>
+                                                                            <span class="sub-text">9.0</span>
+                                                                        </div>
+                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
 
 
@@ -215,24 +249,7 @@ function Skills() {
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="card-inner p-0">
-                                                                    <ul class="link-list-menu">
-                                                                        <li><Link class="" to="/candidate/profile"><em
-                                                                            class="icon ni ni-user-fill-c"></em><span>Personal
-                                                                                Infomation</span></Link></li>
-                                                                        <li><Link
-                                                                            to="/candidate/socialmedia"><em
-                                                                                class="icon ni ni-bell-fill"></em><span>Social Media</span></Link>
-                                                                        </li>
-                                                                        <li><Link to="/candidate/academic"><em class="icon ni ni-medal-fill"></em><span>Education</span></Link></li>
-                                                                        <li><Link to="/candidate/skill"><em
-                                                                            class="icon ni ni-activity-round-fill"></em><span>Skill</span></Link></li>
-                                                                        <li><Link to="/candidate/setting"><em
-                                                                            class="icon ni ni-lock-alt-fill"></em><span>Security
-                                                                                Settings</span></Link></li>
-                                                                        <li><Link to="/candidate/resume"><em class="icon ni ni-briefcase-fill"></em><span>Resume</span></Link></li>
-                                                                    </ul>
-                                                                </div>
+                                                                <MenuBar/>
                                                                 <div class="card-inner">
                                                                     <div class="user-account-info py-0">
                                                                         <h6 class="overline-title-alt">Last Login</h6>
