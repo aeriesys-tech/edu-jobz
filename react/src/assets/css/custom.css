@@ -1,6 +1,9 @@
-.form-label{
+/* .form-label{
     float: left;
 }
 .btn-primary-jobs{
     background-color: #003366;
+} */
+.docbackground{
+    background-color: rgba( 245, 246, 250, 1 );
 }

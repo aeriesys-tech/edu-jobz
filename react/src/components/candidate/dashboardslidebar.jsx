@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import logo from '../../assets/img/logo.png'
 
 function SideBar(){
+    const location = useLocation();
+
+    const isActive = (path) => location.pathname === path;
+    const isParentActive = (basePath) => location.pathname.startsWith(basePath);
     return(
         <> 
 
@@ -31,73 +35,73 @@ function SideBar(){
                                 <li class="nk-menu-heading">
                                     <h6 class="overline-title text-primary-alt">MENU</h6>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('/candidate/dashboard') ? 'active' : ''}`}>
                                     <Link to="/candidate/dashboard" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-cart-fill"></em></span><span
                                             class="nk-menu-text">Dashboard</span>
                                     </Link>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isParentActive('/candidate/profile') ? 'active' : ''}`}>
                                     <Link to="/candidate/profile" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-user"></em></span>
 
                                         <span class="nk-menu-text">Update Profile</span>
                                     </Link>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('/candidate/dashboard/subscription') ? 'active' : ''}`}>
                                     <Link to="/candidate/dashboard/subscription" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em
                                                 class="icon ni ni-calendar-booking"></em></span><span
                                             class="nk-menu-text">Subscriptions</span>
                                     </Link>
                                 </li>   
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('/candidate/list') ? 'active' : ''}`}>
                                     <Link to="/candidate/list" class="nk-menu-link">
                                         <span class="nk-menu-icon">
                                             <em class="icon ni ni-search"></em>
                                         </span><span class="nk-menu-text">Job Search</span>
                                     </Link>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
                                     <Link to="#" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-zoom-in"></em></span><span
                                             class="nk-menu-text">Interview Process</span>
                                     </Link>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
                                     <Link to="#" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-medal"></em></span><span
                                             class="nk-menu-text">Training & certifications</span>
                                     </Link>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
                                     <Link to="#" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em
                                                 class="icon ni ni-calender-date-fill"></em></span><span
                                             class="nk-menu-text">Events</span>
                                     </Link>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
                                     <Link to="#" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em
                                                 class="icon ni ni-setting-question"></em></span><span
                                             class="nk-menu-text">Workshop</span>
                                     </Link>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
                                     <Link to="#" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em
                                                 class="icon ni ni-user-group-fill"></em></span><span
                                             class="nk-menu-text">Job Fair</span>
                                     </Link>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('/candidate/message') ? 'active' : ''}`}>
                                     <Link to="/candidate/message" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-bell"></em></span><span
                                             class="nk-menu-text">Messages</span>
                                     </Link>
                                 </li>
-                                <li class="nk-menu-item">
+                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
                                     <Link to="/candidate/message" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-bell"></em></span><span
                                             class="nk-menu-text">Notifications</span>

@@ -39,16 +39,16 @@ function App() {
         <Route path='/candidate/dashboard/subscription' element={<Subscription/>}/>
 
         <Route path='/candidate/profile' element={<Profile/>}/>
-        <Route path='/candidate/experience' element={<Experience/>}/>
+        <Route path='/candidate/profile/experience' element={<Experience/>}/>
 
-        <Route path='/candidate/socialmedia' element={<ProfileNotification/>}/>
-        <Route path='/candidate/academic' element={<ProfileActivity/>}/>
-        <Route path='/candidate/setting' element={<ProfileSettings/>}/>
+        <Route path='/candidate/profile/socialmedia' element={<ProfileNotification/>}/>
+        <Route path='/candidate/profile/academic' element={<ProfileActivity/>}/>
+        <Route path='/candidate/profile/setting' element={<ProfileSettings/>}/>
         <Route path='/candidate/message' element={<Message/>}/>
         <Route path='/candidate/list' element={<List/>}/>
         <Route path='/candidate/details' element={<Details/>}/>
-        <Route path='/candidate/skill' element={<Skills/>}/>
-        <Route path='/candidate/resume' element={<Resume/>}/>
+        <Route path='/candidate/profile/skill' element={<Skills/>}/>
+        <Route path='/candidate/profile/resume' element={<Resume/>}/>
 
 
 
