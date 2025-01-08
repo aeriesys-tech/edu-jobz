@@ -14980,7 +14980,7 @@ a.alert:hover {
   transform-origin: 50% 50%;
   content: "";
   background-color: #e5e9f2;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   opacity: 0;
   transition: all 0.3s;
 }
