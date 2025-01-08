@@ -7,6 +7,7 @@ function MenuBar() {
     const location = useLocation();
 
     const isActive = (path) => location.pathname === path;
+    
     return (
         <>
             <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg"

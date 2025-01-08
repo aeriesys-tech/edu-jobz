@@ -62,8 +62,8 @@ function SideBar(){
                                         </span><span class="nk-menu-text">Job Search</span>
                                     </Link>
                                 </li>
-                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
-                                    <Link to="#" class="nk-menu-link">
+                                <li class={`nk-menu-item ${isActive('/candidate/Interview') ? 'active' : ''}`}>
+                                    <Link to="/candidate/Interview" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-zoom-in"></em></span><span
                                             class="nk-menu-text">Interview Process</span>
                                     </Link>

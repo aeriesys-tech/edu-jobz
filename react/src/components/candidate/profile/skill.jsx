@@ -38,9 +38,8 @@ function Skills() {
                                                         <ul class="nk-block-tools g-3">
 
                                                             <li><a href="#file-upload" class="btn btn-primary"
-                                                                    data-bs-toggle="modal"><em
-                                                                        class="icon ni ni-upload-cloud"></em>
-                                                                    <span>Update</span></a>
+                                                                    data-bs-toggle="modal"><em class="icon ni ni-plus"></em>
+                                                                    <span>Add</span></a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -179,7 +178,7 @@ function Skills() {
                                                                                     placeholder="Enter Skill" />
                                                                             </div>
                                                                             <div class="col-md-12 d-flex">
-                                                                                <div class="mb-3 pe-5">
+                                                                                <div class="col-md-6 mb-3 pe-5">
                                                                                     <label class="form-label">Proficiency Level 
                                                                                 </label>
                                                                                     <select class="form-select">
@@ -191,6 +190,15 @@ function Skills() {
                                                                                         <option>9</option>
 
                                                                                         <option>10</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-md-6 mb-3 ">
+                                                                                    <label class="form-label">Skill Type 
+                                                                                </label>
+                                                                                    <select class="form-select">
+                                                                                        <option>Top Skill</option>
+                                                                                        <option>Other Skills</option>
+                                                                                        
                                                                                     </select>
                                                                                 </div>
                                                                                 

@@ -20,6 +20,7 @@ import Page404 from './components/login/404'
 import Page504 from './components/login/504'
 import Subscription from './components/candidate/dashboardsubscription'
 import Experience from './components/candidate/profile/experience'
+import Interview from './components/candidate/dashboardinterview'
 
 function App() {
 
@@ -46,6 +47,8 @@ function App() {
         <Route path='/candidate/profile/setting' element={<ProfileSettings/>}/>
         <Route path='/candidate/message' element={<Message/>}/>
         <Route path='/candidate/list' element={<List/>}/>
+        <Route path='/candidate/Interview' element={<Interview/>}/>
+
         <Route path='/candidate/details' element={<Details/>}/>
         <Route path='/candidate/profile/skill' element={<Skills/>}/>
         <Route path='/candidate/profile/resume' element={<Resume/>}/>

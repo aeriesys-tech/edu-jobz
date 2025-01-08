@@ -39,9 +39,8 @@ function ProfileActivity() {
                                                         <ul class="nk-block-tools g-3">
 
                                                             <li><a href="#file-upload" class="btn btn-primary"
-                                                                    data-bs-toggle="modal"><em
-                                                                        class="icon ni ni-upload-cloud"></em>
-                                                                    <span>Update</span></a>
+                                                                    data-bs-toggle="modal"><em class="icon ni ni-plus"></em>
+                                                                    <span>Add</span></a>
                                                             </li>
                                                         </ul>
                                                     </div>

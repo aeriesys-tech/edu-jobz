@@ -5783,9 +5783,7 @@ fieldset:disabled .dual-listbox .dual-listbox__button {
     --bs-alert-border-color: var(--bs-dark-border-subtle);
     --bs-alert-link-color: var(--bs-dark-text-emphasis)
 }
-th,td{
-    border-bottom: none;
-}
+
 .alert-gray {
     --bs-alert-color: var(--bs-gray-text-emphasis);
     --bs-alert-bg: var(--bs-gray-bg-subtle);
@@ -45859,7 +45857,7 @@ div.dt-container div.dt-search .nk-reply-form-field input {
     justify-content: space-between;
     flex-wrap: wrap;
     padding: .75rem 1.25rem;
-    border-bottom: 1px solid #dbdfea;
+    border-bottom: "";
     background-color: #fff;
     z-index: 9;
     position: relative;
