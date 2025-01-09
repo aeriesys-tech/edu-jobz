@@ -107,7 +107,7 @@ function Interview() {
                                                         </div>
                                                         <div class="nk-tb-col"><Link to="/candidate/details">
                                                                 <div class="user-card">
-                                                                    <div class="user-avatar bg-primary"><span>AB</span>
+                                                                    <div class="user-avatar "><span>AB</span>
                                                                     </div>
                                                                     <div class="user-info"><span class="tb-lead">Abu Bin
                                                                             Ishtiyak <span
@@ -687,7 +687,7 @@ function Interview() {
                                                         </div>
                                                         <div class="nk-tb-col"><a href="students-details.html">
                                                                 <div class="user-card">
-                                                                    <div class="user-avatar bg-primary"><span>AB</span>
+                                                                    <div class="user-avatar "><span>AB</span>
                                                                     </div>
                                                                     <div class="user-info"><span class="tb-lead">Abu Bin
                                                                             Ishtiyak <span

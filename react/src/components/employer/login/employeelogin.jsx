@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import logo from '../../assets/img/logo.png'
-function Login(){
+import logo from '../../../assets/img/logo.png'
+function EmployeeLogin(){
     return(
         <>
 
@@ -20,6 +20,7 @@ function Login(){
                                     </div>
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content">
+                                            
                                             <h5 class="nk-block-title">Sign-In</h5>
                                             <div class="nk-block-des">
                                                 <p>Access the EduJobZ panel using your email and Password.</p>
@@ -50,10 +51,7 @@ function Login(){
                                         <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px" href="#">Google</a></li>
                                     </ul>
                                     <div class="text-center mt-4">
-                                        <span class="fw-500">New on our platform? <Link to="/signup">Create an account</Link></span>
-                                    </div>
-                                    <div class="text-center mt-4">
-                                    <Link to="/employee/login">Employee Sign in</Link>
+                                        <span class="fw-500">New on our platform? <Link to="/employee/signup">Create an account</Link></span>
                                     </div>
                                 </div>
                                 <div class="nk-block nk-auth-footer">
@@ -83,4 +81,4 @@ function Login(){
         </>
     )
 }
-export default Login
+export default EmployeeLogin

@@ -41,7 +41,7 @@ function List() {
                                                         </li>
                                                         <li>
                                                             <div class="drodown"><a href="#"
-                                                                    class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
+                                                                    class="dropdown-toggle dropdown-indicator btn btn-block btn-dim btn-primary"
                                                                     data-bs-toggle="dropdown">Choose one or more Industries</a>
                                                                 <div class="dropdown-menu dropdown-menu-end">
                                                                     <ul class="link-list-opt no-bdr">
@@ -54,7 +54,7 @@ function List() {
                                                         </li>
                                                         <li>
                                                         <div class="drodown"><a href="#"
-                                                                    class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
+                                                                    class="dropdown-toggle dropdown-indicator btn btn-block btn-dim btn-primary"
                                                                     data-bs-toggle="dropdown">Choose one or more Roles</a>
                                                                 <div class="dropdown-menu dropdown-menu-end">
                                                                     <ul class="link-list-opt no-bdr">
@@ -70,7 +70,7 @@ function List() {
                                                         </li>
                                                         <li>
                                                         <div class="drodown"><a href="#"
-                                                                    class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
+                                                                    class="dropdown-toggle dropdown-indicator btn btn-block btn-dim btn-primary"
                                                                     data-bs-toggle="dropdown">Work From Home</a>
                                                                 <div class="dropdown-menu dropdown-menu-end">
                                                                     <ul class="link-list-opt no-bdr">
@@ -84,7 +84,7 @@ function List() {
                                                        
                                                         <li>
                                                         <div class="drodown"><a href="#"
-                                                                    class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
+                                                                    class="dropdown-toggle dropdown-indicator btn btn-block btn-dim btn-primary"
                                                                     data-bs-toggle="dropdown">Country</a>
                                                                 <div class="dropdown-menu dropdown-menu-end">
                                                                     <ul class="link-list-opt no-bdr">
@@ -101,9 +101,9 @@ function List() {
                                                       
                                                         <li>
                                                         <div class="drodown"><a href="#"
-                                                                    class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
+                                                                    class="dropdown-toggle dropdown-indicator btn btn-block btn-dim btn-primary"
                                                                     data-bs-toggle="dropdown">City</a>
-                                                                <div class="dropdown-menu dropdown-menu-end">
+                                                                <div class="dropdown-menu dropdown-menu-start">
                                                                     <ul class="link-list-opt no-bdr">
                                                                         <li><a href="#"><span>Athani</span></a></li>
                                                                         <li><a href="#"><span>Belgavi</span></a></li>
@@ -117,7 +117,7 @@ function List() {
                                                         </li>
                                                         <li>
                                                         <div class="drodown"><a href="#"
-                                                                    class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
+                                                                    class="dropdown-toggle dropdown-indicator btn btn-block btn-dim btn-primary"
                                                                     data-bs-toggle="dropdown">Salary Range</a>
                                                                 <div class="dropdown-menu dropdown-menu-end">
                                                                     <ul class="link-list-opt no-bdr">
@@ -187,7 +187,7 @@ function List() {
                                                                 </div>
                                                             </div>
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar lg bg-primary">
+                                                                <div class="user-avatar lg ">
                                                                     <span>AB</span>
                                                                     
                                                                 </div>
@@ -204,12 +204,12 @@ function List() {
                                                                 <li><span>Email</span><span>info@softnio.com</span>
                                                                 </li>
                                                             </ul>
-                                                            <div class="team-view"><a
-                                                                    href="../../user-details-regular.html"
+                                                            <div class="team-view"><Link
+                                                                    to="/candidate/jobs/details"
                                                                     class="btn btn-block btn-dim btn-primary me-1"><span>View
-                                                                    </span></a>
+                                                                    </span></Link>
                                                                 <a href="../../user-details-regular.html"
-                                                                    class="btn btn-block  btn-primary ms-1"><span>Applay</span></a>
+                                                                    class="btn btn-block  btn-primary ms-1"><span>Apply</span></a>
 
                                                             </div>
                                                         </div>
@@ -257,7 +257,7 @@ function List() {
                                                                 </div>
                                                             </div>
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar lg bg-primary">
+                                                                <div class="user-avatar lg">
                                                                     <span>AB</span>
                                                                     
                                                                 </div>
@@ -274,12 +274,12 @@ function List() {
                                                                 <li><span>Email</span><span>info@softnio.com</span>
                                                                 </li>
                                                             </ul>
-                                                            <div class="team-view"><a
-                                                                    href="../../user-details-regular.html"
+                                                            <div class="team-view"><Link
+                                                                    to="/candidate/jobs/details"
                                                                     class="btn btn-block btn-dim btn-primary me-1"><span>View
-                                                                    </span></a>
+                                                                    </span></Link>
                                                                 <a href="../../user-details-regular.html"
-                                                                    class="btn btn-block  btn-primary ms-1"><span>Applay</span></a>
+                                                                    class="btn btn-block  btn-primary ms-1"><span>Apply</span></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -326,7 +326,7 @@ function List() {
                                                                 </div>
                                                             </div>
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar lg bg-primary">
+                                                                <div class="user-avatar lg ">
                                                                     <span>AB</span>
                                                                    
                                                                 </div>
@@ -343,12 +343,12 @@ function List() {
                                                                 <li><span>Email</span><span>info@softnio.com</span>
                                                                 </li>
                                                             </ul>
-                                                            <div class="team-view"><a
-                                                                    href="../../user-details-regular.html"
+                                                            <div class="team-view"><Link
+                                                                    to="/candidate/jobs/details"
                                                                     class="btn btn-block btn-dim btn-primary me-1"><span>View
-                                                                    </span></a>
+                                                                    </span></Link>
                                                                 <a href="../../user-details-regular.html"
-                                                                    class="btn btn-block btn-primary ms-1"><span>Applay</span></a>
+                                                                    class="btn btn-block btn-primary ms-1"><span>Apply</span></a>
                                                             </div>
                                                         </div>
                                                     </div>

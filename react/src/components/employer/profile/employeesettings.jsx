@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom"
-import SideBar from "../dashboardslidebar"
-import DashFooter from "../footer"
-import DashHeader from "../header"
-import MenuBar from "./profilemenu"
+import DashHeader from "../../candidate/header"
+import EmployeeSideBar from "../employeesidebar"
+import EmployeeMenuBar from "./employeeprofilemenu"
+import DashFooter from "../../candidate/footer"
 
 
-function ProfileSettings() {
+function EmployeeSettings() {
     return (
         <>
             <body class="nk-body bg-lighter npc-general has-sidebar ">
                 <div class="nk-app-root">
                     <div class="nk-main ">
-                        <SideBar />
+                        <EmployeeSideBar />
                         <div class="nk-wrap ">
 
                             <DashHeader />
@@ -225,7 +225,7 @@ function ProfileSettings() {
 
                                                             </div>
                                                         </div>
-                                                        <MenuBar />
+                                                        <EmployeeMenuBar />
                                                     </div>
                                                 </div>
                                             </div>
@@ -241,4 +241,4 @@ function ProfileSettings() {
         </>
     )
 }
-export default ProfileSettings
+export default EmployeeSettings

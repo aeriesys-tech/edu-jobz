@@ -42,7 +42,7 @@ function Details() {
                                                                         <div
                                                                             class="nk-block-between d-flex justify-content-between">
                                                                             <div class="nk-block-head-content">
-                                                                                <h4 class="nk-block-title">Students Information</h4>
+                                                                                <h4 class="nk-block-title">Informations</h4>
                                                                                 <div class="nk-block-des">
                                                                                     <p>Basic info, like students name and address,
                                                                                         that you use on Nio Platform.</p>

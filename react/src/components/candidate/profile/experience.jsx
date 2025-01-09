@@ -44,7 +44,7 @@ function Experience() {
                                                             <div class="project">
                                                                 <div class="project-head">
                                                                     <a href="#" class="project-title">
-                                                                        <div class="user-avatar sq bg-purple">
+                                                                        <div class="user-avatar sq ">
                                                                             <span>DD</span>
                                                                         </div>
                                                                         <div class="project-info">
@@ -100,7 +100,7 @@ function Experience() {
                                                             <div class="project">
                                                                 <div class="project-head">
                                                                     <a href="#" class="project-title">
-                                                                        <div class="user-avatar sq bg-purple">
+                                                                        <div class="user-avatar sq ">
                                                                             <span>DD</span>
                                                                         </div>
                                                                         <div class="project-info">

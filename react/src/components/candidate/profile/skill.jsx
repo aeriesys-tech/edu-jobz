@@ -52,7 +52,7 @@ function Skills() {
                                                                     <div class="project">
                                                                         <div class="project-head">
                                                                             <a href="#" class="project-title">
-                                                                                <div class="user-avatar sq bg-purple">
+                                                                                <div class="user-avatar sq ">
                                                                                     <span>Java</span>
                                                                                 </div>
                                                                                 <div class="project-info">
@@ -106,7 +106,7 @@ function Skills() {
                                                                     <div class="project">
                                                                         <div class="project-head">
                                                                             <a href="#" class="project-title">
-                                                                                <div class="user-avatar sq bg-purple">
+                                                                                <div class="user-avatar sq ">
                                                                                     <span>JS</span>
                                                                                 </div>
                                                                                 <div class="project-info">

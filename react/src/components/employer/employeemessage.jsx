@@ -1,16 +1,17 @@
 
 import { Link } from 'react-router-dom';
-import SideBar from './dashboardslidebar';
-import DashHeader from './header';
-import DashFooter from './footer';
+import EmployeeSideBar from './employeesidebar';
+import DashHeader from '../candidate/header';
+import DashFooter from '../candidate/footer';
 
-function Message(){
+
+function EmployeeMessage(){
     return(
         <>
 <body class="nk-body bg-lighter npc-general has-sidebar ">
                 <div class="nk-app-root">
                     <div class="nk-main ">
-                       <SideBar/>
+                       <EmployeeSideBar/>
                         <div class="nk-wrap ">
                            <DashHeader/>
                            
@@ -91,7 +92,7 @@ function Message(){
                                                                 class="status dot dot-lg dot-success"></span></div>
                                                     </a></li>
                                                 <li><a href="#">
-                                                        <div class="user-avatar "><span>VB</span><span
+                                                        <div class="user-avatar bg-purple"><span>VB</span><span
                                                                 class="status dot dot-lg dot-success"></span></div>
                                                     </a></li>
                                                 <li><a href="#">
@@ -925,4 +926,4 @@ function Message(){
         </>
     )
 }
-export default Message
+export default EmployeeMessage

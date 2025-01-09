@@ -1,9 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
-import SideBar from "../dashboardslidebar"
-import DashFooter from "../footer"
-import DashHeader from "../header"
 
-function MenuBar() {
+function EmployeeMenuBar() {
     const location = useLocation();
 
     const isActive = (path) => location.pathname === path;
@@ -16,7 +13,7 @@ function MenuBar() {
                 <div class="card-inner-group" data-simplebar>
                     <div class="card-inner">
                         <div class="user-card">
-                            <div class="user-avatar"><span>AB</span></div>
+                            <div class="user-avatar "><span>AB</span></div>
                             <div class="user-info"><span class="lead-text">Abu Bin
                                 Ishtiyak</span><span
                                     class="sub-text">info@softnio.com</span></div>
@@ -42,23 +39,23 @@ function MenuBar() {
 
                     <div class="card-inner p-0">
                         <ul class="link-list-menu">
-                            <li class={isActive('/candidate/profile') ? 'active' : ''}><Link class="" to="/candidate/profile"><em
+                            <li class={isActive('/employee/profile') ? 'active' : ''}><Link class="" to="/employee/profile"><em
                                 class="icon ni ni-user-fill-c"></em><span>Personal
                                     Infomation</span></Link></li>
-                                    <li class={isActive('/candidate/profile/setting') ? 'active' : ''}><Link to="/candidate/profile/setting"><em
+                                    <li class={isActive('/employee/profile/setting') ? 'active' : ''}><Link to="/employee/profile/setting"><em
                                 class="icon ni ni-lock-alt-fill"></em><span>Security
                                     Settings</span></Link></li>
-                            <li class={isActive('/candidate/profile/socialmedia') ? 'active' : ''}><Link
-                                to="/candidate/profile/socialmedia"><em
+                            <li class={isActive('/employee/profile/socialmedia') ? 'active' : ''}><Link
+                                to="/employee/profile/socialmedia"><em
                                     class="icon ni ni-bell-fill"></em><span>Social Media</span></Link>
                             </li>
-                            <li class={isActive('/candidate/profile/experience') ? 'active' : ''}><Link to="/candidate/profile/experience"><em class="icon ni ni-briefcase-fill"></em><span>Experience</span></Link></li>
+                            {/* <li class={isActive('/candidate/profile/experience') ? 'active' : ''}><Link to="/candidate/profile/experience"><em class="icon ni ni-briefcase-fill"></em><span>Experience</span></Link></li>
 
                             <li class={isActive('/candidate/profile/academic') ? 'active' : ''}><Link to="/candidate/profile/academic"><em class="icon ni ni-medal-fill"></em><span>Education</span></Link></li>
                             <li class={isActive('/candidate/profile/skill') ? 'active' : ''}><Link to="/candidate/profile/skill"><em
                                 class="icon ni ni-activity-round-fill"></em><span>Skill</span></Link></li>
                             
-                            <li class={isActive('/candidate/profile/resume') ? 'active' : ''}><Link to="/candidate/profile/resume"><em class="icon ni ni-briefcase-fill"></em><span>Documents</span></Link></li>
+                            <li class={isActive('/candidate/profile/resume') ? 'active' : ''}><Link to="/candidate/profile/resume"><em class="icon ni ni-briefcase-fill"></em><span>Documents</span></Link></li> */}
                         </ul>
                     </div>
                     <div class="card-inner">
@@ -74,4 +71,4 @@ function MenuBar() {
         </>
     )
 }
-export default MenuBar
+export default EmployeeMenuBar

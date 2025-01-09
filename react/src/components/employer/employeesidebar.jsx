@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import logo from '../../assets/img/logo.png'
 
-function SideBar(){
+function EmployeeSideBar(){
     const location = useLocation();
 
     const isActive = (path) => location.pathname === path;
@@ -35,74 +35,61 @@ function SideBar(){
                                 <li class="nk-menu-heading">
                                     <h6 class="overline-title text-primary-alt">MENU</h6>
                                 </li>
-                                <li class={`nk-menu-item ${isActive('/candidate/dashboard') ? 'active' : ''}`}>
-                                    <Link to="/candidate/dashboard" class="nk-menu-link">
+                                <li class={`nk-menu-item ${isActive('/employee/dashboard') ? 'active' : ''}`}>
+                                    <Link to="/employee/dashboard" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-cart-fill"></em></span><span
                                             class="nk-menu-text">Dashboard</span>
                                     </Link>
                                 </li>
-                                <li class={`nk-menu-item ${isParentActive('/candidate/profile') ? 'active' : ''}`}>
-                                    <Link to="/candidate/profile" class="nk-menu-link">
+                                <li class={`nk-menu-item ${isParentActive('/employee/profile') ? 'active' : ''}`}>
+                                    <Link to="/employee/profile" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-user"></em></span>
 
                                         <span class="nk-menu-text">Update Profile</span>
                                     </Link>
                                 </li>
                                 <li class={`nk-menu-item ${isActive('/candidate/dashboard/subscription') ? 'active' : ''}`}>
-                                    <Link to="/candidate/dashboard/subscription" class="nk-menu-link">
+                                    <Link to="#" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em
-                                                class="icon ni ni-calendar-booking"></em></span><span
+                                                class="icon ni ni-medal"></em></span><span
                                             class="nk-menu-text">Subscriptions</span>
                                     </Link>
                                 </li>   
-                                <li class={`nk-menu-item ${isActive('/candidate/jobs') ? 'active' : ''}`}>
-                                    <Link to="/candidate/jobs" class="nk-menu-link">
+                                <li class={`nk-menu-item ${isActive('/candidate/list') ? 'active' : ''}`}>
+                                    <Link to="#" class="nk-menu-link">
                                         <span class="nk-menu-icon">
                                             <em class="icon ni ni-search"></em>
-                                        </span><span class="nk-menu-text">Job Search</span>
+                                        </span><span class="nk-menu-text">Job Post</span>
                                     </Link>
                                 </li>
                                 <li class={`nk-menu-item ${isActive('/candidate/Interview') ? 'active' : ''}`}>
-                                    <Link to="/candidate/Interview" class="nk-menu-link">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-zoom-in"></em></span><span
+                                    <Link to="#" class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-calendar-booking"></em></span><span
                                             class="nk-menu-text">Interview Process</span>
                                     </Link>
                                 </li>
                                 <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
                                     <Link to="#" class="nk-menu-link">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-medal"></em></span><span
-                                            class="nk-menu-text">Training & certifications</span>
+                                        <span class="nk-menu-icon"><em class="icon ni ni-zoom-in"></em></span><span
+                                            class="nk-menu-text">Find Candidates</span>
                                     </Link>
                                 </li>
-                                <li class={`nk-menu-item ${isActive('/candidate/events') ? 'active' : ''}`}>
-                                    <Link to="/candidate/events" class="nk-menu-link">
+                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
+                                    <Link to="#" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em
                                                 class="icon ni ni-calender-date-fill"></em></span><span
-                                            class="nk-menu-text">Events</span>
+                                            class="nk-menu-text">Walk-in Interviews</span>
                                     </Link>
                                 </li>
-                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
-                                    <Link to="#" class="nk-menu-link">
-                                        <span class="nk-menu-icon"><em
-                                                class="icon ni ni-setting-question"></em></span><span
-                                            class="nk-menu-text">Workshop</span>
-                                    </Link>
-                                </li>
-                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
-                                    <Link to="#" class="nk-menu-link">
-                                        <span class="nk-menu-icon"><em
-                                                class="icon ni ni-user-group-fill"></em></span><span
-                                            class="nk-menu-text">Job Fair</span>
-                                    </Link>
-                                </li>
-                                <li class={`nk-menu-item ${isActive('/candidate/message') ? 'active' : ''}`}>
-                                    <Link to="/candidate/message" class="nk-menu-link">
+                              
+                                <li class={`nk-menu-item ${isActive('/employee/message') ? 'active' : ''}`}>
+                                    <Link to="/employee/message" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-notice"></em></span><span
                                             class="nk-menu-text">Messages</span>
                                     </Link>
-                                </li>
-                                <li class={`nk-menu-item ${isActive('/candidate/notification') ? 'active' : ''}`}>
-                                    <Link to="/candidate/notification" class="nk-menu-link">
+                                </li> 
+                                <li class={`nk-menu-item ${isActive('/employee/notification') ? 'active' : ''}`}>
+                                    <Link to="/employee/notification" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-bell"></em></span><span
                                             class="nk-menu-text">Notifications</span>
                                     </Link>
@@ -119,4 +106,4 @@ function SideBar(){
         </>
     )
 }
-export default SideBar
+export default EmployeeSideBar
