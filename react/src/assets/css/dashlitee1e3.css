@@ -45857,7 +45857,7 @@ div.dt-container div.dt-search .nk-reply-form-field input {
     justify-content: space-between;
     flex-wrap: wrap;
     padding: .75rem 1.25rem;
-    border-bottom: 1px solid #dbdfea;
+    border-bottom: "";
     background-color: #fff;
     z-index: 9;
     position: relative;
