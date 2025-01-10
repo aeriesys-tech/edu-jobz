@@ -1,5 +1,6 @@
 const { Candidate, CandidateToken, CandidateOtp } = require("../../models");
 const { sendResponse } = require("../../services/responseService");
+const { sendOtp } = require("../../services/messageService");
 const { Op, Sequelize } = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -7,7 +8,7 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
 // Registration
-const registration = async (req, res) => {
+const register = async (req, res) => {
   try {
     const { name, mobile_no, email, password } = req.body;
 
@@ -68,13 +69,30 @@ This OTP is valid for the next 15 minutes. If you did not request a password res
 Thank you,
 Aeriesys Team`,
     };
+    const mobile_otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
+    const mobile_expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return sendResponse(res, 500, false, error.message);
-      }
-      sendResponse(res, 200, true, "Email verification email sent");
+    await CandidateOtp.create({
+      candidate_id: newCandidate.candidate_id,
+      verification_type: "Mobile",
+      otp: mobile_otp,
+      send_to: newCandidate.mobile_no,
+      created_at: new Date(),
+      expire_at: mobile_expireAt,
     });
+
+    await verify_email(mailOptions);
+
+    // await userotp.sendOtp(newCandidate.mobile_no, mobile_otp);
+
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //   if (error) {
+    //     return sendResponse(res, 500, false, error.message);
+    //   }
+    //   sendResponse(res, 200, true, "Email verification email sent");
+    // });
+
+    await send_mobile_otp(newCandidate.mobile_no, mobile_otp);
 
     return sendResponse(
       res,
@@ -98,10 +116,18 @@ const login = async (req, res) => {
       where: { email: email },
     });
 
+    if (!candidate) {
+      return sendResponse(res, 400, false, "Email is incorrect", null, {
+        email: "Invalid Email",
+        password: "Invalid Password",
+      });
+    }
+
     // Validate password
     const validPassword = await bcrypt.compare(password, candidate.password);
     if (!validPassword) {
       return sendResponse(res, 400, false, "Password is incorrect", null, {
+        email: "Invalid Email",
         password: "Invalid password",
       });
     }
@@ -156,8 +182,6 @@ const login = async (req, res) => {
     return sendResponse(res, 500, false, null, null, error.message);
   }
 };
-
-
 
 // updatePassword
 const updatePassword = async (req, res) => {
@@ -375,7 +399,90 @@ const resetPassword = async (req, res) => {
   }
 };
 
+// verify Email function
+const verifyEmail = async (req, res) => {
+  const { email, otp } = req.body;
 
+  // if (newPassword !== confirmPassword) {
+  //   return sendResponse(res, 400, false, "Passwords do not match", null, {
+  //     confirmPassword: "Passwords do not match",
+  //   });
+  // }
+
+  try {
+    const candidate = await Candidate.findOne({ where: { email } });
+    if (!candidate) {
+      return sendResponse(res, 404, false, "Email not found", null, {
+        email: "Email not found",
+      });
+    }
+
+    const candidateOtp = await CandidateOtp.findOne({
+      where: {
+        candidate_id: candidate.candidate_id,
+        verification_type: "Email",
+        otp: otp,
+        expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
+      },
+    });
+
+    if (!candidateOtp) {
+      return sendResponse(res, 400, false, "Invalid OTP", null, {
+        otp: "Invalid or expired OTP",
+      });
+    }
+
+    await Candidate.update({ is_email_verified: "true" }, { where: { email } });
+
+    sendResponse(res, 200, true, "Email is verified successfully");
+  } catch (error) {
+    sendResponse(res, 500, false, error.message);
+  }
+};
+
+// verify Email function
+const verifyMobile = async (req, res) => {
+  const { mobile_no, otp } = req.body;
+
+  // if (newPassword !== confirmPassword) {
+  //   return sendResponse(res, 400, false, "Passwords do not match", null, {
+  //     confirmPassword: "Passwords do not match",
+  //   });
+  // }
+
+  try {
+    const candidate = await Candidate.findOne({ where: { mobile_no } });
+    if (!candidate) {
+      return sendResponse(res, 404, false, "Mobile not found", null, {
+        email: "Mobile no not found",
+      });
+    }
+
+    const candidateOtp = await CandidateOtp.findOne({
+      where: {
+        candidate_id: candidate.candidate_id,
+        verfiication_type: "Moble",
+        otp: otp,
+        expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
+      },
+    });
+
+    if (!candidateOtp) {
+      return sendResponse(res, 400, false, "Invalid OTP", null, {
+        otp: "Invalid or expired OTP",
+      });
+    }
+
+    await Candidate.update(
+      { is_mobile_no_verified: "true" },
+      { where: { mobile_no } }
+    );
+
+    sendResponse(res, 200, true, "Mobile No is verified successfully");
+  } catch (error) {
+    sendResponse(res, 500, false, error.message);
+  }
+};
 
 //logout function
 const logout = async (req, res) => {
@@ -403,13 +510,30 @@ const logout = async (req, res) => {
   }
 };
 
+async function send_mobile_otp(mobile_no, otp) {
+  let user_otp = sendOtp(mobile_no, otp);
+  if (user_otp) {
+    console.log("success");
+  }
+}
+
+async function verify_email(mailOptions) {
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return sendResponse(res, 500, false, error.message);
+    }
+    sendResponse(res, 200, true, "Email verification email sent");
+  });
+}
+
 module.exports = {
-  registration,
+  register,
   forgotPassword,
   updatePassword,
   resetPassword,
   updateProfile,
   verifyEmail,
+  verifyMobile,
   login,
   logout,
 };
