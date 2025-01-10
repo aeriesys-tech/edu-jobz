@@ -102,6 +102,18 @@ const forgotPasswordValidation = (req, res, next) => {
 const verifyEmailValidation = (req, res, next) => {
   return Validate([
     check("email").isEmail().withMessage("Enter a valid email address"),
+    check("otp")
+      .isLength({ min: 6, max: 6 })
+      .withMessage("OTP must be a 6-digit number"),
+  ])(req, res, next);
+};
+
+const verifyMobileValidation = (req, res, next) => {
+  return Validate([
+    check("email").isEmail().withMessage("Enter a valid email address"),
+    check("otp")
+      .isLength({ min: 6, max: 6 })
+      .withMessage("OTP must be a 6-digit number"),
   ])(req, res, next);
 };
 
@@ -127,4 +139,5 @@ module.exports = {
   forgotPasswordValidation,
   resetPasswordValidation,
   verifyEmailValidation,
+  verifyMobileValidation,
 };

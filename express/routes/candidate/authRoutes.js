@@ -10,15 +10,12 @@ const {
   forgotPasswordValidation,
   resetPasswordValidation,
   verifyEmailValidation,
+  verifyMobileValidation,
 } = require("../../validations/candidate/authValidation");
 const upload = require("../../middleware/candidate/multerMiddleware");
 
 // Registration
-router.post(
-  "/registration",
-  registrationValidation,
-  authController.registration
-);
+router.post("/register", registrationValidation, authController.register);
 
 // login
 router.post("/login", loginValidation, authController.login);
@@ -46,6 +43,11 @@ router.post(
 
 router.post("/verifyEmail", verifyEmailValidation, authController.verifyEmail);
 // router.post("/me", authMiddleware, authController.me);
+router.post(
+  "/verifyMobile",
+  verifyMobileValidation,
+  authController.verifyMobile
+);
 
 router.post(
   "/resetPassword",
