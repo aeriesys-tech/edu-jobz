@@ -13,7 +13,7 @@ function EmployeeSideBar(){
 <div class="nk-sidebar nk-sidebar-fixed is-light" data-content="sidebarMenu">
                 <div class="nk-sidebar-element nk-sidebar-head">
                     <div class="nk-sidebar-brand">
-                        <Link to="/" class="logo-link nk-sidebar-logo">
+                        <Link to="/employee/login" class="logo-link nk-sidebar-logo">
                             <img class="logo-light logo-img" src={logo} 
                                 alt="logo" /><img class="logo-dark logo-img" src={logo}
                                  alt="" />

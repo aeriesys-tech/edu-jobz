@@ -33,6 +33,7 @@ import EmployeeLogin from './components/employer/login/employeelogin'
 import EmployeeSignUp from './components/employer/login/employeeregister'
 import EmployeeMessage from './components/employer/employeemessage'
 import Events from './components/candidate/dashboardevent'
+import Terms from './components/login/terms-condition'
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
                                         <Route path='/success' element={<Success />} />
                                         <Route path='/404' element={<Page404 />} />
                                         <Route path='/504' element={<Page504 />} />
+                                        <Route path='/terms' element={<Terms />} />
 
                                         <Route path='/employee/login' element={<EmployeeLogin />} />
                                         <Route path='/employee/signup' element={<EmployeeSignUp />} />
@@ -67,7 +69,7 @@ function App() {
                                         <Route path='/candidate/jobs' element={<List />} />
                                         <Route path='/candidate/Interview' element={<Interview />} />
                                         <Route path='/candidate/jobs/details' element={<JobsDetails />} />
-                                        <Route path='/candidate/details' element={<Details />} />
+                                        <Route path='/candidate/Interview/details' element={<Details />} />
                                         <Route path='/candidate/profile/skill' element={<Skills />} />
                                         <Route path='/candidate/profile/resume' element={<Resume />} />
 

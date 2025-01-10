@@ -3,6 +3,8 @@ import SideBar from "../dashboardslidebar"
 import DashFooter from "../footer"
 import DashHeader from "../header"
 import MenuBar from "./profilemenu"
+import React, { useRef, useEffect } from "react"
+
 
 function Resume() {
     $('#exampleModal').on('show.bs.modal', function (event) {
@@ -12,6 +14,47 @@ function Resume() {
         modal.find('.modal-title').text('New message to ' + recipient)
         modal.find('.modal-body input').val(recipient)
     })
+
+    const fileDropContainer = useRef(null);
+    const fileInput = useRef(null);
+
+    useEffect(() => {
+        const container = fileDropContainer.current;
+
+        const handleDragOver = (event) => {
+            event.preventDefault();
+            container.classList.add('drag-over');
+        };
+
+        const handleDragLeave = () => {
+            container.classList.remove('drag-over');
+        };
+
+        const handleDrop = (event) => {
+            event.preventDefault();
+            container.classList.remove('drag-over');
+            const files = event.dataTransfer.files;
+            handleFileUpload(files);
+        };
+
+        container.addEventListener('dragover', handleDragOver);
+        container.addEventListener('dragleave', handleDragLeave);
+        container.addEventListener('drop', handleDrop);
+
+        return () => {
+            container.removeEventListener('dragover', handleDragOver);
+            container.removeEventListener('dragleave', handleDragLeave);
+            container.removeEventListener('drop', handleDrop);
+        };
+    }, []);
+
+    const handleFileUpload = (files) => {
+        if (files.length > 0) {
+            alert(`File uploaded: ${files[0].name}`);
+        } else {
+            alert('No file selected');
+        }
+    };
 
     return (
         <>
@@ -59,7 +102,7 @@ function Resume() {
                                                                                     <div class="nk-files-group">
 
                                                                                         <div class="nk-files-list">
-                                                                                     
+
                                                                                             <div class="nk-file-item nk-file">
                                                                                                 <div class="nk-file-info">
                                                                                                     <div class="nk-file-title">
@@ -83,7 +126,7 @@ function Resume() {
                                                                                                         <div class="nk-file-name">
                                                                                                             <div
                                                                                                                 class="nk-file-name-text">
-                                                                                                                <a href="#"
+                                                                                                                <a to="#"
                                                                                                                     class="title">Database.xlsx</a>
 
                                                                                                             </div>
@@ -97,7 +140,7 @@ function Resume() {
                                                                                                     </ul>
                                                                                                 </div>
                                                                                                 <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
+                                                                                                    <div class="dropdown"><a to="#"
                                                                                                         class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
                                                                                                         data-bs-toggle="dropdown"><em
                                                                                                             class="icon ni ni-more-h"></em></a>
@@ -106,14 +149,14 @@ function Resume() {
                                                                                                             <ul
                                                                                                                 class="link-list-plain no-bdr">
 
-                                                                                                                <li><a href="#"
+                                                                                                                <li><a to="#"
                                                                                                                     class="file-dl-toast"><em
                                                                                                                         class="icon ni ni-download"></em><span>Download</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-pen"></em><span>Rename</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-trash"></em><span>Delete</span></a>
                                                                                                                 </li>
                                                                                                             </ul>
@@ -178,7 +221,7 @@ function Resume() {
                                                                                                         <div class="nk-file-name">
                                                                                                             <div
                                                                                                                 class="nk-file-name-text">
-                                                                                                                <a href="#"
+                                                                                                                <a to="#"
                                                                                                                     class="title">dashlite...1.2.zip</a>
 
                                                                                                             </div>
@@ -192,7 +235,7 @@ function Resume() {
                                                                                                     </ul>
                                                                                                 </div>
                                                                                                 <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
+                                                                                                    <div class="dropdown"><a to="#"
                                                                                                         class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
                                                                                                         data-bs-toggle="dropdown"><em
                                                                                                             class="icon ni ni-more-h"></em></a>
@@ -201,14 +244,14 @@ function Resume() {
                                                                                                             <ul
                                                                                                                 class="link-list-plain no-bdr">
 
-                                                                                                                <li><a href="#"
+                                                                                                                <li><a to="#"
                                                                                                                     class="file-dl-toast"><em
                                                                                                                         class="icon ni ni-download"></em><span>Download</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-pen"></em><span>Rename</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-trash"></em><span>Delete</span></a>
                                                                                                                 </li>
                                                                                                             </ul>
@@ -273,7 +316,7 @@ function Resume() {
                                                                                                         <div class="nk-file-name">
                                                                                                             <div
                                                                                                                 class="nk-file-name-text">
-                                                                                                                <a href="#"
+                                                                                                                <a to="#"
                                                                                                                     class="title">covstats.zip</a>
 
                                                                                                             </div>
@@ -287,7 +330,7 @@ function Resume() {
                                                                                                     </ul>
                                                                                                 </div>
                                                                                                 <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
+                                                                                                    <div class="dropdown"><a to="#"
                                                                                                         class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
                                                                                                         data-bs-toggle="dropdown"><em
                                                                                                             class="icon ni ni-more-h"></em></a>
@@ -296,14 +339,14 @@ function Resume() {
                                                                                                             <ul
                                                                                                                 class="link-list-plain no-bdr">
 
-                                                                                                                <li><a href="#"
+                                                                                                                <li><a to="#"
                                                                                                                     class="file-dl-toast"><em
                                                                                                                         class="icon ni ni-download"></em><span>Download</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-pen"></em><span>Rename</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-trash"></em><span>Delete</span></a>
                                                                                                                 </li>
                                                                                                             </ul>
@@ -361,7 +404,7 @@ function Resume() {
                                                                                                         <div class="nk-file-name">
                                                                                                             <div
                                                                                                                 class="nk-file-name-text">
-                                                                                                                <a href="#"
+                                                                                                                <a to="#"
                                                                                                                     class="title">Price
                                                                                                                     List.doc</a>
 
@@ -376,7 +419,7 @@ function Resume() {
                                                                                                     </ul>
                                                                                                 </div>
                                                                                                 <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
+                                                                                                    <div class="dropdown"><a to="#"
                                                                                                         class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
                                                                                                         data-bs-toggle="dropdown"><em
                                                                                                             class="icon ni ni-more-h"></em></a>
@@ -385,14 +428,14 @@ function Resume() {
                                                                                                             <ul
                                                                                                                 class="link-list-plain no-bdr">
 
-                                                                                                                <li><a href="#"
+                                                                                                                <li><a to="#"
                                                                                                                     class="file-dl-toast"><em
                                                                                                                         class="icon ni ni-download"></em><span>Download</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-pen"></em><span>Rename</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-trash"></em><span>Delete</span></a>
                                                                                                                 </li>
                                                                                                             </ul>
@@ -412,7 +455,7 @@ function Resume() {
                                                             </div>
                                                             <div class="modal fade" tabindex="-1" role="dialog" id="file-upload">
                                                                 <div class="modal-dialog modal-md" role="document">
-                                                                    <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em
+                                                                    <div class="modal-content"><a to="#" class="close" data-bs-dismiss="modal"><em
                                                                         class="icon ni ni-cross-sm"></em></a>
 
                                                                         <div class="modal-body modal-body-md">
@@ -428,14 +471,20 @@ function Resume() {
                                                                                     </select>
                                                                                 </div>
 
-                                                                                <div class="upload-zone small bg-lighter">
-                                                                                    <div class="file-area">
-                                                                                        <input type="file" />
-                                                                                        <div class="file-dummy">
-                                                                                            <span >Click to select a file, or drag it here</span>
+                                                                                <div
+                                                                                    className="file-drop-container"
+                                                                                    ref={fileDropContainer}
+                                                                                    onClick={() => fileInput.current.click()}
+                                                                                >
+                                                                                    <p>Drag and drop a file here, or click to select a file</p>
+                                                                                    <input
+                                                                                        type="file"
+                                                                                        ref={fileInput}
+                                                                                        style={{ display: 'none' }}
+                                                                                        onChange={() => handleFileUpload(fileInput.current.files)}
+                                                                                    />
+                                                                                </div>
 
-                                                                                        </div>
-                                                                                    </div>  </div>
                                                                             </div>
                                                                             <div class="nk-modal-action justify-end">
                                                                                 <ul class="btn-toolbar g-4 align-center">

@@ -112,7 +112,7 @@ function EmployeeNotification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/a-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>ABI</span><img src="images/avatar/a-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Abu Bin Ishtiyak</div>
@@ -182,7 +182,7 @@ function EmployeeNotification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/b-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>RS</span><img src="images/avatar/b-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Ricardo Salazar</div>
@@ -325,7 +325,7 @@ function EmployeeNotification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/c-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>LM</span><img src="images/avatar/c-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Laura Matthews</div>
@@ -398,7 +398,7 @@ function EmployeeNotification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/d-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>TW</span><img src="images/avatar/d-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Tammy Wilson</div>
@@ -468,7 +468,7 @@ function EmployeeNotification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/d-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>TW</span><img src="images/avatar/d-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Tammy Wilson</div>
@@ -526,78 +526,7 @@ function EmployeeNotification() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="nk-ibx-item"><a to="#" class="nk-ibx-link"></a>
-                                            <div class="nk-ibx-item-elem nk-ibx-item-check">
-                                                <div class="custom-control custom-control-sm custom-checkbox"><input
-                                                        type="checkbox" class="custom-control-input nk-dt-item-check"
-                                                        id="conversionItem10"/><label class="custom-control-label"
-                                                        for="conversionItem10"></label></div>
-                                            </div>
-                                            <div class="nk-ibx-item-elem nk-ibx-item-star">
-                                                <div class="asterisk"><a to="#"><em
-                                                            class="asterisk-off icon ni ni-star"></em><em
-                                                            class="asterisk-on icon ni ni-star-fill"></em></a></div>
-                                            </div>
-                                            <div class="nk-ibx-item-elem nk-ibx-item-user">
-                                                <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/b-sm.jpg" alt=""/>
-                                                    </div>
-                                                    <div class="user-name">
-                                                        <div class="lead-text">Ricardo Salazar</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="nk-ibx-item-elem nk-ibx-item-fluid">
-                                                <div class="nk-ibx-context-group">
-                                                    <div class="nk-ibx-context"><span class="nk-ibx-context-text"><span
-                                                                class="heading">Registration Confirmation for Envato
-                                                                Worldwide</span> The event organizer has provided the
-                                                            following information </span></div>
-                                                </div>
-                                            </div>
-                                            <div class="nk-ibx-item-elem nk-ibx-item-attach"><a
-                                                    class="link link-light"><em class="icon ni ni-clip-h"></em></a>
-                                            </div>
-                                            <div class="nk-ibx-item-elem nk-ibx-item-time">
-                                                <div class="sub-text">10:30 AM</div>
-                                            </div>
-                                            <div class="nk-ibx-item-elem nk-ibx-item-tools">
-                                                <div class="ibx-actions">
-                                                    <ul class="ibx-actions-hidden gx-1">
-                                                        <li><a to="#" class="btn btn-sm btn-icon btn-trigger"
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Archive"><em
-                                                                    class="icon ni ni-archived"></em></a></li>
-                                                        <li><a to="#" class="btn btn-sm btn-icon btn-trigger"
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Delete"><em class="icon ni ni-trash"></em></a>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="ibx-actions-visible gx-2">
-                                                        <li>
-                                                            <div class="dropdown"><a to="#"
-                                                                    class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
-                                                                    data-bs-toggle="dropdown"><em
-                                                                        class="icon ni ni-more-h"></em></a>
-                                                                <div class="dropdown-menu dropdown-menu-end">
-                                                                    <ul class="link-list-opt no-bdr">
-                                                                        <li><a class="dropdown-item" to="#"><em
-                                                                                    class="icon ni ni-eye"></em><span>View</span></a>
-                                                                        </li>
-                                                                        <li><a class="dropdown-item" to="#"><em
-                                                                                    class="icon ni ni-trash"></em><span>Delete</span></a>
-                                                                        </li>
-                                                                        <li><a class="dropdown-item" to="#"><em
-                                                                                    class="icon ni ni-archived"></em><span>Archive</span></a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="nk-ibx-item"><a to="#" class="nk-ibx-link"></a>
                                             <div class="nk-ibx-item-elem nk-ibx-item-check">
                                                 <div class="custom-control custom-control-sm custom-checkbox"><input
@@ -754,7 +683,7 @@ function EmployeeNotification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/c-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>LM</span><img src="images/avatar/c-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Laura Matthews</div>

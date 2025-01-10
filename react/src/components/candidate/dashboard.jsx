@@ -126,6 +126,7 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
+                
              <DashFooter/>
             </div>
         </div>

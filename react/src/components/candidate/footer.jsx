@@ -12,32 +12,32 @@ function DashFooter(){
                                 <ul class="nav nav-sm">
 
                                     <li class="nav-item">
-                                        <a data-bs-toggle="modal" href="#region" class="nav-link">
+                                        <a data-bs-toggle="modal" href="#region" class="nav-link" style={{color:'#003366'}}>
 
                                             <span class="">About Us</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a data-bs-toggle="modal" href="#region" class="nav-link">
+                                        <a data-bs-toggle="modal" href="#region" class="nav-link" style={{color:'#003366'}}>
 
                                             <span class="">Contact Us</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a data-bs-toggle="modal" href="#region" class="nav-link">
+                                        <a data-bs-toggle="modal" href="#region" class="nav-link" style={{color:'#003366'}}>
 
                                             <span class="">FAQ's</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a data-bs-toggle="modal" href="#region" class="nav-link">
+                                        <a data-bs-toggle="modal" href="#region" class="nav-link" style={{color:'#003366'}}    >
 
                                             <span class="">Term & Conditions</span>
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a data-bs-toggle="modal" href="#region" class="nav-link">
+                                        <a data-bs-toggle="modal" href="#region" class="nav-link" style={{color:'#003366'}}>
                                             <span class="">Privacy policy</span>
                                         </a>
                                     </li>

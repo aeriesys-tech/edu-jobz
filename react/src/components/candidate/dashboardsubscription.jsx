@@ -34,8 +34,8 @@ function Subscription() {
                                     </div>
                             <div class="nk-block">
                                         <div class="row g-gs">
-                                            <div class="col-md-4">
-                                                <div class="price-plan card card-bordered text-center">
+                                            <div class="col-md-4 " >
+                                                <div class="price-plan card card-bordered text-center" style={{borderRadius:'20px'}}>
                                                     <div class="card-inner">
                                                         <div class="price-plan-media">
                                                             <img src={img} alt=""
@@ -81,7 +81,7 @@ function Subscription() {
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="price-item card card-bordered text-center">
+                                                <div class="price-item card card-bordered text-center" style={{borderRadius:'20px'}}>
                                                     <div class="card-inner">
                                                         <div class="price-plan-media"><img src={img1}
                                                                 alt="" style={{width: "100px"}}/>
@@ -125,7 +125,7 @@ function Subscription() {
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="price-item card card-bordered text-center">
+                                                <div class="price-item card card-bordered text-center" style={{borderRadius:'20px'}}>
                                                     <div class="card-inner">
                                                         <div class="price-plan-media"><img src={img2}
                                                                 alt="" style={{width: "100px"}}/>

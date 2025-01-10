@@ -55,23 +55,17 @@ function SideBar(){
                                             class="nk-menu-text">Subscriptions</span>
                                     </Link>
                                 </li>   
-                                <li class={`nk-menu-item ${isActive('/candidate/jobs') ? 'active' : ''}`}>
+                                <li class={`nk-menu-item ${isParentActive('/candidate/jobs') ? 'active' : ''}`}>
                                     <Link to="/candidate/jobs" class="nk-menu-link">
                                         <span class="nk-menu-icon">
                                             <em class="icon ni ni-search"></em>
                                         </span><span class="nk-menu-text">Job Search</span>
                                     </Link>
                                 </li>
-                                <li class={`nk-menu-item ${isActive('/candidate/Interview') ? 'active' : ''}`}>
+                                <li class={`nk-menu-item ${isParentActive('/candidate/Interview') ? 'active' : ''}`}>
                                     <Link to="/candidate/Interview" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-zoom-in"></em></span><span
                                             class="nk-menu-text">Interview Process</span>
-                                    </Link>
-                                </li>
-                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
-                                    <Link to="#" class="nk-menu-link">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-medal"></em></span><span
-                                            class="nk-menu-text">Training & certifications</span>
                                     </Link>
                                 </li>
                                 <li class={`nk-menu-item ${isActive('/candidate/events') ? 'active' : ''}`}>
@@ -81,6 +75,13 @@ function SideBar(){
                                             class="nk-menu-text">Events</span>
                                     </Link>
                                 </li>
+                                <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
+                                    <Link to="#" class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-medal"></em></span><span
+                                            class="nk-menu-text">Training & certifications</span>
+                                    </Link>
+                                </li>
+                              
                                 <li class={`nk-menu-item ${isActive('#') ? 'active' : ''}`}>
                                     <Link to="#" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em

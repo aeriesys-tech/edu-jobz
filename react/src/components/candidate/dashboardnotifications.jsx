@@ -111,7 +111,7 @@ function Notification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/a-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>ABI</span><img src="images/avatar/a-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Abu Bin Ishtiyak</div>
@@ -181,7 +181,7 @@ function Notification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/b-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>RS</span><img src="images/avatar/b-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Ricardo Salazar</div>
@@ -324,7 +324,7 @@ function Notification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/c-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>LM</span><img src="images/avatar/c-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Laura Matthews</div>
@@ -397,7 +397,7 @@ function Notification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/d-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>TW</span><img src="images/avatar/d-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Tammy Wilson</div>
@@ -467,7 +467,7 @@ function Notification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/d-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>TW</span><img src="images/avatar/d-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Tammy Wilson</div>
@@ -539,7 +539,7 @@ function Notification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/b-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>RS</span><img src="images/avatar/b-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Ricardo Salazar</div>
@@ -753,7 +753,7 @@ function Notification() {
                                             </div>
                                             <div class="nk-ibx-item-elem nk-ibx-item-user">
                                                 <div class="user-card">
-                                                    <div class="user-avatar"><img src="images/avatar/c-sm.jpg" alt=""/>
+                                                    <div class="user-avatar"><span>LM</span><img src="images/avatar/c-sm.jpg" alt=""/>
                                                     </div>
                                                     <div class="user-name">
                                                         <div class="lead-text">Laura Matthews</div>

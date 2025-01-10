@@ -105,7 +105,7 @@ function Interview() {
                                                                     id="uid1"/><label class="custom-control-label"
                                                                     for="uid1"></label></div>
                                                         </div>
-                                                        <div class="nk-tb-col"><Link to="/candidate/details">
+                                                        <div class="nk-tb-col"><Link to="/candidate/Interview/details">
                                                                 <div class="user-card">
                                                                     <div class="user-avatar "><span>AB</span>
                                                                     </div>
@@ -166,7 +166,7 @@ function Interview() {
                                                                                 class="icon ni ni-more-h"></em></a>
                                                                         <div class="dropdown-menu dropdown-menu-end">
                                                                             <ul class="link-list-opt no-bdr">
-                                                                                <li><Link to="/candidate/details"><em
+                                                                                <li><Link to="/candidate/Interview/details"><em
                                                                                             class="icon ni ni-eye"></em><span>View
                                                                                             Details</span></Link></li>
                                                                                 <li><a href="#"><em
@@ -187,7 +187,7 @@ function Interview() {
                                                                     id="uid2"/><label class="custom-control-label"
                                                                     for="uid2"></label></div>
                                                         </div>
-                                                        <div class="nk-tb-col"><Link to="/candidate/details">
+                                                        <div class="nk-tb-col"><Link to="/candidate/Interview/details">
                                                                 <div class="user-card">
                                                                     <div class="user-avatar"><img
                                                                             src="../images/avatar/a-sm.jpg" alt=""/>
@@ -595,88 +595,7 @@ function Interview() {
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div
-                                                                class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="uid10"/><label class="custom-control-label"
-                                                                    for="uid10"></label></div>
-                                                        </div>
-                                                        <div class="nk-tb-col"><a href="students-details.html">
-                                                                <div class="user-card">
-                                                                    <div class="user-avatar"><img
-                                                                            src="../images/avatar/b-sm.jpg" alt=""/>
-                                                                    </div>
-                                                                    <div class="user-info"><span class="tb-lead">Frances
-                                                                            Burns <span
-                                                                                class="dot dot-success d-md-none ms-1"></span></span><span>frances@example.com</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a></div>
-                                                        <div class="nk-tb-col tb-col-mb"><span
-                                                                class="tb-lead d-lg-flex d-none">Android
-                                                                Development</span>
-                                                            <div class="d-lg-flex d-none">
-                                                                <div class="drodown"><a href="#"
-                                                                        class="dropdown-toggle pt-1 text-info"
-                                                                        data-bs-toggle="dropdown"> <span>View
-                                                                            More</span> </a>
-                                                                    <div class="dropdown-menu dropdown-menu-start">
-                                                                        <ul class="link-list-opt no-bdr p-3">
-                                                                            <li class="tb-lead p-1">Application
-                                                                                Management</li>
-                                                                            <li class="tb-lead p-1">Learn Android
-                                                                                Development with project</li>
-                                                                            <li class="tb-lead p-1">UI/UX Design with
-                                                                                Adobe XD</li>
-                                                                            <li class="tb-lead p-1">Learn Android
-                                                                                Development with project</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md"><span>+639 130-3150</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-lg"><span>Australia</span></div>
-                                                        <div class="nk-tb-col tb-col-lg"><span
-                                                                class="tb-status badge-dot bg-success">Paid</span></div>
-                                                        <div class="nk-tb-col tb-col-md"><span
-                                                                class="tb-status text-success">Active</span></div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li class="nk-tb-action-hidden"><a href="#"
-                                                                        class="btn btn-trigger btn-icon"
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                        title="Send Email"><em
-                                                                            class="icon ni ni-mail-fill"></em></a></li>
-                                                                <li class="nk-tb-action-hidden"><a href="#"
-                                                                        class="btn btn-trigger btn-icon"
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                        title="Suspend"><em
-                                                                            class="icon ni ni-user-cross-fill"></em></a>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="drodown"><a href="#"
-                                                                            class="dropdown-toggle btn btn-icon btn-trigger"
-                                                                            data-bs-toggle="dropdown"><em
-                                                                                class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="students-details.html"><em
-                                                                                            class="icon ni ni-eye"></em><span>View
-                                                                                            Details</span></a></li>
-                                                                                <li><a href="#"><em
-                                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div> 
+                                                   
                                                     <div class="nk-tb-item">
                                                         <div class="nk-tb-col nk-tb-col-check">
                                                             <div
@@ -759,89 +678,7 @@ function Interview() {
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div
-                                                                class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="uid7"/><label class="custom-control-label"
-                                                                    for="uid7"></label></div>
-                                                        </div>
-                                                        <div class="nk-tb-col"><a href="students-details.html">
-                                                                <div class="user-card">
-                                                                    <div class="user-avatar"><img
-                                                                            src="../images/avatar/a-sm.jpg" alt=""/>
-                                                                    </div>
-                                                                    <div class="user-info"><span class="tb-lead">Ashley
-                                                                            Lawson <span
-                                                                                class="dot dot-warning d-md-none ms-1"></span></span><span>ashley@softnio.com</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a></div>
-                                                        <div class="nk-tb-col tb-col-mb"><span
-                                                                class="tb-lead d-lg-flex d-none">Learn Android
-                                                                Development with project </span>
-                                                            <div class="d-lg-flex d-none">
-                                                                <div class="drodown"><a href="#"
-                                                                        class="dropdown-toggle pt-1 text-info"
-                                                                        data-bs-toggle="dropdown"> <span>View
-                                                                            More</span> </a>
-                                                                    <div class="dropdown-menu dropdown-menu-start">
-                                                                        <ul class="link-list-opt no-bdr p-3">
-                                                                            <li class="tb-lead p-1">Application
-                                                                                Management</li>
-                                                                            <li class="tb-lead p-1">Learn Android
-                                                                                Development with project</li>
-                                                                            <li class="tb-lead p-1">UI/UX Design with
-                                                                                Adobe XD</li>
-                                                                            <li class="tb-lead p-1">Learn Android
-                                                                                Development with project</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md"><span>+124 394-1787</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-lg"><span>United Kindom</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-lg"><span
-                                                                class="tb-status badge-dot bg-success">Paid</span></div>
-                                                        <div class="nk-tb-col tb-col-md"><span
-                                                                class="tb-status text-warning">Inactive</span></div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li class="nk-tb-action-hidden"><a href="#"
-                                                                        class="btn btn-trigger btn-icon"
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                        title="Send Email"><em
-                                                                            class="icon ni ni-mail-fill"></em></a></li>
-                                                                <li class="nk-tb-action-hidden"><a href="#"
-                                                                        class="btn btn-trigger btn-icon"
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                        title="Suspend"><em
-                                                                            class="icon ni ni-user-cross-fill"></em></a>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="drodown"><a href="#"
-                                                                            class="dropdown-toggle btn btn-icon btn-trigger"
-                                                                            data-bs-toggle="dropdown"><em
-                                                                                class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="students-details.html"><em
-                                                                                            class="icon ni ni-eye"></em><span>View
-                                                                                            Details</span></a></li>
-                                                                                <li><a href="#"><em
-                                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
+                                                  
                                                     <div class="nk-tb-item">
                                                         <div class="nk-tb-col nk-tb-col-check">
                                                             <div

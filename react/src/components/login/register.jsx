@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import logo from '../../assets/img/logo.png'
+import login from '../../assets/img/bg3.jpg'
 
 
 function Register(){
@@ -11,6 +12,8 @@ function Register(){
             <div class="nk-wrap nk-wrap-nosidebar">
                 <div class="nk-content ">
                     <div class="nk-split nk-split-page nk-split-md">
+                                                                                    <img src={login} alt="" style={{width:'860px',objectFit:'cover'}}/>
+                        
                         <div
                             class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white w-lg-45">
                             <div class="nk-block nk-block-middle nk-auth-body">
@@ -66,12 +69,11 @@ function Register(){
                             <div class="nk-block nk-auth-footer">
                                 <div class="nk-block-between justify-center">
                                     <ul class="nav nav-sm">
-                                        <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px"
-                                                href="#">Terms & Condition</a></li>
-                                        <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px"
-                                                href="#">Privacy Policy</a></li>
-                                        <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px"
-                                                href="#">Privacy Policy</a></li>
+                                        <li class="nav-item"><Link class="link  fw-normal py-2 px-3 fs-13px"
+                                                to="/terms"  style={{color:'blue'}}>Terms & Condition</Link></li>
+                                        <li class="nav-item"><a class="link  fw-normal py-2 px-3 fs-13px"
+                                                href="#" style={{color:'blue'}}>Privacy Policy</a></li>
+                                       
                                     </ul>
                                 </div>
                                 <div class="justify-center mt-3">
@@ -79,7 +81,7 @@ function Register(){
                                 </div>
                             </div>
                         </div>
-                        <div class="nk-split-content nk-split-stretch bg-abstract"></div>
+                        {/* <div class="nk-split-content nk-split-stretch bg-abstract"></div> */}
                     </div>
                     
                 </div>

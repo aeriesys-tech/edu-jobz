@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import logo from '../../../assets/img/logo.png'
-
+import login from '../../../assets/img/backgroundimg1.jpg'
 
 function EmployeeSignUp(){
     return(
@@ -11,6 +11,8 @@ function EmployeeSignUp(){
             <div class="nk-wrap nk-wrap-nosidebar">
                 <div class="nk-content ">
                     <div class="nk-split nk-split-page nk-split-md">
+                                                                                    <img src={login} alt="" style={{width:'860px'}}/>
+                        
                         <div
                             class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white w-lg-45">
                             <div class="nk-block nk-block-middle nk-auth-body">
@@ -21,7 +23,7 @@ function EmployeeSignUp(){
                                             srcset="/demo2/images/logo-dark2x.png 2x" alt="logo-dark"/></a></div>
                                 <div class="nk-block-head">
                                     <div class="nk-block-head-content">
-                                        <h5 class="nk-block-title">Employee Register</h5>
+                                        <h5 class="nk-block-title">Employer Register</h5>
                                         <div class="nk-block-des">
                                             <p>Create New EduJobZ Account</p>
                                         </div>
@@ -66,12 +68,11 @@ function EmployeeSignUp(){
                             <div class="nk-block nk-auth-footer">
                                 <div class="nk-block-between justify-center">
                                     <ul class="nav nav-sm">
-                                        <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px"
-                                                href="#">Terms & Condition</a></li>
-                                        <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px"
-                                                href="#">Privacy Policy</a></li>
-                                        <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px"
-                                                href="#">Privacy Policy</a></li>
+                                        <li class="nav-item"><Link class="link  fw-normal py-2 px-3 fs-13px"
+                                                to="/terms" style={{color:'blue'}}>Terms & Condition</Link></li>
+                                        <li class="nav-item"><a class="link  fw-normal py-2 px-3 fs-13px"
+                                                href="#" style={{color:'blue'}}>Privacy Policy</a></li>
+                                       
                                     </ul>
                                 </div>
                                 <div class="justify-center mt-3">

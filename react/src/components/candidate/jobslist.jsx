@@ -326,7 +326,7 @@ function List() {
                                                                 </div>
                                                             </div>
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar lg ">
+                                                                <div class="user-avatar lg">
                                                                     <span>AB</span>
                                                                    
                                                                 </div>
