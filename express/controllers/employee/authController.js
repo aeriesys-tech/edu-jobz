@@ -195,7 +195,6 @@ const login = async (req, res) => {
       name: employee.name,
       email: employee.email,
       mobile_no: employee.mobile_no,
-
       whatsapp_no: employee.whatsapp_no,
       gender: employee.gender,
       d_o_b: employee.d_o_b,
@@ -295,7 +294,21 @@ const updatePassword = async (req, res) => {
 //Update Profile
 const updateProfile = async (req, res) => {
   const employeeId = req.employee.employee_id; // Extract user ID from the authenticated user object
-  const { name, email, mobile_no } = req.body;
+  const {
+    name,
+    mobile_no,
+    email,
+    whatsapp_no,
+    gender,
+    d_o_b,
+    type_of_institute,
+    institution_name,
+    address,
+    state,
+    city,
+    country,
+    pincode,
+  } = req.body;
   const avatar = req.file ? req.file.filename : null; // Get the uploaded file name if present
 
   try {
@@ -324,6 +337,16 @@ const updateProfile = async (req, res) => {
       name,
       email,
       mobile_no,
+      whatsapp_no,
+      gender,
+      d_o_b,
+      type_of_institute,
+      institution_name,
+      address,
+      state,
+      city,
+      country,
+      pincode,
     };
     if (avatar) {
       updateData.avatar = avatar; // Add avatar to the update data if a file was uploaded
