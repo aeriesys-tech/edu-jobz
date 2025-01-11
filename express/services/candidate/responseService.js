@@ -1,4 +1,4 @@
-const { CandidateLog } = require("../models");
+const { CandidateLog } = require("../../models");
 
 const sendResponse = async (
   res,
