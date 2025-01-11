@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axios from 'axios';
 import { HashRouter, Route, Routes } from 'react-router-dom'
 // import './App.css'
 
@@ -34,6 +35,7 @@ import EmployeeSignUp from './components/employer/login/employeeregister'
 import EmployeeMessage from './components/employer/employeemessage'
 import Events from './components/candidate/dashboardevent'
 import Terms from './components/login/terms-condition'
+import ResetOTP from './components/login/otpverify';
 
 function App() {
 
@@ -44,6 +46,8 @@ function App() {
                                         <Route path='/' element={<Login />} />
                                         <Route path='/signup' element={<Register />} />
                                         <Route path='/reset' element={<ResetPassword />} />
+                                        <Route path='/otpverify' element={<ResetOTP />} />
+
                                         <Route path='/success' element={<Success />} />
                                         <Route path='/404' element={<Page404 />} />
                                         <Route path='/504' element={<Page504 />} />
