@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { EmployeeToken } = require("../../models");
+const { EmployerToken } = require("../../models");
 
 const authMiddleware = async (req, res, next) => {
   const token = req.header("Authorization")?.replace("Bearer ", "");
@@ -13,20 +13,20 @@ const authMiddleware = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Check if the token exists in the database and is not expired
-    const employeeToken = await EmployeeToken.findOne({
+    const employerToken = await EmployerToken.findOne({
       where: {
         token,
-        employee_id: decoded.employee_id,
+        employer_id: decoded.employer_id,
       },
     });
 
-    if (!employeeToken) {
+    if (!employerToken) {
       console.log("Token not found in database.");
       return res.status(401).json({ error: "Invalid or expired token." });
     }
 
     const currentDate = new Date();
-    const expireDate = new Date(employeeToken.expire_at);
+    const expireDate = new Date(employerToken.expire_at);
 
     if (currentDate > expireDate) {
       console.log("Token expired.");
@@ -35,8 +35,8 @@ const authMiddleware = async (req, res, next) => {
 
     console.log("Token valid.");
     // Attach user info to response locals
-    req.employee = decoded;
-    res.locals.employee = decoded; // Store the decoded user data in res.locals
+    req.employer = decoded;
+    res.locals.employer = decoded; // Store the decoded user data in res.locals
     next();
   } catch (error) {
     console.error("Token verification error:", error.message);

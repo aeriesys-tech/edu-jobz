@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       modelName: "CandidateLog",
-      tableName: "Candidate_logs",
+      tableName: "candidate_logs",
       timestamps: false,
       underscored: true, // This will create columns like `created_at` and `updated_at`
     }

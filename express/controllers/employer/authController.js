@@ -1,5 +1,5 @@
-const { Employee, EmployeeToken, EmployeeOtp } = require("../../models");
-const { sendResponse } = require("../../services/employee/responseService");
+const { Employer, EmployerToken, EmployerOtp } = require("../../models");
+const { sendResponse } = require("../../services/employer/responseService");
 const { sendOtp } = require("../../services/messageService");
 const { Op, Sequelize } = require("sequelize");
 const bcrypt = require("bcrypt");
@@ -29,20 +29,20 @@ const register = async (req, res) => {
     } = req.body;
 
     // Check if email or mobile_no already exists
-    const existingEmployee = await Employee.findOne({
+    const existingEmployer = await Employer.findOne({
       where: {
         [Op.or]: [{ email }, { mobile_no }],
       },
     });
 
-    if (existingEmployee) {
+    if (existingEmployer) {
       const errors = {};
-      if (existingEmployee.email === email) {
-        errors.email = "Employee with the same email already exists";
+      if (existingEmployer.email === email) {
+        errors.email = "Employer with the same email already exists";
       }
-      if (existingEmployee.mobile_no === mobile_no) {
+      if (existingEmployer.mobile_no === mobile_no) {
         errors.mobile_no =
-          "Employee with the same mobile number already exists";
+          "Employer with the same mobile number already exists";
       }
       return sendResponse(res, 400, false, "Validation Error", null, errors);
     }
@@ -51,7 +51,7 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the new Candidate
-    const newEmployee = await Employee.create({
+    const newEmployer = await Employer.create({
       name,
       mobile_no,
       email,
@@ -71,11 +71,11 @@ const register = async (req, res) => {
     const otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
     const expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
 
-    await EmployeeOtp.create({
-      employee_id: newEmployee.employee_id,
+    await EmployerOtp.create({
+      employer_id: newEmployer.employer_id,
       verification_type: "Email",
       otp: otp,
-      send_to: newEmployee.email,
+      send_to: newEmployer.email,
       created_at: new Date(),
       expire_at: expireAt,
     });
@@ -98,11 +98,11 @@ Aeriesys Team`,
     const mobile_otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
     const mobile_expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
 
-    await EmployeeOtp.create({
-      employee_id: newEmployee.employee_id,
+    await EmployerOtp.create({
+      employer_id: newEmployer.employer_id,
       verification_type: "Mobile",
       otp: mobile_otp,
-      send_to: newEmployee.mobile_no,
+      send_to: newEmployer.mobile_no,
       created_at: new Date(),
       expire_at: mobile_expireAt,
     });
@@ -118,14 +118,14 @@ Aeriesys Team`,
     //   sendResponse(res, 200, true, "Email verification email sent");
     // });
 
-    await send_mobile_otp(newEmployee.mobile_no, mobile_otp);
+    await send_mobile_otp(newEmployer.mobile_no, mobile_otp);
 
     return sendResponse(
       res,
       201,
       true,
-      "Employee created successfully",
-      newEmployee
+      "Employer created successfully",
+      newEmployer
     );
   } catch (error) {
     console.error("Error in Registration function:", error);
@@ -138,11 +138,11 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const employee = await Employee.findOne({
+    const employer = await Employer.findOne({
       where: { email: email },
     });
 
-    if (!employee) {
+    if (!employer) {
       return sendResponse(res, 400, false, "Email is incorrect", null, {
         email: "Invalid Email",
         password: "Invalid Password",
@@ -150,7 +150,7 @@ const login = async (req, res) => {
     }
 
     // Validate password
-    const validPassword = await bcrypt.compare(password, employee.password);
+    const validPassword = await bcrypt.compare(password, employer.password);
     if (!validPassword) {
       return sendResponse(res, 400, false, "Password is incorrect", null, {
         email: "Invalid Email",
@@ -159,13 +159,13 @@ const login = async (req, res) => {
     }
 
     // Clear existing tokens for the user
-    await EmployeeToken.destroy({
-      where: { employee_id: employee.employee_id },
+    await EmployerToken.destroy({
+      where: { employer_id: employer.employer_id },
     });
 
     // Generate JWT token
     const token = jwt.sign(
-      { employee_id: employee.employee_id },
+      { employer_id: employer.employer_id },
       process.env.JWT_SECRET,
       {
         expiresIn: process.env.TOKEN_EXPIRY,
@@ -177,41 +177,41 @@ const login = async (req, res) => {
     expireAt.setHours(expireAt.getHours() + parseInt(process.env.TOKEN_EXPIRY));
 
     // Save token to the UserToken table
-    await EmployeeToken.create({
-      employee_id: employee.employee_id,
+    await EmployerToken.create({
+      employer_id: employer.employer_id,
       token: token,
       expire_at: expireAt,
     });
 
-    if (!employee) {
+    if (!employer) {
       return sendResponse(res, 400, false, "Email not found", null, {
         email: "Invalid email or email not found",
       });
     }
 
     // Construct the user response without password
-    const employeeWithoutPassword = {
-      employee_id: employee.employee_id,
-      name: employee.name,
-      email: employee.email,
-      mobile_no: employee.mobile_no,
-      whatsapp_no: employee.whatsapp_no,
-      gender: employee.gender,
-      d_o_b: employee.d_o_b,
-      type_of_institute: employee.type_of_institute,
-      institution_name: employee.institution_name,
-      address: employee.address,
-      state: employee.state,
-      city: employee.city,
-      country: employee.country,
-      pincode: employee.pincode,
-      created_at: employee.created_at,
+    const employerWithoutPassword = {
+      employer_id: employer.employer_id,
+      name: employer.name,
+      email: employer.email,
+      mobile_no: employer.mobile_no,
+      whatsapp_no: employer.whatsapp_no,
+      gender: employer.gender,
+      d_o_b: employer.d_o_b,
+      type_of_institute: employer.type_of_institute,
+      institution_name: employer.institution_name,
+      address: employer.address,
+      state: employer.state,
+      city: employer.city,
+      country: employer.country,
+      pincode: employer.pincode,
+      created_at: employer.created_at,
     };
 
     // Send the response with token and user data
     return sendResponse(res, 200, true, "Login successful", {
       token,
-      employee: employeeWithoutPassword,
+      employer: employerWithoutPassword,
     });
   } catch (error) {
     console.error("Error in login function:", error);
@@ -237,7 +237,7 @@ const login = async (req, res) => {
 
 // updatePassword
 const updatePassword = async (req, res) => {
-  const employeeId = req.employee.employee_id; // Extract user ID from the authenticated user object
+  const employerId = req.employer.employer_id; // Extract user ID from the authenticated user object
   const { oldPassword, newPassword, confirmPassword } = req.body;
 
   // Validate the new password and confirm password
@@ -252,20 +252,20 @@ const updatePassword = async (req, res) => {
 
   try {
     // Find the user by ID
-    const employee = await Employee.findByPk(employeeId);
+    const employer = await Employer.findByPk(employerId);
 
-    if (!employee) {
-      return sendResponse(res, 404, false, "Employee not found");
+    if (!employer) {
+      return sendResponse(res, 404, false, "Employer not found");
     }
 
     // Check if the old password is valid
-    const validPassword = await bcrypt.compare(oldPassword, employee.password);
+    const validPassword = await bcrypt.compare(oldPassword, employer.password);
     if (!validPassword) {
       return sendResponse(res, 400, false, "Invalid old password");
     }
 
     // Check if the new password is the same as the old password
-    const isSamePassword = await bcrypt.compare(newPassword, employee.password);
+    const isSamePassword = await bcrypt.compare(newPassword, employer.password);
     if (isSamePassword) {
       return sendResponse(
         res,
@@ -279,9 +279,9 @@ const updatePassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // Update the user's password in the database
-    await Employee.update(
+    await Employer.update(
       { password: hashedPassword },
-      { where: { employee_id: employeeId } } // Ensure you are using the correct user_id field
+      { where: { employer_id: employerId } } // Ensure you are using the correct user_id field
     );
 
     sendResponse(res, 200, true, "Password updated successfully");
@@ -293,7 +293,7 @@ const updatePassword = async (req, res) => {
 
 //Update Profile
 const updateProfile = async (req, res) => {
-  const employeeId = req.employee.employee_id; // Extract user ID from the authenticated user object
+  const employerId = req.employer.employer_id; // Extract user ID from the authenticated user object
   const {
     name,
     mobile_no,
@@ -313,21 +313,21 @@ const updateProfile = async (req, res) => {
 
   try {
     // Check if the username, mobile number, or personal email already exists and belongs to a different user
-    const existingEmployee = await Employee.findOne({
+    const existingEmployer = await Employer.findOne({
       where: {
         [Op.or]: [{ email }, { mobile_no }],
-        employee_id: { [Op.ne]: employeeId }, // Exclude the current user from the check
+        employer_id: { [Op.ne]: employerId }, // Exclude the current user from the check
       },
     });
 
-    if (existingEmployee) {
+    if (existingEmployer) {
       const errors = {};
-      if (existingEmployee.email === email) {
-        errors.email = "Employee with the same email already exists";
+      if (existingEmployer.email === email) {
+        errors.email = "Employer with the same email already exists";
       }
-      if (existingEmployee.mobile_no === mobile_no) {
+      if (existingEmployer.mobile_no === mobile_no) {
         errors.mobile_no =
-          "Employee with the same mobile number already exists";
+          "Employer with the same mobile number already exists";
       }
       return sendResponse(res, 400, false, "Validation Error", null, errors);
     }
@@ -352,18 +352,18 @@ const updateProfile = async (req, res) => {
       updateData.avatar = avatar; // Add avatar to the update data if a file was uploaded
     }
 
-    await Employee.update(updateData, {
-      where: { employee_id: employeeId },
+    await Employer.update(updateData, {
+      where: { employer_id: employerId },
     });
 
     // Retrieve updated user details, explicitly excluding the password and timestamp fields
-    const employee = await Employee.findByPk(employeeId, {
+    const employer = await Employer.findByPk(employerId, {
       attributes: {
         exclude: ["password", "created_at", "updated_at", "deleted_at"],
       },
     });
 
-    sendResponse(res, 200, true, "Profile updated successfully", employee);
+    sendResponse(res, 200, true, "Profile updated successfully", employer);
   } catch (error) {
     console.error("Error in updateProfile function:", error.message); // Log the error message
     sendResponse(res, 500, false, error.message);
@@ -383,18 +383,18 @@ const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const employee = await Employee.findOne({ where: { email } });
-    if (!employee) {
-      return sendResponse(res, 404, false, "Employee not found", null, {
-        email: "Employee not found",
+    const employer = await Employer.findOne({ where: { email } });
+    if (!employer) {
+      return sendResponse(res, 404, false, "Employer not found", null, {
+        email: "Employer not found",
       });
     }
 
     const otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
     const expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
 
-    await EmployeeToken.create({
-      employee_id: employee.employee_id,
+    await EmployerToken.create({
+      employer_id: employer.employer_id,
       token: otp,
       expire_at: expireAt,
     });
@@ -437,33 +437,33 @@ const resetPassword = async (req, res) => {
   }
 
   try {
-    const employee = await Employee.findOne({ where: { email } });
-    if (!employee) {
-      return sendResponse(res, 404, false, "Employee not found", null, {
-        email: "Employee not found",
+    const employer = await Employer.findOne({ where: { email } });
+    if (!employer) {
+      return sendResponse(res, 404, false, "Employer not found", null, {
+        email: "Employer not found",
       });
     }
 
-    const employeeToken = await EmployeeToken.findOne({
+    const employerToken = await EmployerToken.findOne({
       where: {
-        employee_id: employee.employee_id,
+        employer_id: employer.employer_id,
         token: otp,
         expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
       },
     });
 
-    if (!employeeToken) {
+    if (!employerToken) {
       return sendResponse(res, 400, false, "Invalid OTP", null, {
         otp: "Invalid or expired OTP",
       });
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await Employee.update({ password: hashedPassword }, { where: { email } });
+    await Employer.update({ password: hashedPassword }, { where: { email } });
 
     // Optionally, delete the used token
-    await EmployeeToken.destroy({
-      where: { employee_id: employee.employee_id, token: otp },
+    await EmployerToken.destroy({
+      where: { employer_id: employer.employer_id, token: otp },
     });
 
     sendResponse(res, 200, true, "Password reset successfully");
@@ -483,29 +483,29 @@ const verifyEmail = async (req, res) => {
   // }
 
   try {
-    const employee = await Employee.findOne({ where: { email } });
-    if (!employee) {
+    const employer = await Employer.findOne({ where: { email } });
+    if (!employer) {
       return sendResponse(res, 404, false, "Email not found", null, {
         email: "Email not found",
       });
     }
 
-    const employeeOtp = await EmployeeOtp.findOne({
+    const employerOtp = await EmployerOtp.findOne({
       where: {
-        employee_id: employee.employee_id,
+        employer_id: employer.employer_id,
         verification_type: "Email",
         otp: otp,
         expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
       },
     });
 
-    if (!employeeOtp) {
+    if (!employerOtp) {
       return sendResponse(res, 400, false, "Invalid OTP", null, {
         otp: "Invalid or expired OTP",
       });
     }
 
-    await Employee.update({ is_email_verified: "true" }, { where: { email } });
+    await Employer.update({ is_email_verified: "true" }, { where: { email } });
 
     sendResponse(res, 200, true, "Email is verified successfully");
   } catch (error) {
@@ -524,29 +524,29 @@ const verifyMobile = async (req, res) => {
   // }
 
   try {
-    const employee = await Employee.findOne({ where: { mobile_no } });
-    if (!employee) {
+    const employer = await Employer.findOne({ where: { mobile_no } });
+    if (!employer) {
       return sendResponse(res, 404, false, "Mobile not found", null, {
         email: "Mobile no not found",
       });
     }
 
-    const employeeOtp = await EmployeeOtp.findOne({
+    const employerOtp = await EmployerOtp.findOne({
       where: {
-        employee_id: employee.employee_id,
+        employer_id: employer.employer_id,
         verfiication_type: "Moble",
         otp: otp,
         expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
       },
     });
 
-    if (!employeeOtp) {
+    if (!employerOtp) {
       return sendResponse(res, 400, false, "Invalid OTP", null, {
         otp: "Invalid or expired OTP",
       });
     }
 
-    await Employee.update(
+    await Employer.update(
       { is_mobile_no_verified: "true" },
       { where: { mobile_no } }
     );
@@ -570,10 +570,10 @@ const logout = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Delete the token from the UserToken table
-    await EmployeeToken.destroy({
+    await EmployerToken.destroy({
       where: {
         token: token,
-        employee_id: decoded.employee_id,
+        employer_id: decoded.employer_id,
       },
     });
 
