@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const authController = require("../../controllers/employee/authController");
-const authMiddleware = require("../../middleware/employee/authMiddleware");
+const authController = require("../../controllers/employer/authController");
+const authMiddleware = require("../../middleware/employer/authMiddleware");
 const {
   registrationValidation,
   loginValidation,
@@ -11,11 +11,11 @@ const {
   resetPasswordValidation,
   verifyEmailValidation,
   verifyMobileValidation,
-} = require("../../validations/employee/authValidation");
+} = require("../../validations/employer/authValidation");
 const upload = require("../../middleware/multerMiddleware");
 
 // Registration
-router.post("/register", authController.register);
+router.post("/register", registrationValidation, authController.register);
 
 // login
 router.post("/login", loginValidation, authController.login);

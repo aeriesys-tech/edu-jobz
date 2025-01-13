@@ -1,5 +1,5 @@
 // const { AdminLog } = require("../models");
-const { EmployeeLog } = require("../../models");
+const { EmployerLog } = require("../../models");
 const sendResponse = async (
   res,
   statusCode,
@@ -17,8 +17,8 @@ const sendResponse = async (
   if (errors !== null) response.errors = errors;
 
   // Prepare the API log details
-  const employeeApiLog = {
-    employee_id: res.locals.admin ? res.locals.employee.id : null, // Retrieve admin ID from locals
+  const employerApiLog = {
+    employer_id: res.locals.admin ? res.locals.employer.id : null, // Retrieve admin ID from locals
     api_name: res.req.originalUrl, // API endpoint
     api_request: JSON.stringify(res.req.body), // Request payload
     status: statusCode,
@@ -29,10 +29,10 @@ const sendResponse = async (
 
   try {
     // Store the log in the database
-    if (EmployeeLog && typeof EmployeeLog.create === "function") {
-      await EmployeeLog.create(employeeApiLog);
+    if (EmployerLog && typeof EmployerLog.create === "function") {
+      await EmployerLog.create(employerApiLog);
     } else {
-      console.warn("EmployeeLog model is not defined or not initialized.");
+      console.warn("EmployerLog model is not defined or not initialized.");
     }
   } catch (error) {
     console.error("Failed to log API request:", error.message || error);

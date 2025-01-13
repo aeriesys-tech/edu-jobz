@@ -1,19 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-  const EmployeeOtp = sequelize.define(
-    "EmployeeOtp",
+  const EmployerOtp = sequelize.define(
+    "EmployerOtp",
     {
-      employee_otp_id: {
+      employer_otp_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      employee_id: {
+      employer_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         index: true,
         references: {
-          model: "candidates",
-          key: "candidate_id",
+          model: "employers",
+          key: "employer_id",
         },
       },
       verification_type: {
@@ -42,18 +42,18 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      modelName: "EmployeeOtp",
-      tableName: "employee_otps",
+      modelName: "EmployerOtp",
+      tableName: "employer_otps",
       underscored: true, // This will create columns like `created_at` and `updated_at`
       timestamps: false,
     }
   );
 
-  EmployeeOtp.associate = (models) => {
-    EmployeeOtp.belongsTo(models.Employee, {
-      foreignKey: "employee_id",
+  EmployerOtp.associate = (models) => {
+    EmployerOtp.belongsTo(models.Employer, {
+      foreignKey: "employer_id",
     });
   };
 
-  return EmployeeOtp;
+  return EmployerOtp;
 };

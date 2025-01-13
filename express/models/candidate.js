@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       modelName: "Candidate",
-      tableName: "Candidates",
+      tableName: "candidates",
       paranoid: true, // Enables soft deletes
       underscored: true,
     }
