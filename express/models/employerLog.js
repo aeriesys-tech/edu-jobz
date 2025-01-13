@@ -1,19 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-  const EmployeeLog = sequelize.define(
-    "EmployeeLog",
+  const EmployerLog = sequelize.define(
+    "EmployerLog",
     {
-      employee_log_id: {
+      employer_log_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      employee_id: {
+      employer_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
         index: true,
         references: {
-          model: "employees",
-          key: "employee_id",
+          model: "employers",
+          key: "employer_id",
         },
       },
       api_name: {
@@ -49,18 +49,18 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      modelName: "EmployeeLog",
-      tableName: "Employee_logs",
+      modelName: "EmployerLog",
+      tableName: "employer_logs",
       timestamps: false,
       underscored: true, // This will create columns like `created_at` and `updated_at`
     }
   );
 
-  EmployeeLog.associate = (models) => {
-    EmployeeLog.belongsTo(models.Employee, {
-      foreignKey: "employee_id",
+  EmployerLog.associate = (models) => {
+    EmployerLog.belongsTo(models.Employer, {
+      foreignKey: "employer_id",
     });
   };
 
-  return EmployeeLog;
+  return EmployerLog;
 };

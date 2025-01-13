@@ -1,120 +1,128 @@
 "use strict";
-/** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Employees", {
-      employee_id: {
-        allowNull: false,
-        autoIncrement: true,
+const { Model } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
+  const Employer = sequelize.define(
+    "Employer",
+    {
+      employer_id: {
+        type: DataTypes.INTEGER,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        autoIncrement: true,
       },
       name: {
-        type: Sequelize.STRING(100),
+        type: DataTypes.STRING(100),
         allowNull: false,
         index: true,
       },
       email: {
-        type: Sequelize.STRING(120),
+        type: DataTypes.STRING(120),
         allowNull: false,
         unique: true,
         index: true,
       },
       password: {
-        type: Sequelize.STRING(120),
+        type: DataTypes.STRING(250),
         allowNull: false,
       },
       mobile_no: {
-        type: Sequelize.STRING(20),
+        type: DataTypes.STRING(20),
         allowNull: false,
         unique: true,
         index: true,
       },
       whatsapp_no: {
-        type: Sequelize.STRING(20),
-        allowNull: false,
+        type: DataTypes.STRING(20),
+        allowNull: true,
         unique: true,
         index: true,
       },
       is_email_verified: {
-        type: Sequelize.BOOLEAN(false),
+        type: DataTypes.BOOLEAN(false),
         allowNull: true,
         index: true,
+        defaultValue: false,
       },
       is_mobile_no_verified: {
-        type: Sequelize.BOOLEAN(false),
+        type: DataTypes.BOOLEAN(false),
         allowNull: true,
         index: true,
+        defaultValue: false,
       },
       gender: {
-        type: Sequelize.STRING(20),
+        type: DataTypes.STRING(20),
         allowNull: true,
         index: true,
       },
       d_o_b: {
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         allowNull: false,
         index: true,
       },
       type_of_institute: {
-        type: Sequelize.STRING(20),
+        type: DataTypes.STRING(20),
         allowNull: true,
         index: true,
       },
       institution_name: {
-        type: Sequelize.STRING(500),
+        type: DataTypes.STRING(500),
         allowNull: false,
         index: true,
       },
       address: {
-        type: Sequelize.TEXT,
+        type: DataTypes.TEXT,
         allowNull: true,
         index: true,
       },
       state: {
-        type: Sequelize.STRING(100),
+        type: DataTypes.STRING(100),
         allowNull: true,
         index: true,
       },
       city: {
-        type: Sequelize.STRING(100),
+        type: DataTypes.STRING(100),
         allowNull: true,
         index: true,
       },
       country: {
-        type: Sequelize.STRING(100),
+        type: DataTypes.STRING(100),
         allowNull: true,
         index: true,
       },
       pincode: {
-        type: Sequelize.STRING(10),
+        type: DataTypes.STRING(10),
         allowNull: false,
         index: true,
       },
+
       avatar: {
-        type: Sequelize.STRING(50),
-        allowNull: false,
-        index: true,
-      },
-      created_at: {
+        type: DataTypes.STRING(50),
         allowNull: true,
+        defaultValue: "avatar.png",
+      },
+
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: DataTypes.NOW,
         index: true,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
       },
       updated_at: {
+        type: DataTypes.DATE,
         allowNull: true,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        defaultValue: DataTypes.NOW,
       },
       deleted_at: {
+        type: DataTypes.DATE,
         allowNull: true,
         index: true,
-        type: Sequelize.DATE,
       },
-    });
-  },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Emplyees");
-  },
+    },
+    {
+      modelName: "Employer",
+      tableName: "employers",
+      paranoid: true, // Enables soft deletes
+      underscored: true,
+    }
+  );
+  return Employer;
 };

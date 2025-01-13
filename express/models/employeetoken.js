@@ -1,19 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-  const EmployeeToken = sequelize.define(
-    "EmployeeToken",
+  const EmployerToken = sequelize.define(
+    "EmployerToken",
     {
-      employee_token_id: {
+      employer_token_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      employee_id: {
+      employer_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         index: true,
         references: {
-          model: "employees",
-          key: "employee_id",
+          model: "employers",
+          key: "employer_id",
         },
       },
       token: {
@@ -33,17 +33,17 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      modelName: "EmployeeToken",
-      tableName: "employee_tokens",
+      modelName: "EmployerToken",
+      tableName: "employer_tokens",
       timestamps: false,
       underscored: true, // This will create columns like `created_at` and `updated_at`
     }
   );
 
-  EmployeeToken.associate = (models) => {
-    EmployeeToken.belongsTo(models.Employee, {
-      foreignKey: "employee_id",
+  EmployerToken.associate = (models) => {
+    EmployerToken.belongsTo(models.Employer, {
+      foreignKey: "employer_id",
     });
   };
-  return EmployeeToken;
+  return EmployerToken;
 };

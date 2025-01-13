@@ -2,19 +2,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("employee_tokens", {
-      employee_token_id: {
+    await queryInterface.createTable("employer_tokens", {
+      employer_token_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      employee_id: {
+      employer_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "Employees",
-          key: "employee_id",
+          model: "employers",
+          key: "employer_id",
         },
       },
       token: {
@@ -35,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("employee_tokens");
+    await queryInterface.dropTable("employer_tokens");
   },
 };
