@@ -8,6 +8,7 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 // const auth = require("../../services/authService");
 const passport = require("passport");
+const { sendEmail } = require("../../services/emailService");
 
 // Registration
 const register = async (req, res) => {
@@ -66,11 +67,12 @@ We received a request for Email verification for your account. Please use the On
 
 OTP: ${otp}
 
-This OTP is valid for the next 15 minutes. If you did not request a password reset, please ignore this email.
+This OTP is valid for the next 15 minutes. If you did not request this, please ignore this email.
 
 Thank you,
 Aeriesys Team`,
     };
+
     const mobile_otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
     const mobile_expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
 
@@ -83,17 +85,10 @@ Aeriesys Team`,
       expire_at: mobile_expireAt,
     });
 
-    await verify_email(mailOptions);
+    // Send email
+    await sendEmail(mailOptions);
 
-    // await userotp.sendOtp(newCandidate.mobile_no, mobile_otp);
-
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //   if (error) {
-    //     return sendResponse(res, 500, false, error.message);
-    //   }
-    //   sendResponse(res, 200, true, "Email verification email sent");
-    // });
-
+    // Call a function to send mobile OTP (assume it's implemented elsewhere)
     await send_mobile_otp(newCandidate.mobile_no, mobile_otp);
 
     return sendResponse(
@@ -165,14 +160,14 @@ const login = async (req, res) => {
       });
     }
 
-    // Construct the user response without password
-    const candidateWithoutPassword = {
-      candidate_id: candidate.candidate_id,
-      name: candidate.name,
-      email: candidate.email,
-      mobile_no: candidate.mobile_no,
-      created_at: candidate.created_at,
-    };
+    const candidateWithoutPassword = await Candidate.findOne({
+      where: {
+        candidate_id: candidate.candidate_id,
+      },
+      attributes: {
+        exclude: ["password"],
+      },
+    });
 
     // Send the response with token and user data
     return sendResponse(res, 200, true, "Login successful", {
