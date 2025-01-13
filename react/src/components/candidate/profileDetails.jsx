@@ -25,7 +25,7 @@ function Details() {
                                                             class="text-primary small">Abu Bin Ishtiyak</strong></h3>
                                                     </div>
                                                     <div class="nk-block-head-content"><a href="students.html"
-                                                        class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em
+                                                        class="btn btn-outline-light  d-none d-sm-inline-flex"><em
                                                             class="icon ni ni-arrow-left"></em><span>Back</span></a><a
                                                                 href="students.html"
                                                                 class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em
@@ -42,7 +42,7 @@ function Details() {
                                                                         <div
                                                                             class="nk-block-between d-flex justify-content-between">
                                                                             <div class="nk-block-head-content">
-                                                                                <h4 class="nk-block-title">Students Information</h4>
+                                                                                <h4 class="nk-block-title">Informations</h4>
                                                                                 <div class="nk-block-des">
                                                                                     <p>Basic info, like students name and address,
                                                                                         that you use on Nio Platform.</p>
@@ -288,7 +288,7 @@ function Details() {
                                                             <div class="card-inner-group" data-simplebar>
                                                                 <div class="card-inner">
                                                                     <div class="user-card">
-                                                                        <div class="user-avatar bg-primary"><span>AB</span></div>
+                                                                        <div class="user-avatar "><span>AB</span></div>
                                                                         <div class="user-info"><span class="lead-text">Abu Bin
                                                                             Ishtiyak</span><span
                                                                                 class="sub-text">info@softnio.com</span></div>
@@ -309,12 +309,12 @@ function Details() {
                                                                         <li><a class="active" href="students-details.html"><em
                                                                             class="icon ni ni-user-fill-c"></em><span>Personal
                                                                                 Infomation</span></a></li>
-                                                                        <li><a href="students-details-courses.html"><em
-                                                                            class="icon ni ni-book-fill"></em><span>Courses</span></a>
+                                                                        <li><Link to="#"><em
+                                                                            class="icon ni ni-book-fill"></em><span>Courses</span></Link>
                                                                         </li>
-                                                                        <li><a href="students-details-activity.html"><em
+                                                                        <li><Link to="#"><em
                                                                             class="icon ni ni-activity-round-fill"></em><span>Account
-                                                                                Activity</span></a></li>
+                                                                                Activity</span></Link></li>
                                                                     </ul>
                                                                 </div>
                                                                 <div class="card-inner">

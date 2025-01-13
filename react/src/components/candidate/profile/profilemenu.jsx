@@ -16,7 +16,7 @@ function MenuBar() {
                 <div class="card-inner-group" data-simplebar>
                     <div class="card-inner">
                         <div class="user-card">
-                            <div class="user-avatar bg-primary"><span>AB</span></div>
+                            <div class="user-avatar"><span>AB</span></div>
                             <div class="user-info"><span class="lead-text">Abu Bin
                                 Ishtiyak</span><span
                                     class="sub-text">info@softnio.com</span></div>

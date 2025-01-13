@@ -42,7 +42,7 @@ function ProfileNotification() {
                                                                 <div class="form-group">
                                                                     <div class="form-control-wrap"><input type="text"
                                                                             class="form-control" id="site-name"
-                                                                            value="http://www.abc.com"/></div>
+                                                                            placeholder="http://www.abc.com"/></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -57,7 +57,7 @@ function ProfileNotification() {
                                                                 <div class="form-group">
                                                                     <div class="form-control-wrap"><input type="text"
                                                                             class="form-control" id="site-email"
-                                                                            value="info@softnio.com"/></div>
+                                                                            placeholder="info@softnio.com"/></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -72,7 +72,7 @@ function ProfileNotification() {
                                                                 <div class="form-group">
                                                                     <div class="form-control-wrap"><input type="text"
                                                                             class="form-control" id="site-name"
-                                                                            value="info.twitter"/></div>
+                                                                        placeholder="info.twitter"/></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -87,7 +87,7 @@ function ProfileNotification() {
                                                                 <div class="form-group">
                                                                     <div class="form-control-wrap"><input type="text"
                                                                             class="form-control" id="site-email"
-                                                                            value="info@softnio.com"/></div>
+                                                                            placeholder="info@softnio.com"/></div>
                                                                 </div>
                                                             </div>
                                                         </div>

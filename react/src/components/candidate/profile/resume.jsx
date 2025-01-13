@@ -3,6 +3,8 @@ import SideBar from "../dashboardslidebar"
 import DashFooter from "../footer"
 import DashHeader from "../header"
 import MenuBar from "./profilemenu"
+import React, { useRef, useEffect } from "react"
+
 
 function Resume() {
     $('#exampleModal').on('show.bs.modal', function (event) {
@@ -12,6 +14,47 @@ function Resume() {
         modal.find('.modal-title').text('New message to ' + recipient)
         modal.find('.modal-body input').val(recipient)
     })
+
+    const fileDropContainer = useRef(null);
+    const fileInput = useRef(null);
+
+    useEffect(() => {
+        const container = fileDropContainer.current;
+
+        const handleDragOver = (event) => {
+            event.preventDefault();
+            container.classList.add('drag-over');
+        };
+
+        const handleDragLeave = () => {
+            container.classList.remove('drag-over');
+        };
+
+        const handleDrop = (event) => {
+            event.preventDefault();
+            container.classList.remove('drag-over');
+            const files = event.dataTransfer.files;
+            handleFileUpload(files);
+        };
+
+        container.addEventListener('dragover', handleDragOver);
+        container.addEventListener('dragleave', handleDragLeave);
+        container.addEventListener('drop', handleDrop);
+
+        return () => {
+            container.removeEventListener('dragover', handleDragOver);
+            container.removeEventListener('dragleave', handleDragLeave);
+            container.removeEventListener('drop', handleDrop);
+        };
+    }, []);
+
+    const handleFileUpload = (files) => {
+        if (files.length > 0) {
+            alert(`File uploaded: ${files[0].name}`);
+        } else {
+            alert('No file selected');
+        }
+    };
 
     return (
         <>
@@ -59,268 +102,7 @@ function Resume() {
                                                                                     <div class="nk-files-group">
 
                                                                                         <div class="nk-files-list">
-                                                                                            <div class="nk-file-item nk-file">
-                                                                                                <div class="nk-file-info">
-                                                                                                    <div class="nk-file-title">
-                                                                                                        <div class="nk-file-icon"><span
-                                                                                                            class="nk-file-icon-type"><svg
-                                                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                                                viewBox="0 0 72 72">
-                                                                                                                <g>
-                                                                                                                    <rect x="32"
-                                                                                                                        y="16"
-                                                                                                                        width="28"
-                                                                                                                        height="15"
-                                                                                                                        rx="2.5"
-                                                                                                                        ry="2.5"
-                                                                                                                        style={{ fill: "#f29611" }} />
-                                                                                                                    <path
-                                                                                                                        d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
-                                                                                                                        style={{ fill: "#ffb32c" }} />
-                                                                                                                    <path
-                                                                                                                        d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z"
-                                                                                                                        style={{ fill: "#f2a222" }} />
-                                                                                                                </g>
-                                                                                                            </svg></span>
-                                                                                                        </div>
-                                                                                                        <div class="nk-file-name">
-                                                                                                            <div
-                                                                                                                class="nk-file-name-text">
-                                                                                                                <a href="#"
-                                                                                                                    class="title">UI
-                                                                                                                    Design</a>
 
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <ul class="nk-file-desc">
-                                                                                                        <li class="date">Today</li>
-                                                                                                        <li class="size">4.5 MB</li>
-                                                                                                        <li class="members">3 Members
-                                                                                                        </li>
-                                                                                                    </ul>
-                                                                                                </div>
-                                                                                                <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
-                                                                                                        class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
-                                                                                                        data-bs-toggle="dropdown"><em
-                                                                                                            class="icon ni ni-more-h"></em></a>
-                                                                                                        <div
-                                                                                                            class="dropdown-menu dropdown-menu-end">
-                                                                                                            <ul
-                                                                                                                class="link-list-plain no-bdr">
-
-                                                                                                                <li><a href="#"
-                                                                                                                    class="file-dl-toast"><em
-                                                                                                                        class="icon ni ni-download"></em><span>Download</span></a>
-                                                                                                                </li>
-                                                                                                                <li><a href="#"><em
-                                                                                                                    class="icon ni ni-pen"></em><span>Rename</span></a>
-                                                                                                                </li>
-                                                                                                                <li><a href="#"><em
-                                                                                                                    class="icon ni ni-trash"></em><span>Delete</span></a>
-                                                                                                                </li>
-                                                                                                            </ul>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="nk-file-item nk-file">
-                                                                                                <div class="nk-file-info">
-                                                                                                    <div class="nk-file-title">
-                                                                                                        <div class="nk-file-icon"><span
-                                                                                                            class="nk-file-icon-type"><svg
-                                                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                                                viewBox="0 0 72 72">
-                                                                                                                <g>
-                                                                                                                    <rect x="32"
-                                                                                                                        y="16"
-                                                                                                                        width="28"
-                                                                                                                        height="15"
-                                                                                                                        rx="2.5"
-                                                                                                                        ry="2.5"
-                                                                                                                        style={{ fill: "#f29611" }} />
-                                                                                                                    <path
-                                                                                                                        d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
-                                                                                                                        style={{ fill: "#ffb32c" }} />
-                                                                                                                    <path
-                                                                                                                        d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z"
-                                                                                                                        style={{ fill: "#f2a222" }} />
-                                                                                                                </g>
-                                                                                                            </svg></span></div>
-                                                                                                        <div class="nk-file-name">
-                                                                                                            <div
-                                                                                                                class="nk-file-name-text">
-                                                                                                                <a href="#"
-                                                                                                                    class="title">Proposal</a>
-
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <ul class="nk-file-desc">
-                                                                                                        <li class="date">Today</li>
-                                                                                                        <li class="size">4.5 MB</li>
-                                                                                                        <li class="members">3 Members
-                                                                                                        </li>
-                                                                                                    </ul>
-                                                                                                </div>
-                                                                                                <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
-                                                                                                        class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
-                                                                                                        data-bs-toggle="dropdown"><em
-                                                                                                            class="icon ni ni-more-h"></em></a>
-                                                                                                        <div
-                                                                                                            class="dropdown-menu dropdown-menu-end">
-                                                                                                            <ul
-                                                                                                                class="link-list-plain no-bdr">
-
-                                                                                                                <li><a href="#"
-                                                                                                                    class="file-dl-toast"><em
-                                                                                                                        class="icon ni ni-download"></em><span>Download</span></a>
-                                                                                                                </li>
-                                                                                                                <li><a href="#"><em
-                                                                                                                    class="icon ni ni-pen"></em><span>Rename</span></a>
-                                                                                                                </li>
-                                                                                                                <li><a href="#"><em
-                                                                                                                    class="icon ni ni-trash"></em><span>Delete</span></a>
-                                                                                                                </li>
-                                                                                                            </ul>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="nk-file-item nk-file">
-                                                                                                <div class="nk-file-info">
-                                                                                                    <div class="nk-file-title">
-                                                                                                        <div class="nk-file-icon"><span
-                                                                                                            class="nk-file-icon-type"><svg
-                                                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                                                viewBox="0 0 72 72">
-                                                                                                                <g>
-                                                                                                                    <rect x="32"
-                                                                                                                        y="16"
-                                                                                                                        width="28"
-                                                                                                                        height="15"
-                                                                                                                        rx="2.5"
-                                                                                                                        ry="2.5"
-                                                                                                                        style={{ fill: "#f29611" }} />
-                                                                                                                    <path
-                                                                                                                        d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
-                                                                                                                        style={{ fill: "#ffb32c" }} />
-                                                                                                                    <path
-                                                                                                                        d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z"
-                                                                                                                        style={{ fill: "#f2a222" }} />
-                                                                                                                    <path
-                                                                                                                        d="M29.6309,37.36a3.0236,3.0236,0,0,1-.86-2.39A4.3748,4.3748,0,0,1,32.9961,31h.0078a4.36,4.36,0,0,1,4.22,3.9121,3.0532,3.0532,0,0,1-.8545,2.4482A4.4158,4.4158,0,0,1,33.23,38.53c-.0771,0-.1533-.002-.23-.0049A4.519,4.519,0,0,1,29.6309,37.36ZM43.4668,40.1a1,1,0,1,0-.9336,1.77c.7207.38,1.4658,2.126,1.4668,4.39v1.7256a1,1,0,0,0,2,0V46.26C45.999,43.33,45.0049,40.9119,43.4668,40.1ZM40.165,37.3816c-.1445.084-.29.168-.4316.2549a1,1,0,0,0,.5215,1.8535.9887.9887,0,0,0,.52-.1465c.1289-.0781.2607-.1543.3916-.23a4.2311,4.2311,0,0,0,2.1465-2.124.9839.9839,0,0,0,.0313-.1045A3.8411,3.8411,0,0,0,40.5,32.52a1,1,0,1,0-.4922,1.9395,1.8773,1.8773,0,0,1,1.4,1.9092A2.835,2.835,0,0,1,40.165,37.3816ZM36.5,41h-7c-2.5234,0-4.5,2.7822-4.5,6.333V48.5a.8355.8355,0,0,0,.0588.2914.9731.9731,0,0,0,.3508.4946C26.4646,50.2812,29.4614,51,33,51s6.5353-.7187,7.59-1.7139a.9726.9726,0,0,0,.3509-.4949A.8361.8361,0,0,0,41,48.5V47.333C41,43.7822,39.0234,41,36.5,41Z"
-                                                                                                                        style={{ fill: "#c67424" }} />
-                                                                                                                </g>
-                                                                                                            </svg></span></div>
-                                                                                                        <div class="nk-file-name">
-                                                                                                            <div
-                                                                                                                class="nk-file-name-text">
-                                                                                                                <a href="#"
-                                                                                                                    class="title">Projects</a>
-
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <ul class="nk-file-desc">
-                                                                                                        <li class="date">Today</li>
-                                                                                                        <li class="size">235 KB</li>
-                                                                                                        <li class="members">3 Members
-                                                                                                        </li>
-                                                                                                    </ul>
-                                                                                                </div>
-                                                                                                <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
-                                                                                                        class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
-                                                                                                        data-bs-toggle="dropdown"><em
-                                                                                                            class="icon ni ni-more-h"></em></a>
-                                                                                                        <div
-                                                                                                            class="dropdown-menu dropdown-menu-end">
-                                                                                                            <ul
-                                                                                                                class="link-list-plain no-bdr">
-
-                                                                                                                <li><a href="#"
-                                                                                                                    class="file-dl-toast"><em
-                                                                                                                        class="icon ni ni-download"></em><span>Download</span></a>
-                                                                                                                </li>
-                                                                                                                <li><a href="#"><em
-                                                                                                                    class="icon ni ni-pen"></em><span>Rename</span></a>
-                                                                                                                </li>
-                                                                                                                <li><a href="#"><em
-                                                                                                                    class="icon ni ni-trash"></em><span>Delete</span></a>
-                                                                                                                </li>
-                                                                                                            </ul>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="nk-file-item nk-file">
-                                                                                                <div class="nk-file-info">
-                                                                                                    <div class="nk-file-title">
-                                                                                                        <div class="nk-file-icon"><span
-                                                                                                            class="nk-file-icon-type"><svg
-                                                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                                                viewBox="0 0 72 72">
-                                                                                                                <g>
-                                                                                                                    <rect x="32"
-                                                                                                                        y="16"
-                                                                                                                        width="28"
-                                                                                                                        height="15"
-                                                                                                                        rx="2.5"
-                                                                                                                        ry="2.5"
-                                                                                                                        style={{ fill: "#f29611" }} />
-                                                                                                                    <path
-                                                                                                                        d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
-                                                                                                                        style={{ fill: "#ffb32c" }} />
-                                                                                                                    <path
-                                                                                                                        d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z"
-                                                                                                                        style={{ fill: "#f2a222" }} />
-                                                                                                                </g>
-                                                                                                            </svg></span></div>
-                                                                                                        <div class="nk-file-name">
-                                                                                                            <div
-                                                                                                                class="nk-file-name-text">
-                                                                                                                <a href="#"
-                                                                                                                    class="title">2019
-                                                                                                                    Projects</a>
-
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <ul class="nk-file-desc">
-                                                                                                        <li class="date">03 May</li>
-                                                                                                        <li class="size">235 KB</li>
-                                                                                                        <li class="members">3 Members
-                                                                                                        </li>
-                                                                                                    </ul>
-                                                                                                </div>
-                                                                                                <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
-                                                                                                        class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
-                                                                                                        data-bs-toggle="dropdown"><em
-                                                                                                            class="icon ni ni-more-h"></em></a>
-                                                                                                        <div
-                                                                                                            class="dropdown-menu dropdown-menu-end">
-                                                                                                            <ul
-                                                                                                                class="link-list-plain no-bdr">
-
-                                                                                                                <li><a href="#"
-                                                                                                                    class="file-dl-toast"><em
-                                                                                                                        class="icon ni ni-download"></em><span>Download</span></a>
-                                                                                                                </li>
-                                                                                                                <li><a href="#"><em
-                                                                                                                    class="icon ni ni-pen"></em><span>Rename</span></a>
-                                                                                                                </li>
-                                                                                                                <li><a href="#"><em
-                                                                                                                    class="icon ni ni-trash"></em><span>Delete</span></a>
-                                                                                                                </li>
-                                                                                                            </ul>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
                                                                                             <div class="nk-file-item nk-file">
                                                                                                 <div class="nk-file-info">
                                                                                                     <div class="nk-file-title">
@@ -344,7 +126,7 @@ function Resume() {
                                                                                                         <div class="nk-file-name">
                                                                                                             <div
                                                                                                                 class="nk-file-name-text">
-                                                                                                                <a href="#"
+                                                                                                                <a to="#"
                                                                                                                     class="title">Database.xlsx</a>
 
                                                                                                             </div>
@@ -358,7 +140,7 @@ function Resume() {
                                                                                                     </ul>
                                                                                                 </div>
                                                                                                 <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
+                                                                                                    <div class="dropdown"><a to="#"
                                                                                                         class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
                                                                                                         data-bs-toggle="dropdown"><em
                                                                                                             class="icon ni ni-more-h"></em></a>
@@ -367,14 +149,14 @@ function Resume() {
                                                                                                             <ul
                                                                                                                 class="link-list-plain no-bdr">
 
-                                                                                                                <li><a href="#"
+                                                                                                                <li><a to="#"
                                                                                                                     class="file-dl-toast"><em
                                                                                                                         class="icon ni ni-download"></em><span>Download</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-pen"></em><span>Rename</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-trash"></em><span>Delete</span></a>
                                                                                                                 </li>
                                                                                                             </ul>
@@ -439,7 +221,7 @@ function Resume() {
                                                                                                         <div class="nk-file-name">
                                                                                                             <div
                                                                                                                 class="nk-file-name-text">
-                                                                                                                <a href="#"
+                                                                                                                <a to="#"
                                                                                                                     class="title">dashlite...1.2.zip</a>
 
                                                                                                             </div>
@@ -453,7 +235,7 @@ function Resume() {
                                                                                                     </ul>
                                                                                                 </div>
                                                                                                 <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
+                                                                                                    <div class="dropdown"><a to="#"
                                                                                                         class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
                                                                                                         data-bs-toggle="dropdown"><em
                                                                                                             class="icon ni ni-more-h"></em></a>
@@ -462,14 +244,14 @@ function Resume() {
                                                                                                             <ul
                                                                                                                 class="link-list-plain no-bdr">
 
-                                                                                                                <li><a href="#"
+                                                                                                                <li><a to="#"
                                                                                                                     class="file-dl-toast"><em
                                                                                                                         class="icon ni ni-download"></em><span>Download</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-pen"></em><span>Rename</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-trash"></em><span>Delete</span></a>
                                                                                                                 </li>
                                                                                                             </ul>
@@ -534,7 +316,7 @@ function Resume() {
                                                                                                         <div class="nk-file-name">
                                                                                                             <div
                                                                                                                 class="nk-file-name-text">
-                                                                                                                <a href="#"
+                                                                                                                <a to="#"
                                                                                                                     class="title">covstats.zip</a>
 
                                                                                                             </div>
@@ -548,7 +330,7 @@ function Resume() {
                                                                                                     </ul>
                                                                                                 </div>
                                                                                                 <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
+                                                                                                    <div class="dropdown"><a to="#"
                                                                                                         class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
                                                                                                         data-bs-toggle="dropdown"><em
                                                                                                             class="icon ni ni-more-h"></em></a>
@@ -557,14 +339,14 @@ function Resume() {
                                                                                                             <ul
                                                                                                                 class="link-list-plain no-bdr">
 
-                                                                                                                <li><a href="#"
+                                                                                                                <li><a to="#"
                                                                                                                     class="file-dl-toast"><em
                                                                                                                         class="icon ni ni-download"></em><span>Download</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-pen"></em><span>Rename</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-trash"></em><span>Delete</span></a>
                                                                                                                 </li>
                                                                                                             </ul>
@@ -622,7 +404,7 @@ function Resume() {
                                                                                                         <div class="nk-file-name">
                                                                                                             <div
                                                                                                                 class="nk-file-name-text">
-                                                                                                                <a href="#"
+                                                                                                                <a to="#"
                                                                                                                     class="title">Price
                                                                                                                     List.doc</a>
 
@@ -637,7 +419,7 @@ function Resume() {
                                                                                                     </ul>
                                                                                                 </div>
                                                                                                 <div class="nk-file-actions">
-                                                                                                    <div class="dropdown"><a href="#"
+                                                                                                    <div class="dropdown"><a to="#"
                                                                                                         class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
                                                                                                         data-bs-toggle="dropdown"><em
                                                                                                             class="icon ni ni-more-h"></em></a>
@@ -646,14 +428,14 @@ function Resume() {
                                                                                                             <ul
                                                                                                                 class="link-list-plain no-bdr">
 
-                                                                                                                <li><a href="#"
+                                                                                                                <li><a to="#"
                                                                                                                     class="file-dl-toast"><em
                                                                                                                         class="icon ni ni-download"></em><span>Download</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-pen"></em><span>Rename</span></a>
                                                                                                                 </li>
-                                                                                                                <li><a href="#"><em
+                                                                                                                <li><a to="#"><em
                                                                                                                     class="icon ni ni-trash"></em><span>Delete</span></a>
                                                                                                                 </li>
                                                                                                             </ul>
@@ -673,7 +455,7 @@ function Resume() {
                                                             </div>
                                                             <div class="modal fade" tabindex="-1" role="dialog" id="file-upload">
                                                                 <div class="modal-dialog modal-md" role="document">
-                                                                    <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em
+                                                                    <div class="modal-content"><a to="#" class="close" data-bs-dismiss="modal"><em
                                                                         class="icon ni ni-cross-sm"></em></a>
 
                                                                         <div class="modal-body modal-body-md">
@@ -689,14 +471,20 @@ function Resume() {
                                                                                     </select>
                                                                                 </div>
 
-                                                                                <div class="upload-zone small bg-lighter">
-                                                                                    <div class="file-area">
-                                                                                        <input type="file" />
-                                                                                        <div class="file-dummy">
-                                                                                            <span >Click to select a file, or drag it here</span>
+                                                                                <div
+                                                                                    className="file-drop-container"
+                                                                                    ref={fileDropContainer}
+                                                                                    onClick={() => fileInput.current.click()}
+                                                                                >
+                                                                                    <p>Drag and drop a file here, or click to select a file</p>
+                                                                                    <input
+                                                                                        type="file"
+                                                                                        ref={fileInput}
+                                                                                        style={{ display: 'none' }}
+                                                                                        onChange={() => handleFileUpload(fileInput.current.files)}
+                                                                                    />
+                                                                                </div>
 
-                                                                                        </div>
-                                                                                    </div>  </div>
                                                                             </div>
                                                                             <div class="nk-modal-action justify-end">
                                                                                 <ul class="btn-toolbar g-4 align-center">

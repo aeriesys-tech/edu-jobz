@@ -178,10 +178,10 @@ function ProfileSettings() {
                                                                                                             <div class="col-sm-12">
                                                                                                                 <h5>New password must contain:</h5>
                                                                                                                 <ul class="list-group list-group-flush">
-                                                                                                                    <li class="list-group-item"><i class="ti ti-circle-check text-success f-8 me-2"></i> At least 8 characters</li>
+                                                                                                                    <li class="list-group-item"><em class="icon ni ni-check-thick "></em> At least 8 characters</li>
 
                                                                                                                     <li class="list-group-item"
-                                                                                                                    ><i class="ti ti-circle-check text-success f-8 me-2"></i> At least 1 uppercase letter(A-Z)</li
+                                                                                                                    ><em class="icon ni ni-check-thick "></em> At least 1 uppercase letter(A-Z)</li
                                                                                                                     >
 
                                                                                                                 </ul>
@@ -217,7 +217,7 @@ function ProfileSettings() {
                                                                                     using app. You can receive this code by in
                                                                                     mobile app. </p>
                                                                             </div>
-                                                                            <div class="nk-block-actions"><a href="#"
+                                                                            <div class="nk-block-actions"><a to="#"
                                                                                 class="btn btn-primary">Disable</a></div>
                                                                         </div>
                                                                     </div>
