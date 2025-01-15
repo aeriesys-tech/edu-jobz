@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import logo from '../../assets/img/logo.png'
@@ -6,6 +7,84 @@ import login from '../../assets/img/bg3.jpg'
 
 
 function Register() {
+    // const [name, setName] = useState("");
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    // const [mobile_no, setMobile] = useState("");
+    // const [errors, setErrors] = useState({});
+    // const [loading, setLoading] = useState(false);
+    // const navigate = useNavigate();
+
+    // const emailRef = useRef(null);
+    // const passwordRef = useRef(null);
+    // const mobileRef = useRef(null);
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+    //     setErrors({});
+
+    //     const data = { name, email, password ,mobile_no};
+
+    //     try {
+    //         const response = await fetch(
+    //             `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/register`,
+    //             {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify(data),
+    //             }
+    //         );
+
+    //         if (!response.ok) {
+    //             const errorData = await response.json();
+    //             const errorMessage = errorData.message;
+
+    //             setErrors(errorData.errors || {});
+    //             toast.error(errorMessage);
+    //             setLoading(false);
+    //             return;
+    //         }
+
+    //         toast.success("Registration successful! Please log in.");
+    //         navigate("/success");
+    //     } catch (error) {
+    //         console.error("Error occurred:", error);
+    //         toast.error("An unexpected error occurred. Please try again.");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    // const handleNameKeyDown = (event) => {
+    //     if (event.key === "Enter") {
+    //         event.preventDefault();
+    //         emailRef.current.focus();
+    //     }
+    // };
+
+    // const handleEmailKeyDown = (event) => {
+    //     if (event.key === "Enter") {
+    //         event.preventDefault();
+    //         passwordRef.current.focus();
+    //     }
+    // };
+
+    // const handlePasswordKeyDown = (event) => {
+    //     if (event.key === "Enter") {
+    //         event.preventDefault();
+    //         mobileRef.current.focus();
+    //     }
+    // };
+
+    // const handleMobileKeyDown = (event) => {
+    //     if (event.key === "Enter") {
+    //         event.preventDefault();
+    //         handleSubmit(event);
+    //     }
+    // };
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -23,35 +102,32 @@ function Register() {
         setLoading(true);
         setErrors({});
 
-        const data = { name, email, password ,mobile_no};
+        const data = { name, email, password, mobile_no };
 
         try {
-            const response = await fetch(
+            const response = await axios.post(
                 `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/register`,
+                data,
                 {
-                    method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(data),
                 }
             );
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                const errorMessage = errorData.message;
-
-                setErrors(errorData.errors || {});
-                toast.error(errorMessage);
-                setLoading(false);
-                return;
-            }
 
             toast.success("Registration successful! Please log in.");
             navigate("/success");
         } catch (error) {
-            console.error("Error occurred:", error);
-            toast.error("An unexpected error occurred. Please try again.");
+            if (error.response && error.response.data) {
+                const errorData = error.response.data;
+                const errorMessage = errorData.message;
+
+                setErrors(errorData.errors || {});
+                toast.error(errorMessage);
+            } else {
+                console.error("Error occurred:", error);
+                toast.error("An unexpected error occurred. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
@@ -84,6 +160,7 @@ function Register() {
             handleSubmit(event);
         }
     };
+
     return (
         <>
             <body class="nk-body bg-white npc-default pg-auth">
@@ -187,7 +264,7 @@ function Register() {
                                                         type="checkbox" class="custom-control-input" id="checkbox" /><label
                                                             class="custom-control-label" for="checkbox">I agree to EduJobZ <a
                                                                 tabindex="-1" href="../terms-policy.html">Privacy Policy</a> &amp;
-                                                            <a tabindex="-1" href="../terms-policy.html"> Terms.</a></label></div>
+                                                            <Link tabindex="-1" to="/terms"> Terms.</Link></label></div>
                                                 </div>
                                                 <div class="form-group"><Link ><button
                                                     class="btn btn-lg btn-primary btn-block" type="submit" onClick={handleSubmit}>Register</button></Link></div>

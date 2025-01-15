@@ -1,9 +1,57 @@
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../assets/img/logo.png'
 import { useState } from 'react';
-
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function ResetPassword() {
+    // const [loading, setLoading] = useState(false);
+    // const [email, setEmail] = useState("");
+    // const [errors, setErrors] = useState({});
+    // const navigate = useNavigate();
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+    //     setErrors({});
+
+    //     try {
+
+    //         const response = await fetch(
+    //             `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/forgotPassword`,
+    //             {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify({ email: email }),
+    //             }
+    //         );
+
+    //         if (!response.ok) {
+    //             const errorData = await response.json();
+
+
+    //             const errorMessaged = errorData.message
+
+    //             setErrors(errorData.errors || {});
+    //             toast.error(errorMessaged);
+    //             setLoading(false);
+    //             return
+    //         }
+
+    //         navigate("/otpverify");
+
+    //     } catch (error) {
+    //         console.error("Error occurred:", error);
+    //         // toast.error("Error occurred");
+    //     }
+
+    //     setLoading(false);
+    // };
+
+    // const currentYear = new Date().getFullYear();
+
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [errors, setErrors] = useState({});
@@ -15,41 +63,36 @@ function ResetPassword() {
         setErrors({});
 
         try {
-
-            const response = await fetch(
+            const response = await axios.post(
                 `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/forgotPassword`,
+                { email: email },
                 {
-                    method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ email: email }),
                 }
             );
 
-            if (!response.ok) {
-                const errorData = await response.json();
-
-
-                const errorMessaged = errorData.message
+            toast.success("Password reset email sent successfully!");
+            navigate("/otpverify");
+        } catch (error) {
+            if (error.response && error.response.data) {
+                const errorData = error.response.data;
+                const errorMessage = errorData.message;
 
                 setErrors(errorData.errors || {});
-                toast.error(errorMessaged);
-                setLoading(false);
-                return
+                toast.error(errorMessage);
+            } else {
+                console.error("Error occurred:", error);
+                toast.error("An unexpected error occurred. Please try again.");
             }
-
-            navigate("/success");
-
-        } catch (error) {
-            console.error("Error occurred:", error);
-            // toast.error("Error occurred");
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     };
 
     const currentYear = new Date().getFullYear();
+
 
     return (
         <>
@@ -96,8 +139,8 @@ function ResetPassword() {
                                                     />
                                                         </div>
                                                 </div>
-                                                <div class="form-group"><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit}>Send Reset
-                                                    Link</button></div>
+                                                <div class="form-group"><Link ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit}>Send Reset
+                                                    Link</button></Link></div>
                                             </form>
                                             <div class="form-note-s2 pt-5"><Link to="/"><strong>Return to
                                                 login</strong></Link></div>

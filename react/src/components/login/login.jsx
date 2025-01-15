@@ -1,3 +1,7 @@
+import React  from "react";
+import { useState, useRef } from "react"
+import axios from "axios";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../assets/img/logo.png'
 
@@ -5,66 +9,136 @@ import facebook from '../../assets/img/facebook.svg'
 import google from '../../assets/img/google.svg'
 import linkedin from '../../assets/img/linkedin.svg'
 import login from '../../assets/img/bg3.jpg'
-import { useRef, useState } from 'react'
+
 
 
 function Login() {
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+
+    // const [loginError, setLoginError] = useState("");
+
+    // const [errors, setErrors] = useState({});
+
+    // const [loading, setLoading] = useState(false);
+    // const [passwordVisible, setPasswordVisible] = useState(false);
+
+    // const navigate = useNavigate();
+    // const passwordRef = useRef(null);
+
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+    //     setErrors({});
+    
+    //     // Store the full email in session storage
+    //     sessionStorage.setItem("email", email);
+    
+    //     const data = { email, password };
+    
+    //     try {
+    //         const response = await fetch(
+    //             `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/login`,
+    //             {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify(data),
+    //             }
+    //         );
+    
+    //         if (!response.ok) {
+    //             const errorData = await response.json();
+    //             const errorMessage = errorData.message;
+    
+    //             setErrors(errorData.errors || {});
+    //             toast.error(errorMessage);
+    //             setLoading(false);
+    //             return;
+    //         }
+    
+    //         setLoading(false);
+    //         navigate("/candidate/dashboard");
+    //     } catch (error) {
+    //         console.error("Error occurred:", error);
+    //         toast.error("An unexpected error occurred. Please try again.");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+    
+
+    // const handleEmailKeyDown = (event) => {
+    //     if (event.key === "Enter") {
+    //         event.preventDefault();
+    //         passwordRef.current.focus();
+    //     }
+    // };
+
+    // const handlePasswordKeyDown = (event) => {
+    //     if (event.key === "Enter") {
+    //         event.preventDefault();
+    //         handleSubmit(event);
+    //     }
+    // };
+
+    // const currentYear = new Date().getFullYear();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const [loginError, setLoginError] = useState("");
-
     const [errors, setErrors] = useState({});
-
     const [loading, setLoading] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const navigate = useNavigate();
     const passwordRef = useRef(null);
 
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
         setErrors({});
-    
+
         // Store the full email in session storage
         sessionStorage.setItem("email", email);
-    
+
         const data = { email, password };
-    
+
         try {
-            const response = await fetch(
+            const response = await axios.post(
                 `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/login`,
+                data,
                 {
-                    method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(data),
                 }
             );
-    
-            if (!response.ok) {
-                const errorData = await response.json();
-                const errorMessage = errorData.message;
-    
-                setErrors(errorData.errors || {});
-                toast.error(errorMessage);
-                setLoading(false);
-                return;
-            }
-    
+
+            // Handle success
+            toast.success("Login successful!");
             setLoading(false);
             navigate("/candidate/dashboard");
         } catch (error) {
-            console.error("Error occurred:", error);
-            toast.error("An unexpected error occurred. Please try again.");
+            if (error.response) {
+                // Server responded with an error status
+                const errorMessage = error.response.data.message || "An error occurred";
+                const errorDetails = error.response.data.errors || {};
+
+                setErrors(errorDetails);
+                toast.error(errorMessage);
+            } else {
+                // Network or other errors
+                console.error("Error occurred:", error);
+                toast.error("An unexpected error occurred. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
     };
-    
 
     const handleEmailKeyDown = (event) => {
         if (event.key === "Enter") {
@@ -147,9 +221,8 @@ function Login() {
                                                         {/* <input id='password' name='password' type="password" class="form-control form-control-lg"  placeholder="Enter your Password" /> */}
                                                     </div>
                                                 </div>
-                                                {/* <div class="form-group"><Link to="/candidate/dashboard" ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit} >Sign in</button></Link></div> */}
-                                                <div class="form-group"><Link to="/candidate/dashboard" ><button class="btn btn-lg btn-primary btn-block" type='submit'  >Sign in</button></Link></div>
-                                           
+                                                <div class="form-group"><Link ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit} >Sign in</button></Link></div>
+                                               
                                             </form>
                                             <div class="text-center pt-4 pb-3">
                                                 <h6 class="overline-title overline-title-sap"><span>OR</span></h6>

@@ -36,6 +36,7 @@ import EmployeeMessage from './components/employer/employeemessage'
 import Events from './components/candidate/dashboardevent'
 import Terms from './components/login/terms-condition'
 import ResetOTP from './components/login/otpverify';
+import ChangePassword from './components/login/changepassword';
 
 function App() {
 
@@ -52,6 +53,8 @@ function App() {
                                         <Route path='/404' element={<Page404 />} />
                                         <Route path='/504' element={<Page504 />} />
                                         <Route path='/terms' element={<Terms />} />
+                                        <Route path='/changepassword' element={<ChangePassword />} />
+
 
                                         <Route path='/employee/login' element={<EmployeeLogin />} />
                                         <Route path='/employee/signup' element={<EmployeeSignUp />} />
