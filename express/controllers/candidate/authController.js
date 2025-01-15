@@ -9,6 +9,8 @@ const crypto = require("crypto");
 // const auth = require("../../services/authService");
 const passport = require("passport");
 const { sendEmail } = require("../../services/emailService");
+const fs = require("fs");
+const path = require("path");
 
 // Registration
 const register = async (req, res) => {
@@ -57,20 +59,21 @@ const register = async (req, res) => {
       expire_at: expireAt,
     });
 
+    // Read the HTML template
+    const templatePath = path.join(
+      __dirname,
+      "../../templates/verifyEmail.html"
+    );
+    let htmlContent = fs.readFileSync(templatePath, "utf8");
+
+    // Replace placeholders with dynamic values
+    htmlContent = htmlContent.replace("{{otp}}", otp);
+
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Your OTP for Email Verification",
-      text: `Hello,
-
-We received a request for Email verification for your account. Please use the One-Time Password (OTP) provided below to complete the process.
-
-OTP: ${otp}
-
-This OTP is valid for the next 15 minutes. If you did not request this, please ignore this email.
-
-Thank you,
-Aeriesys Team`,
+      html: htmlContent, // Use the HTML content as email body
     };
 
     const mobile_otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
@@ -339,20 +342,21 @@ const forgotPassword = async (req, res) => {
       expire_at: expireAt,
     });
 
+    // Read the HTML template
+    const templatePath = path.join(
+      __dirname,
+      "../../templates/forgotPassword.html"
+    );
+    let htmlContent = fs.readFileSync(templatePath, "utf8");
+
+    // Replace placeholders with dynamic values
+    htmlContent = htmlContent.replace("{{otp}}", otp);
+
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Your OTP for Resetting Your Password",
-      text: `Hello,
-
-We received a request to reset the password for your account. Please use the One-Time Password (OTP) provided below to complete the process.
-
-OTP: ${otp}
-
-This OTP is valid for the next 15 minutes. If you did not request a password reset, please ignore this email.
-
-Thank you,
-Aeriesys Team`,
+      html: htmlContent, // Use the HTML content as email body
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
