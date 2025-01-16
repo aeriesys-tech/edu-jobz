@@ -64,7 +64,8 @@ function ResetPassword() {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/forgotPassword`,
+
+                `${import.meta.env.VITE_BASE_API_URL1}/api/admin/forgotPassword`,
                 { email: email },
                 {
                     headers: {
@@ -110,9 +111,9 @@ function ResetPassword() {
                                         <div class="nk-block nk-block-middle nk-auth-body mt-4">
                                             <div class="brand-logo justify-center pb-5"><Link to="/" class="logo-link"><img
                                                 class="logo-light logo-img logo-img-lg" src={logo}
-                                                srcset="/demo2/images/logo2x.png 2x" alt="logo" /><img
+                                                srcset={logo} alt="logo" /><img
                                                     class="logo-dark logo-img logo-img-lg" src={logo}
-                                                    srcset="/demo2/images/logo-dark2x.png 2x" alt="logo-dark" /></Link></div>
+                                                    srcset={logo} alt="logo-dark" /></Link></div>
                                             <div class="nk-block-head">
                                                 <div class="nk-block-head-content">
                                                     <h5 class="nk-block-title">Forgot password</h5>
@@ -123,21 +124,25 @@ function ResetPassword() {
                                                 </div>
                                             </div>
                                             <form onSubmit={handleSubmit}>
-                                                <div class="form-group">
-                                                    <div class="form-label-group"><label class="form-label"
-                                                        for="default-01">Email</label><a class="link link-primary link-sm"
-                                                            href="#">Need Help?</a></div>
-                                                    <div class="form-control-wrap"><input
-                                                        id="email"
-                                                        name="email"
-                                                        placeholder="Enter your email"
-                                                        className={`form-control form-control-lg ${errors.email ? "is-invalid" : ""
-                                                            }`}
-                                                        value={email}
-                                                        onChange={(e) => setEmail(e.target.value)}
-                                                        autoComplete="off"
-                                                    />
-                                                        </div>
+                                                <div className="form-group">
+                                                    <div className="form-label-group">
+                                                        <label className="form-label" htmlFor="email">Email</label>
+                                                        <a className="link link-primary link-sm" href="#">Need Help?</a>
+                                                    </div>
+                                                    <div className="form-control-wrap">
+                                                        <input
+                                                            id="email"
+                                                            name="email"
+                                                            placeholder="Enter your email"
+                                                            className={`form-control form-control-lg ${errors.email ? "is-invalid" : ""}`}
+                                                            value={email}
+                                                            onChange={(e) => setEmail(e.target.value)}
+                                                            autoComplete="off"
+                                                        />
+                                                    </div>
+                                                    {errors.email && (
+                                                        <p className="error-message text-danger">{errors.email}</p>
+                                                    )}
                                                 </div>
                                                 <div class="form-group"><Link ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit}>Send Reset
                                                     Link</button></Link></div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import logo from '../../assets/img/logo.png'
-import login from '../../assets/img/bg3.jpg'
+import login from '../../assets/img/DALL.webp'
 
 
 function Register() {
@@ -169,12 +169,11 @@ function Register() {
                         <div class="nk-wrap nk-wrap-nosidebar">
                             <div class="nk-content ">
                                 <div class="nk-split nk-split-page nk-split-md">
-                                    <img src={login} alt="" style={{ width: '860px', objectFit: 'cover' }} />
 
                                     <div
-                                        class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white w-lg-45">
+                                        class=" nk-block-area nk-block-area-column nk-auth-container bg-white w-lg-30">
                                         <div class="nk-block nk-block-middle nk-auth-body">
-                                            <div class="brand-logo justify-center pb-5"><a href="#" class="logo-link"><img
+                                            <div class="brand-logo justify-center pb-3"><a href="#" class="logo-link"><img
                                                 class="logo-light logo-img logo-img-lg" src={logo}
                                                 srcset="/demo2/images/logo2x.png 2x" alt="logo" /><img
                                                     class="logo-dark logo-img logo-img-lg" src={logo}
@@ -269,27 +268,30 @@ function Register() {
                                                 <div class="form-group"><Link ><button
                                                     class="btn btn-lg btn-primary btn-block" type="submit" onClick={handleSubmit}>Register</button></Link></div>
                                             </form>
-                                            <div class="form-note-s2 pt-4 justify-center"> Already have an account ? <Link
+                                            <div class="form-note-s2 pt-3 justify-center"> Already have an account ? <Link
                                                 to="/"><strong>Sign in instead</strong></Link></div>
 
 
                                         </div>
-                                        <div class="nk-block nk-auth-footer">
+                                        <div class="nk-block nk-auth-footer pt-0 pb-1">
                                             <div class="nk-block-between justify-center">
                                                 <ul class="nav nav-sm">
-                                                    <li class="nav-item"><Link class="link  fw-normal py-2 px-3 fs-13px"
+                                                    <li class="nav-item"><Link class="link  fw-normal py-1 px-3 fs-13px"
                                                         to="/terms" style={{ color: 'blue' }}>Terms & Condition</Link></li>
-                                                    <li class="nav-item"><a class="link  fw-normal py-2 px-3 fs-13px"
+                                                    <li class="nav-item"><a class="link  fw-normal py-1 px-3 fs-13px"
                                                         href="#" style={{ color: 'blue' }}>Privacy Policy</a></li>
 
                                                 </ul>
                                             </div>
-                                            <div class="justify-center mt-3">
+                                            <div class="justify-center mt-2">
                                                 <p>&copy; 2025 EduJobZ. All Rights Reserved.</p>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <div class="nk-split-content nk-split-stretch bg-abstract"></div> */}
+                                    <div class="nk-split-content nk-split-stretch bg-abstract" style={{width:'800px'}}>
+
+                                    </div>
+                                   
                                 </div>
 
                             </div>

@@ -206,7 +206,7 @@ function ResetOTP() {
                   </p>
                 </div>
               </div>
-              <div className="nk-split-stretch bg-abstract"></div>
+              <div className="nk-split-stretch  bg-abstract"></div>
             </div>
           </div>
         </div>

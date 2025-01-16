@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import logo from '../../../assets/img/logo.png'
-import login from '../../../assets/img/backgroundimg1.jpg'
+import login from '../../../assets/img/teacher.webp'
 
 function EmployeeSignUp(){
     return(
@@ -11,10 +11,9 @@ function EmployeeSignUp(){
             <div class="nk-wrap nk-wrap-nosidebar">
                 <div class="nk-content ">
                     <div class="nk-split nk-split-page nk-split-md">
-                                                                                    <img src={login} alt="" style={{width:'860px'}}/>
                         
                         <div
-                            class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white w-lg-45">
+                            class=" nk-block-area nk-block-area-column nk-auth-container bg-white w-lg-45">
                             <div class="nk-block nk-block-middle nk-auth-body">
                                 <div class="brand-logo justify-center pb-5"><a href="#" class="logo-link"><img
                                             class="logo-light logo-img logo-img-lg" src={logo}
@@ -81,6 +80,8 @@ function EmployeeSignUp(){
                             </div>
                         </div>
                         <div class="nk-split-content nk-split-stretch bg-abstract"></div>
+                        <img src={login} alt="" style={{width:'945px'}}/>
+
                     </div>
                     
                 </div>

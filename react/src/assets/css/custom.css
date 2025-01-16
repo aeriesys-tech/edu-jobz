@@ -238,9 +238,9 @@ input[type="file"] {
 		text-align: center;
 		font-size: 24px;
 		font-family: 'Raleway', sans-serif;
-		font-weight: 200;
+		font-weight: 500;
 		color: black;
-		margin: 0 2px;
+		margin: 2px;
 	}
 
 	.splitter {
@@ -255,8 +255,39 @@ input[type="file"] {
 	font-size: 20px;
 	color: white;
 }
-
+/* Error  */
+.custom-file-input~.error,
+.custom-file-input~.invalid,
+.dual-listbox .dual-listbox__search~.error,
+.dual-listbox .dual-listbox__search~.invalid,
+.form-control~.error,
+.form-control~.invalid,
+.form-select~.error,
+.form-select~.invalid,
+.input-group~.error,
+.input-group~.invalid,
+.js-select2~.error,
+.js-select2~.invalid,
+div.dt-container div.dt-search input~.error,
+div.dt-container div.dt-search input~.invalid {
+    color: #e85347;
+ 
+}
 /* .nav-switch .nav-link.active {
   background: #0059b3;
   color: #fff
 } */
+.nk-split-stretch, .bg-abstract{
+  background-image: url('../img/DALL.webp');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+.nk-split-stretcht, .bg-abstractt{
+  background-image: url('../img/teacher.webp');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}

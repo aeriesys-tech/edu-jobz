@@ -12,7 +12,7 @@ function MenuBar() {
         <>
             <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg"
                 data-content="" data-toggle-screen="lg"
-                data-toggle-overlay="true">
+                data-toggle-overlay="true" >
                 <div class="card-inner-group" data-simplebar>
                     <div class="card-inner">
                         <div class="user-card">

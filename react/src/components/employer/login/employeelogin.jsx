@@ -3,7 +3,7 @@ import logo from '../../../assets/img/logo.png'
 import facebook from '../../../assets/img/facebook.svg'
 import google from '../../../assets/img/google.svg'
 import linkedin from '../../../assets/img/linkedin.svg'
-import login from '../../../assets/img/backgroundimg1.jpg'
+import login from '../../../assets/img/teacher.webp'
 
 
 function EmployeeLogin() {
@@ -15,10 +15,9 @@ function EmployeeLogin() {
                     <div class="nk-main">
                         <div class="nk-wrap nk-wrap-nosidebar">
                             <div class="nk-content">
-                                <div class="nk-split nk-split-page nk-split-md">
-                                <img src={login} alt="" style={{width:'860px'}}/>
+                                <div class="nk-split nk-split-page nk-split-md" >
 
-                                    <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white">
+                                    <div class=" nk-block-area nk-block-area-column nk-auth-container bg-white">
                                         <div class="nk-block nk-block-middle nk-auth-body">
                                             <div class="brand-logo justify-center pb-5">
                                                 <Link to="/" class="logo-link">
@@ -52,7 +51,7 @@ function EmployeeLogin() {
                                                 </div>
                                                 <div class="form-group"><Link to="/employee/dashboard"><button class="btn btn-lg btn-primary btn-block" >Sign in</button></Link></div>
                                             </form>
-                                            <div class="text-center pt-4 pb-3">
+                                            <div class="text-center pt-3 pb-1">
                                                 <h6 class="overline-title overline-title-sap"><span>OR</span></h6>
                                             </div>
                                             <ul class="nav justify-center gx-4">
@@ -79,6 +78,8 @@ function EmployeeLogin() {
                                         </div>
                                     </div>
                                     {/* <div class="nk-split-content nk-split-stretch bg-abstract"></div> */}
+                                    <img src={login} alt="" style={{width:'960px'}}/>
+                                
                                 </div>
                             </div>
                         </div>

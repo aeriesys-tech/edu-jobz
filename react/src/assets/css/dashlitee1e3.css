@@ -19229,7 +19229,7 @@ textarea.textarea-auto {
     min-height: 0
 }
 
-.custom-file-input~.error,
+/* .custom-file-input~.error,
 .custom-file-input~.invalid,
 .dual-listbox .dual-listbox__search~.error,
 .dual-listbox .dual-listbox__search~.invalid,
@@ -19244,9 +19244,9 @@ textarea.textarea-auto {
 div.dt-container div.dt-search input~.error,
 div.dt-container div.dt-search input~.invalid {
     color: #e85347;
-    font-size: 11px;
+    font-size: 14px;
     font-style: italic
-}
+} */
 
 .custom-btn-check {
     position: relative

@@ -37,6 +37,8 @@ import Events from './components/candidate/dashboardevent'
 import Terms from './components/login/terms-condition'
 import ResetOTP from './components/login/otpverify';
 import ChangePassword from './components/login/changepassword';
+import AdminLogin from './components/admin';
+import AdminDashboard from './components/admindashboard';
 
 function App() {
 
@@ -44,6 +46,9 @@ function App() {
                 <>
                         <HashRouter>
                                 <Routes>
+                                <Route path='/admin/login' element={<AdminLogin />} />
+                                <Route path='/admin/dashboard' element={<AdminDashboard />} />
+
                                         <Route path='/' element={<Login />} />
                                         <Route path='/signup' element={<Register />} />
                                         <Route path='/reset' element={<ResetPassword />} />

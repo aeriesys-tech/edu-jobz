@@ -3,9 +3,11 @@ import SideBar from "../dashboardslidebar"
 import DashFooter from "../footer"
 import DashHeader from "../header"
 import MenuBar from "./profilemenu"
-
-
+import { useState } from "react"
+import axios from "axios"
+import { toast } from "react-toastify"
 function ProfileSettings() {
+  
     return (
         <>
             <body class="nk-body bg-lighter npc-general has-sidebar ">
@@ -100,8 +102,8 @@ function ProfileSettings() {
                                                                                 <ul
                                                                                     class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
                                                                                     <li class="order-md-last">
-                                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verify" >Verify...</button>
-                                                                                        <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verify2" >Verify...</button>
+                                                                                        <div class="modal fade" id="verify2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                                             <div class="modal-dialog" role="document">
                                                                                                 <div class="modal-content">
                                                                                                     <div class="modal-header">
@@ -113,11 +115,17 @@ function ProfileSettings() {
                                                                                                     <div class="card-body">
                                                                                                         <div class="row">
                                                                                                             <div class="col-sm-12">
-                                                                                                                <div class="mb-3">
+                                                                                                            <div>
+                                                                                                                    <label className="form-label"> Enter Email</label>
+                                                                                                                    <input type="email" class="form-control "  />
+
+                                                                                                                </div>
+                                                                                                                <div class="my-3">
                                                                                                                     <label class="form-label">Enter OTP  </label>
                                                                                                                     <input type="password" class="form-control " />
                                                                                                                 </div>
-                                                                                                                <label class="form-label pt-5 " >Resend OTP ? </label>
+                                                                                                                
+                                                                                                                <label class="form-label pt-3 " >Resend OTP ? </label>
 
 
                                                                                                             </div>

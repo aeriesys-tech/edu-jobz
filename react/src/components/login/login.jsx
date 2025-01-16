@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { useState, useRef } from "react"
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ import logo from '../../assets/img/logo.png'
 import facebook from '../../assets/img/facebook.svg'
 import google from '../../assets/img/google.svg'
 import linkedin from '../../assets/img/linkedin.svg'
-import login from '../../assets/img/bg3.jpg'
+import login from '../../assets/img/DALL.webp'
 
 
 
@@ -31,12 +31,12 @@ function Login() {
     //     event.preventDefault();
     //     setLoading(true);
     //     setErrors({});
-    
+
     //     // Store the full email in session storage
     //     sessionStorage.setItem("email", email);
-    
+
     //     const data = { email, password };
-    
+
     //     try {
     //         const response = await fetch(
     //             `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/login`,
@@ -48,17 +48,17 @@ function Login() {
     //                 body: JSON.stringify(data),
     //             }
     //         );
-    
+
     //         if (!response.ok) {
     //             const errorData = await response.json();
     //             const errorMessage = errorData.message;
-    
+
     //             setErrors(errorData.errors || {});
     //             toast.error(errorMessage);
     //             setLoading(false);
     //             return;
     //         }
-    
+
     //         setLoading(false);
     //         navigate("/candidate/dashboard");
     //     } catch (error) {
@@ -68,7 +68,7 @@ function Login() {
     //         setLoading(false);
     //     }
     // };
-    
+
 
     // const handleEmailKeyDown = (event) => {
     //     if (event.key === "Enter") {
@@ -165,9 +165,8 @@ function Login() {
                         <div class="nk-wrap nk-wrap-nosidebar">
                             <div class="nk-content">
                                 <div class="nk-split nk-split-page nk-split-md">
-                                    <img src={login} alt="" style={{ width: '860px', objectFit: 'cover' }} />
 
-                                    <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white">
+                                    <div class=" nk-block-area nk-block-area-column nk-auth-container bg-white">
                                         <div class="nk-block nk-block-middle nk-auth-body">
                                             <div class="brand-logo justify-center pb-5">
                                                 <Link to="/" class="logo-link">
@@ -184,88 +183,98 @@ function Login() {
                                                 </div>
                                             </div>
                                             <form onSubmit={handleSubmit}>
-                                                <div class="form-group">
-                                                    <div class="form-label-group"><label class="form-label" for="default-01">Email or Username</label><a class="link link-primary link-sm" tabindex="-1" href="#"></a></div>
-                                                    <div class="form-control-wrap"><input type="text" className={`form-control form-control-lg  ${errors.email ? "is-invalid" : ""
-                                                        }`} id="email" name='email' onChange={(e) => setEmail(e.target.value)} onKeyDown={handleEmailKeyDown} autoComplete='off' placeholder="Enter your email address or username" /></div>
-                                                    {errors.email && (
-                                                        <div className="invalid-feedback">{errors.email}</div>
-                                                    )}
+                                                <div className="form-control-wrap">
+                                                    <input
+                                                        type="email"
+                                                        className={`form-control form-control-lg ${errors.email ? "is-invalid" : ""}`}
+                                                        id="email"
+                                                        name="email"
+                                                        value={email}
+                                                        onChange={(e) => setEmail(e.target.value)}
+                                                        onKeyDown={handleEmailKeyDown}
+                                                        autoComplete="off"
+                                                        placeholder="Enter your email address or username"
+                                                    />
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="form-label-group"><label class="form-label" for="password">Password</label>
-                                                        <Link class="link  link-sm" tabindex="-1" to="/reset" style={{ color: 'blue' }}>Forgot Password?</Link>
-                                                        {loginError && (
-                                                            <p className="error-message text-danger">{loginError}</p>
-                                                        )}
-                                                    </div>
-                                                    <div class="form-control-wrap">
-                                                        <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
-                                                            <em class="passcode-icon icon-show icon ni ni-eye"></em><em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
-                                                        </a>
-                                                        <input
-                                                            id="password"
-                                                            name="password"
-                                                            placeholder="Enter your password"
-                                                            className={`form-control form-control-lg ${errors.password ? "is-invalid" : ""
-                                                                }`}
-                                                            type={passwordVisible ? "text" : "password"}
-                                                            value={password}
-                                                            onChange={(e) => setPassword(e.target.value)}
-                                                            onKeyDown={handlePasswordKeyDown}
-                                                            ref={passwordRef}
-                                                        />
-                                                        {errors.password && (
-                                                            <div className="invalid-feedback">{errors.password}</div>
-                                                        )}
-                                                        {/* <input id='password' name='password' type="password" class="form-control form-control-lg"  placeholder="Enter your Password" /> */}
-                                                    </div>
-                                                </div>
-                                                <div class="form-group"><Link ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit} >Sign in</button></Link></div>
-                                               
-                                            </form>
-                                            <div class="text-center pt-4 pb-3">
-                                                <h6 class="overline-title overline-title-sap"><span>OR</span></h6>
+                                                {errors.email && (
+                                                    <p className="error-message text-danger">{errors.email}</p>
+                                                )}
+                                     
+                                        <div class="form-group">
+                                            <div class="form-label-group"><label class="form-label" for="password">Password</label>
+                                                <Link class="link  link-sm" tabindex="-1" to="/reset" style={{ color: 'blue' }}>Forgot Password?</Link>
+                                                {loginError && (
+                                                    <p className="error-message text-danger">{loginError}</p>
+                                                )}
                                             </div>
-                                            <ul class="nav justify-center gx-4">
-                                                <li class="nav-item"><Link class="link link-primary" to="#"><img src={facebook} alt="" style={{ width: '36px' }} /></Link></li>
-                                                <li class="nav-item"><Link class="link link-primary " to="#"><img src={google} alt="" style={{ width: '36px' }} /></Link></li>
-                                                <li class="nav-item"><Link class="link link-primary  " to="#"><img src={linkedin} alt="" style={{ width: '36px' }} /></Link></li>
-
-                                            </ul>
-
-                                          
-                                            <div class="text-center mt-4">
-                                                <span class="fw-500">New on our platform? <Link to="/signup">Create an account</Link></span><br />
-                                                <Link to="/employee/login">Employee Sign in</Link>
-                                            </div>
-
-                                        </div>
-                                        <div class="nk-block nk-auth-footer">
-                                            <div class="nk-block-between justify-center">
-                                                <ul class="nav nav-sm">
-                                                    <li class="nav-item"><Link class="link  fw-normal py-2 px-3 fs-13px" to="/terms" style={{ color: 'blue' }}>Terms & Condition</Link></li>
-                                                    <li class="nav-item"><a class="link  fw-normal py-2 px-3 fs-13px" href="#" style={{ color: 'blue' }}>Privacy Policy</a></li>
-
-                                                </ul>
-                                            </div>
-                                            <div class="justify-center mt-3">
-                                                <p>&copy; 2025 EduJobZ. All Rights Reserved.</p>
+                                            <div class="form-control-wrap">
+                                                <a tabindex="-1" href="#" class="form-icon form-icon-left passcode-switch lg" data-target="password">
+                                                    <em class="passcode-icon icon-show icon ni ni-eye"></em><em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                                </a>
+                                                <input
+                                                    id="password"
+                                                    name="password"
+                                                    placeholder="Enter your password"
+                                                    className={`form-control form-control-lg ${errors.password ? "is-invalid" : ""
+                                                        }`}
+                                                    type={passwordVisible ? "text" : "password"}
+                                                    value={password}
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    onKeyDown={handlePasswordKeyDown}
+                                                    ref={passwordRef}
+                                                />
+                                                {errors.password && (
+                                                    <div className="invalid-feedback">{errors.password}</div>
+                                                )}
+                                                {/* <input id='password' name='password' type="password" class="form-control form-control-lg"  placeholder="Enter your Password" /> */}
                                             </div>
                                         </div>
+                                        <div class="form-group"><Link ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit} >Sign in</button></Link></div>
+
+                                    </form>
+                                    <div class="text-center pt-3 pb-2">
+                                        <h6 class="overline-title overline-title-sap"><span>OR</span></h6>
                                     </div>
-                                    {/* <div class="nk-split-content nk-split-stretch bg-abstract"></div> */}
+                                    <ul class="nav justify-center gx-4">
+                                        <li class="nav-item"><Link class="link link-primary" to="#"><img src={facebook} alt="" style={{ width: '36px' }} /></Link></li>
+                                        <li class="nav-item"><Link class="link link-primary " to="#"><img src={google} alt="" style={{ width: '36px' }} /></Link></li>
+                                        <li class="nav-item"><Link class="link link-primary  " to="#"><img src={linkedin} alt="" style={{ width: '36px' }} /></Link></li>
+
+                                    </ul>
+
+
+                                    <div class="text-center mt-4">
+                                        <span class="fw-500">New on our platform? <Link to="/signup">Create an account</Link></span><br />
+                                        <Link to="/employee/login">Employee Sign in</Link>
+                                    </div>
 
                                 </div>
+                                <div class="nk-block nk-auth-footer">
+                                    <div class="nk-block-between justify-center">
+                                        <ul class="nav nav-sm">
+                                            <li class="nav-item"><Link class="link  fw-normal py-2 px-3 fs-13px" to="/terms" style={{ color: 'blue' }}>Terms & Condition</Link></li>
+                                            <li class="nav-item"><a class="link  fw-normal py-2 px-3 fs-13px" href="#" style={{ color: 'blue' }}>Privacy Policy</a></li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="justify-center mt-3">
+                                        <p>&copy; 2025 EduJobZ. All Rights Reserved.</p>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="nk-split-content nk-split-stretch bg-abstract"></div>
+                            {/* <img src={login} alt=""  /> */}
+
                         </div>
-
-
                     </div>
                 </div>
 
+
+            </div>
+        </div >
+
              
-            </body>
+            </body >
         </>
     )
 }

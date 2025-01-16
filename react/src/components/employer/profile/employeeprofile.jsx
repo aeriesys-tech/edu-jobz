@@ -21,14 +21,14 @@ function EmployeeProfile() {
                             <DashHeader />
                            
                              <div class="nk-content">
-                    <div class="container-fluid">
-                        <div class="nk-content-inner">
-                            <div class="nk-content-body">
-                                <div class="nk-block">
-                                    <div class="card">
-                                        <div class="card-aside-wrap">
-                                            <div class="card-inner card-inner-lg">
-                                                <div class="nk-block-head">
+                    <div class="container-fluid" >
+                        <div class="nk-content-inner" >
+                            <div class="nk-content-body" >
+                                <div class="nk-block" >
+                                    <div class="card" >
+                                        <div class="card-aside-wrap" >
+                                            <div class="card-inner card-inner-lg" >
+                                                <div class="nk-block-head" >
                                                     <div class="nk-block-between d-flex justify-content-between">
                                                         <div class="nk-block-head-content">
                                                             <h4 class="nk-block-title">Personal Information</h4>
