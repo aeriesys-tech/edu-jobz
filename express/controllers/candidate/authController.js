@@ -125,6 +125,8 @@ const forgotPassword = async (req, res) => {
     await CandidateOtp.create({
       candidate_id: candidate.candidate_id,
       otp: otp,
+      verification_type: "null",
+      send_to: candidate.candidate_id,
       expire_at: expireAt,
     });
 
