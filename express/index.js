@@ -27,7 +27,7 @@ const app = express();
 require("dotenv").config();
 const routes = require("./routes/index");
 // Set default values for environment variables
-const PORT = process.env.APP_PORT || 4000;
+const PORT = process.env.APP_PORT || 3000;
 const URL = process.env.APP_URL || "http://192.168.0.217:3000/api";
 // CORS configuration
 const corsOptions = {

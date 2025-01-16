@@ -107,6 +107,51 @@ const register = async (req, res) => {
   }
 };
 
+// Forgot Password function
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const candidate = await Candidate.findOne({ where: { email } });
+    if (!candidate) {
+      return sendResponse(res, 404, false, "Candidate not found", null, {
+        email: "Candidate not found",
+      });
+    }
+
+    const otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
+    const expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
+
+    await CandidateOtp.create({
+      candidate_id: candidate.candidate_id,
+      otp: otp,
+      expire_at: expireAt,
+    });
+
+    // Read the HTML template
+    const templatePath = path.join(
+      __dirname,
+      "../../templates/forgotPassword.html"
+    );
+    let htmlContent = fs.readFileSync(templatePath, "utf8");
+
+    // Replace placeholders with dynamic values
+    htmlContent = htmlContent.replace("{{otp}}", otp);
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Your OTP for Resetting Your Password",
+      html: htmlContent, // Use the HTML content as email body
+    };
+    // Send email
+    await sendEmail(mailOptions);
+
+    return sendResponse(res, 201, true, "Reset password email sent");
+  } catch (error) {
+    sendResponse(res, 500, false, error.message);
+  }
+};
 // Login function
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -261,7 +306,26 @@ const updatePassword = async (req, res) => {
 //Update Profile
 const updateProfile = async (req, res) => {
   const candidateId = req.candidate.candidate_id; // Extract user ID from the authenticated user object
-  const { name, email, mobile_no } = req.body;
+  const {
+    name,
+    mobile_no,
+    email,
+    gender,
+    d_o_b,
+    role,
+    employer_type,
+    experience,
+    salary_expectation,
+    notice_period,
+    hear_about_us,
+    subjects,
+    type_of_institute,
+    address,
+    state,
+    city,
+    country,
+    pincode,
+  } = req.body;
   const avatar = req.file ? req.file.filename : null; // Get the uploaded file name if present
 
   try {
@@ -290,6 +354,21 @@ const updateProfile = async (req, res) => {
       name,
       email,
       mobile_no,
+      gender,
+      d_o_b,
+      role,
+      employer_type,
+      experience,
+      salary_expectation,
+      notice_period,
+      hear_about_us,
+      subjects,
+      type_of_institute,
+      address,
+      state,
+      city,
+      country,
+      pincode,
     };
     if (avatar) {
       updateData.avatar = avatar; // Add avatar to the update data if a file was uploaded
@@ -313,63 +392,6 @@ const updateProfile = async (req, res) => {
   }
 };
 
-// Update Password function
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-// Forgot Password function
-const forgotPassword = async (req, res) => {
-  const { email } = req.body;
-
-  try {
-    const candidate = await Candidate.findOne({ where: { email } });
-    if (!candidate) {
-      return sendResponse(res, 404, false, "Candidate not found", null, {
-        email: "Candidate not found",
-      });
-    }
-
-    const otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
-    const expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
-
-    await CandidateToken.create({
-      candidate_id: candidate.candidate_id,
-      token: otp,
-      expire_at: expireAt,
-    });
-
-    // Read the HTML template
-    const templatePath = path.join(
-      __dirname,
-      "../../templates/forgotPassword.html"
-    );
-    let htmlContent = fs.readFileSync(templatePath, "utf8");
-
-    // Replace placeholders with dynamic values
-    htmlContent = htmlContent.replace("{{otp}}", otp);
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Your OTP for Resetting Your Password",
-      html: htmlContent, // Use the HTML content as email body
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return sendResponse(res, 500, false, error.message);
-      }
-      sendResponse(res, 200, true, "Reset password email sent");
-    });
-  } catch (error) {
-    sendResponse(res, 500, false, error.message);
-  }
-};
-
 // Reset Password function
 const resetPassword = async (req, res) => {
   const { email, otp, newPassword, confirmPassword } = req.body;
@@ -388,15 +410,15 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    const candidateToken = await CandidateToken.findOne({
+    const candidateOtp = await CandidateOtp.findOne({
       where: {
         candidate_id: candidate.candidate_id,
-        token: otp,
+        otp: otp,
         expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
       },
     });
 
-    if (!candidateToken) {
+    if (!candidateOtp) {
       return sendResponse(res, 400, false, "Invalid OTP", null, {
         otp: "Invalid or expired OTP",
       });
@@ -405,10 +427,10 @@ const resetPassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await Candidate.update({ password: hashedPassword }, { where: { email } });
 
-    // Optionally, delete the used token
-    await CandidateToken.destroy({
-      where: { candidate_id: candidate.candidate_id, token: otp },
-    });
+    // // Optionally, delete the used token
+    // await CandidateToken.destroy({
+    //   where: { candidate_id: candidate.candidate_id, token: otp },
+    // });
 
     sendResponse(res, 200, true, "Password reset successfully");
   } catch (error) {
