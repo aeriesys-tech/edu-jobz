@@ -1,5 +1,5 @@
 const { Country } = require("../models");
-const { sendResponse } = require("../services/responseService");
+const { sendResponse } = require("../services/admin/responseService");
 const { Op } = require("sequelize");
 const redisClient = require("../config/redisConfig");
 
