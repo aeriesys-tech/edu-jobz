@@ -14,7 +14,7 @@ import Message from './components/candidate/message'
 
 import Details from './components/candidate/profileDetails'
 import Skills from './components/candidate/profile/skill'
-import Resume from './components/candidate/profile/resume'
+import Resume from './components/candidate/profile/documents'
 import ResetPassword from './components/login/resetpassword'
 import Success from './components/login/success'
 import Page404 from './components/login/404'
@@ -37,8 +37,11 @@ import Events from './components/candidate/dashboardevent'
 import Terms from './components/login/terms-condition'
 import ResetOTP from './components/login/otpverify';
 import ChangePassword from './components/login/changepassword';
-import AdminLogin from './components/admin';
-import AdminDashboard from './components/admindashboard';
+import AdminLogin from './components/admin/admin';
+import AdminDashboard from './components/admin/admindashboard';
+import AdminConfiguration from './components/admin/adminconfigurations';
+import AdminSettings from './components/admin/adminsettings';
+import Adminprofile from './components/admin/adminprofile';
 
 function App() {
 
@@ -48,6 +51,9 @@ function App() {
                                 <Routes>
                                 <Route path='/admin/login' element={<AdminLogin />} />
                                 <Route path='/admin/dashboard' element={<AdminDashboard />} />
+                                <Route path='/admin/configurations' element={<AdminConfiguration />} />
+                                <Route path='/admin/settings' element={<AdminSettings />} />
+                                <Route path='/admin/profile' element={<Adminprofile />} />
 
                                         <Route path='/' element={<Login />} />
                                         <Route path='/signup' element={<Register />} />

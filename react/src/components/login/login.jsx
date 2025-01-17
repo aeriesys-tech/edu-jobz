@@ -117,7 +117,9 @@ function Login() {
                     },
                 }
             );
-
+            console.log("-------Added------", response.data.data.token);
+            sessionStorage.setItem("token123", response.data.data.token)
+            console.log("-------77777777777777777777------", response.data.token);
             // Handle success
             toast.success("Login successful!");
             setLoading(false);
@@ -199,81 +201,81 @@ function Login() {
                                                 {errors.email && (
                                                     <p className="error-message text-danger">{errors.email}</p>
                                                 )}
-                                     
-                                        <div class="form-group">
-                                            <div class="form-label-group"><label class="form-label" for="password">Password</label>
-                                                <Link class="link  link-sm" tabindex="-1" to="/reset" style={{ color: 'blue' }}>Forgot Password?</Link>
-                                                {loginError && (
-                                                    <p className="error-message text-danger">{loginError}</p>
-                                                )}
+
+                                                <div class="form-group">
+                                                    <div class="form-label-group"><label class="form-label" for="password">Password</label>
+                                                        <Link class="link  link-sm" tabindex="-1" to="/reset" style={{ color: 'blue' }}>Forgot Password?</Link>
+                                                        {loginError && (
+                                                            <p className="error-message text-danger">{loginError}</p>
+                                                        )}
+                                                    </div>
+                                                    <div class="form-control-wrap">
+                                                        <a tabindex="-1" href="#" class="form-icon form-icon-left passcode-switch lg" data-target="password">
+                                                            <em class="passcode-icon icon-show icon ni ni-eye"></em><em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                                        </a>
+                                                        <input
+                                                            id="password"
+                                                            name="password"
+                                                            placeholder="Enter your password"
+                                                            className={`form-control form-control-lg ${errors.password ? "is-invalid" : ""
+                                                                }`}
+                                                            type={passwordVisible ? "text" : "password"}
+                                                            value={password}
+                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            onKeyDown={handlePasswordKeyDown}
+                                                            ref={passwordRef}
+                                                        />
+                                                        {errors.password && (
+                                                            <div className="invalid-feedback">{errors.password}</div>
+                                                        )}
+                                                        {/* <input id='password' name='password' type="password" class="form-control form-control-lg"  placeholder="Enter your Password" /> */}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"><Link ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit} >Sign in</button></Link></div>
+
+                                            </form>
+                                            <div class="text-center pt-3 pb-2">
+                                                <h6 class="overline-title overline-title-sap"><span>OR</span></h6>
                                             </div>
-                                            <div class="form-control-wrap">
-                                                <a tabindex="-1" href="#" class="form-icon form-icon-left passcode-switch lg" data-target="password">
-                                                    <em class="passcode-icon icon-show icon ni ni-eye"></em><em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
-                                                </a>
-                                                <input
-                                                    id="password"
-                                                    name="password"
-                                                    placeholder="Enter your password"
-                                                    className={`form-control form-control-lg ${errors.password ? "is-invalid" : ""
-                                                        }`}
-                                                    type={passwordVisible ? "text" : "password"}
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)}
-                                                    onKeyDown={handlePasswordKeyDown}
-                                                    ref={passwordRef}
-                                                />
-                                                {errors.password && (
-                                                    <div className="invalid-feedback">{errors.password}</div>
-                                                )}
-                                                {/* <input id='password' name='password' type="password" class="form-control form-control-lg"  placeholder="Enter your Password" /> */}
+                                            <ul class="nav justify-center gx-4">
+                                                <li class="nav-item"><Link class="link link-primary" to="#"><img src={facebook} alt="" style={{ width: '36px' }} /></Link></li>
+                                                <li class="nav-item"><Link class="link link-primary " to="#"><img src={google} alt="" style={{ width: '36px' }} /></Link></li>
+                                                <li class="nav-item"><Link class="link link-primary  " to="#"><img src={linkedin} alt="" style={{ width: '36px' }} /></Link></li>
+
+                                            </ul>
+
+
+                                            <div class="text-center mt-4">
+                                                <span class="fw-500">New on our platform? <Link to="/signup">Create an account</Link></span><br />
+                                                <Link to="/employee/login">Employee Sign in</Link>
+                                            </div>
+
+                                        </div>
+                                        <div class="nk-block nk-auth-footer">
+                                            <div class="nk-block-between justify-center">
+                                                <ul class="nav nav-sm">
+                                                    <li class="nav-item"><Link class="link  fw-normal py-2 px-3 fs-13px" to="/terms" style={{ color: 'blue' }}>Terms & Condition</Link></li>
+                                                    <li class="nav-item"><a class="link  fw-normal py-2 px-3 fs-13px" href="#" style={{ color: 'blue' }}>Privacy Policy</a></li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="justify-center mt-3">
+                                                <p>&copy; 2025 EduJobZ. All Rights Reserved.</p>
                                             </div>
                                         </div>
-                                        <div class="form-group"><Link ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit} >Sign in</button></Link></div>
-
-                                    </form>
-                                    <div class="text-center pt-3 pb-2">
-                                        <h6 class="overline-title overline-title-sap"><span>OR</span></h6>
                                     </div>
-                                    <ul class="nav justify-center gx-4">
-                                        <li class="nav-item"><Link class="link link-primary" to="#"><img src={facebook} alt="" style={{ width: '36px' }} /></Link></li>
-                                        <li class="nav-item"><Link class="link link-primary " to="#"><img src={google} alt="" style={{ width: '36px' }} /></Link></li>
-                                        <li class="nav-item"><Link class="link link-primary  " to="#"><img src={linkedin} alt="" style={{ width: '36px' }} /></Link></li>
+                                    <div class="nk-split-content nk-split-stretch bg-abstract"></div>
+                                    {/* <img src={login} alt=""  /> */}
 
-                                    </ul>
-
-
-                                    <div class="text-center mt-4">
-                                        <span class="fw-500">New on our platform? <Link to="/signup">Create an account</Link></span><br />
-                                        <Link to="/employee/login">Employee Sign in</Link>
-                                    </div>
-
-                                </div>
-                                <div class="nk-block nk-auth-footer">
-                                    <div class="nk-block-between justify-center">
-                                        <ul class="nav nav-sm">
-                                            <li class="nav-item"><Link class="link  fw-normal py-2 px-3 fs-13px" to="/terms" style={{ color: 'blue' }}>Terms & Condition</Link></li>
-                                            <li class="nav-item"><a class="link  fw-normal py-2 px-3 fs-13px" href="#" style={{ color: 'blue' }}>Privacy Policy</a></li>
-
-                                        </ul>
-                                    </div>
-                                    <div class="justify-center mt-3">
-                                        <p>&copy; 2025 EduJobZ. All Rights Reserved.</p>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="nk-split-content nk-split-stretch bg-abstract"></div>
-                            {/* <img src={login} alt=""  /> */}
-
                         </div>
+
+
                     </div>
-                </div>
+                </div >
 
 
-            </div>
-        </div >
-
-             
             </body >
         </>
     )

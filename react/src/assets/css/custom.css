@@ -291,3 +291,48 @@ div.dt-container div.dt-search input~.invalid {
   background-size: cover;
   
 }
+/* input border color  */
+.dual-listbox .dual-listbox__search:focus,
+.form-control:focus,
+div.dt-container div.dt-search input:focus {
+    color: #3c4d62;
+    background-color: #fff;
+    border-color: #0059b3;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgb(0, 89, 179,0.2)
+}
+
+
+.nk-sidebar.is-collapsed {
+  width: 62px; /* Example collapsed width */
+  overflow: hidden;
+  opacity: 1;
+}
+.nk-sidebar.is-collapsed .nk-menu-text {
+  transition: opacity 0.3s ease;/* Hide menu text */
+}
+.nk-sidebar.is-collapsed:hover{
+  width: 290px;
+}
+
+/* .nk-sidebar {
+    width: 80px;
+    transition: width 0.3s ease;
+    overflow: hidden; 
+} */
+
+/* Expanded sidebar on hover */
+/* .nk-sidebar:hover {
+    width: 250px; 
+} */
+
+/* Ensure menu text is visible only in expanded state */
+/* .nk-sidebar .nk-menu-text {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+} */
+
+/* .nk-sidebar:hover .nk-menu-text {
+    opacity: 1;
+} */
+ 

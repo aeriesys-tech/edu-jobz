@@ -1,14 +1,14 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import logo from '../../assets/img/Edujobs.svg'
 
-function DashHeader(){
-const Navigate=useNavigate();
+function AdminHeader(){
+    const Navigate=useNavigate();
     const handleLogout = () => {
         // Clear all session storage data
-        sessionStorage.clear("token123");
+        sessionStorage.clear("tokenadmin");
     
         // Optionally, redirect to the login page or homepage after logging out
-        Navigate("/");
+        Navigate("/admin/login");
     };
     return(
         <>
@@ -140,14 +140,14 @@ const Navigate=useNavigate();
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
-                                                        <a href="user-profile-regular.html"><em
+                                                        <Link to="/admin/profile"><em
                                                                 class="icon ni ni-user-alt"></em><span>View
-                                                                Profile</span></a>
+                                                                Profile</span></Link>
                                                     </li>
                                                     <li>
-                                                        <a href="user-profile-setting.html"><em
+                                                        <Link to="/admin/settings"><em
                                                                 class="icon ni ni-setting-alt"></em><span>Account
-                                                                Setting</span></a>
+                                                                Setting</span></Link>
                                                     </li>
                                                     <li>
                                                         <a href="user-profile-activity.html"><em
@@ -159,7 +159,7 @@ const Navigate=useNavigate();
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
-                                                        <a ><em class="icon ni ni-signout"></em><span onClick={handleLogout}>Sign
+                                                        <a><em class="icon ni ni-signout"></em><span onClick={handleLogout}>Sign
                                                                 out</span></a>
                                                     </li>
                                                 </ul>
@@ -174,4 +174,4 @@ const Navigate=useNavigate();
         </>
     )
 }
-export default DashHeader
+export default AdminHeader

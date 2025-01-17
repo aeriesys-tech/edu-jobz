@@ -1,7 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
-import SideBar from "../dashboardslidebar"
-import DashFooter from "../footer"
-import DashHeader from "../header"
+
 
 function MenuBar() {
     const location = useLocation();

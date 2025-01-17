@@ -1,12 +1,12 @@
-import { Link, useNavigate } from "react-router-dom"
-import SideBar from "../dashboardslidebar"
-import DashFooter from "../footer"
-import DashHeader from "../header"
-import MenuBar from "./profilemenu"
-import { useState } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import AdminMenu from "./adminmenus"
+import AdminHeader from "./header"
+import DashFooter from "../candidate/footer"
+import { useState } from "react";
 import axios from "axios"
 import { toast } from "react-toastify"
-function ProfileSettings() {
+
+function AdminSettings() {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -14,7 +14,7 @@ function ProfileSettings() {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     
-    const bearerToken = sessionStorage.getItem("token123"); // Replace with actual token retrieval logic
+    const bearerToken = sessionStorage.getItem("tokenadmin"); // Replace with actual token retrieval logic
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ function ProfileSettings() {
     
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/updatePassword`, // Replace with the actual endpoint
+                `${import.meta.env.VITE_BASE_API_URL1}/api/admin/updatePassword`, // Replace with the actual endpoint
                 {
                     oldPassword,
                     newPassword,
@@ -73,16 +73,19 @@ function ProfileSettings() {
             setLoading(false);
         }
     };
-    
+    const location = useLocation();
+
+    const isActive = (path) => location.pathname === path;
+   
     return (
         <>
             <body class="nk-body bg-lighter npc-general has-sidebar ">
                 <div class="nk-app-root">
                     <div class="nk-main ">
-                        <SideBar />
+                        <AdminMenu />
                         <div class="nk-wrap ">
 
-                            <DashHeader />
+                            <AdminHeader />
                             <div class="nk-content ">
                                 <div class="container-fluid">
                                     <div class="nk-content-inner">
@@ -108,7 +111,7 @@ function ProfileSettings() {
                                                             </div>
                                                             <div class="card-inner-group ">
                                                                 <div>
-                                                                    <div class="card-inner">
+                                                                    {/* <div class="card-inner">
                                                                         <div class="between-center flex-wrap g-3">
                                                                             <div class="nk-block-text">
                                                                                 <h6>Verify Mobile Number</h6>
@@ -168,8 +171,8 @@ function ProfileSettings() {
                                                                                 <ul
                                                                                     class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
                                                                                     <li class="order-md-last">
-                                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verify2" >Verify...</button>
-                                                                                        <div class="modal fade" id="verify2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verify" >Verify...</button>
+                                                                                        <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                                             <div class="modal-dialog" role="document">
                                                                                                 <div class="modal-content">
                                                                                                     <div class="modal-header">
@@ -181,17 +184,11 @@ function ProfileSettings() {
                                                                                                     <div class="card-body">
                                                                                                         <div class="row">
                                                                                                             <div class="col-sm-12">
-                                                                                                                <div>
-                                                                                                                    <label className="form-label"> Enter Email</label>
-                                                                                                                    <input type="email" class="form-control " />
-
-                                                                                                                </div>
-                                                                                                                <div class="my-3">
+                                                                                                                <div class="mb-3">
                                                                                                                     <label class="form-label">Enter OTP  </label>
                                                                                                                     <input type="password" class="form-control " />
                                                                                                                 </div>
-
-                                                                                                                <label class="form-label pt-3 " >Resend OTP ? </label>
+                                                                                                                <label class="form-label pt-5 " >Resend OTP ? </label>
 
 
                                                                                                             </div>
@@ -211,7 +208,7 @@ function ProfileSettings() {
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> */}
                                                                     <div class="card-inner">
                                                                         <div class="between-center flex-wrap g-3">
                                                                             <div class="nk-block-text">
@@ -226,7 +223,7 @@ function ProfileSettings() {
                                                                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change" >Change</button>
                                                                                         <div class="modal fade" id="change" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                                             <div class="modal-dialog" role="document">
-                                                                                                <div class="modal-content">
+                                                                                            <div class="modal-content">
                                                                                                     <div class="modal-header">
                                                                                                         <h5 class="modal-title" id="exampleModalLabel">Change Password </h5>
                                                                                                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -306,7 +303,7 @@ function ProfileSettings() {
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="card-inner">
+                                                                    {/* <div class="card-inner">
                                                                         <div
                                                                             class="between-center flex-wrap flex-md-nowrap g-3">
                                                                             <div class="nk-block-text">
@@ -322,12 +319,46 @@ function ProfileSettings() {
                                                                             <div class="nk-block-actions"><a to="#"
                                                                                 class="btn btn-primary">Disable</a></div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> */}
                                                                 </div>
 
                                                             </div>
                                                         </div>
-                                                        <MenuBar />
+                                                        <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg"
+                data-content="" data-toggle-screen="lg"
+                data-toggle-overlay="true" >
+                <div class="card-inner-group" data-simplebar>
+                   
+
+                    <div class="card-inner p-0">
+                        <ul class="link-list-menu">
+                            <li class={isActive('/admin/profile') ? 'active' : ''}><Link class="" to="/admin/profile"><em
+                                class="icon ni ni-user-fill-c"></em><span>Update Profile</span></Link></li>
+                                    <li class={isActive('/admin/settings') ? 'active' : ''}><Link to="/admin/settings"><em
+                                class="icon ni ni-lock-alt-fill"></em><span>Security Settings</span></Link></li>
+                            {/*<li class={isActive('/candidate/profile/socialmedia') ? 'active' : ''}><Link
+                                to="/candidate/profile/socialmedia"><em
+                                    class="icon ni ni-bell-fill"></em><span>Social Media</span></Link>
+                            </li>
+                            <li class={isActive('/candidate/profile/experience') ? 'active' : ''}><Link to="/candidate/profile/experience"><em class="icon ni ni-briefcase-fill"></em><span>Experience</span></Link></li>
+
+                            <li class={isActive('/candidate/profile/academic') ? 'active' : ''}><Link to="/candidate/profile/academic"><em class="icon ni ni-medal-fill"></em><span>Education</span></Link></li>
+                            <li class={isActive('/candidate/profile/skill') ? 'active' : ''}><Link to="/candidate/profile/skill"><em
+                                class="icon ni ni-activity-round-fill"></em><span>Skill</span></Link></li>
+                            
+                            <li class={isActive('/candidate/profile/resume') ? 'active' : ''}><Link to="/candidate/profile/resume"><em class="icon ni ni-briefcase-fill"></em><span>Documents</span></Link></li> */}
+                        </ul>
+                    </div>
+                    <div class="card-inner">
+                        <div class="user-account-info py-0">
+                            <h6 class="overline-title-alt">Last Login</h6>
+                            <p>06-29-2020 02:39pm</p>
+                            <h6 class="overline-title-alt">Login IP</h6>
+                            <p>192.129.243.28</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -343,4 +374,4 @@ function ProfileSettings() {
         </>
     )
 }
-export default ProfileSettings
+export default AdminSettings

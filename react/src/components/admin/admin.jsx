@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import logo from "../assets/img/logo.png";
+import logo from "../../assets/img/logo.png";
 
 function AdminLogin() {
     const [email, setEmail] = useState("");
@@ -33,6 +33,7 @@ function AdminLogin() {
 
 
 
+            sessionStorage.setItem("tokenadmin", response.data.data.token)
 
             toast.success("Login successful!");
             setLoading(false);

@@ -61,26 +61,49 @@ function ResetPassword() {
         event.preventDefault();
         setLoading(true);
         setErrors({});
-
+    
         try {
-            const response = await axios.post(
-
-                `${import.meta.env.VITE_BASE_API_URL1}/api/admin/forgotPassword`,
-                { email: email },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-
-            toast.success("Password reset email sent successfully!");
-            navigate("/otpverify");
+            // Define API endpoints
+            const candidateUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/forgotPassword`;
+            const adminUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/admin/forgotPassword`;
+    
+            // Send both requests simultaneously
+            const [candidateResponse, adminResponse] = await Promise.allSettled([
+                axios.post(candidateUrl, { email: email }, {
+                    headers: { "Content-Type": "application/json" },
+                }),
+                axios.post(adminUrl, { email: email }, {
+                    headers: { "Content-Type": "application/json" },
+                }),
+            ]);
+    
+            // Handle candidate response
+            if (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success) {
+                toast.success("Candidate password reset email sent successfully!");
+            } else if (candidateResponse.status === "rejected") {
+                toast.error("Candidate API request failed.");
+            }
+    
+            // Handle admin response
+            if (adminResponse.status === "fulfilled" && adminResponse.value.data.success) {
+                toast.success("Admin password reset email sent successfully!");
+            } else if (adminResponse.status === "rejected") {
+                toast.error("Admin API request failed.");
+            }
+    
+            // Navigate to /otpverify if at least one request succeeds
+            if (
+                (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success) ||
+                (adminResponse.status === "fulfilled" && adminResponse.value.data.success)
+            ) {
+                navigate("/otpverify");
+            }
+    
         } catch (error) {
             if (error.response && error.response.data) {
                 const errorData = error.response.data;
                 const errorMessage = errorData.message;
-
+    
                 setErrors(errorData.errors || {});
                 toast.error(errorMessage);
             } else {
@@ -91,6 +114,8 @@ function ResetPassword() {
             setLoading(false);
         }
     };
+    
+    
 
     const currentYear = new Date().getFullYear();
 

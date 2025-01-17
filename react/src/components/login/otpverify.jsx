@@ -117,7 +117,7 @@ function ResetOTP() {
 
       toast.success("OTP resent successfully!");
     } catch (error) {
-      if (error.response && error.response.data) {
+      if (error.response && error.response.data) {  
         const errorMessage = error.response.data.message;
         setErrors(error.response.data.errors || {});
         toast.error(errorMessage);
