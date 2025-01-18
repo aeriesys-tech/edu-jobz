@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const designationController = require("../controllers/designationController");
-const authMiddleware = require("../middleware/candidate/authMiddleware");
-
+const { checkAllTokens } = require("../middleware/verifyAuthMiddlware");
+const { checkAdminToken } = require("../middleware/verifyAuthMiddlware");
 const {
   addDesignationValidation,
   updateDesignationValidation,
@@ -14,35 +14,36 @@ const {
 // Routes for designations
 router.post(
   "/addDesignation",
-  authMiddleware,
+  checkAdminToken,
   addDesignationValidation,
   designationController.addDesignation
 );
 
 router.post(
   "/updateDesignation",
-  authMiddleware,
+  checkAdminToken,
   updateDesignationValidation,
   designationController.updateDesignation
 );
 
 router.post(
   "/deleteDesignation",
-  authMiddleware,
+  checkAdminToken,
   deleteDesignationValidation,
   designationController.deleteDesignation
 );
 
 router.post(
   "/getDesignations",
-  authMiddleware,
+  checkAllTokens,
   getDesignationsValidation,
   designationController.getDesignations
 );
 
 router.post(
   "/paginateDesignations",
-  authMiddleware,
+  checkAllTokens,
+  checkAdminToken,
   paginateDesignationsValidation,
   designationController.paginateDesignations
 );

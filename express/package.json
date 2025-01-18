@@ -30,7 +30,8 @@
     "pg-hstore": "^2.3.4",
     "redis": "^4.7.0",
     "routes": "^2.1.0",
-    "sequelize": "^6.37.5"
+    "sequelize": "^6.37.5",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.9",

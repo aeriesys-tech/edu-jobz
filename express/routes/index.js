@@ -3,20 +3,20 @@ const router = express.Router();
 
 const candidatesAuthRoutes = require("./candidate/authRoutes");
 const employersAuthRoutes = require("./employer/authRoute");
-const designationRoutes = require("./designationRoutes");
+const countryRoutes = require("./countryRoutes");
 const adminsAuthRoutes = require("./admin/authRoutes");
 const adminRoutes = require("./admin/adminRoutes");
-// const designationRoutes = require("./designationRoutes");
-// const userRoutes = require("./userRoutes");
+const designationRoutes = require("./designationRoutes");
+const stateRoutes = require("./stateRoutes");
 // const priorityRoutes = require("./priorityRoutes");
 
 router.use("/candidate", candidatesAuthRoutes);
 router.use("/employer", employersAuthRoutes);
-router.use("/designations", designationRoutes);
+router.use("/countries", countryRoutes);
 router.use("/admin", adminsAuthRoutes);
 router.use("/admin", adminRoutes);
-// router.use("/roles", roleRoutes);
-// router.use("/designations", designationRoutes);
+router.use("/states", stateRoutes);
+router.use("/designations", designationRoutes);
 
 // router.use("/priorities", priorityRoutes);
 

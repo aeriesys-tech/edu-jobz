@@ -1,27 +1,39 @@
 const { Designation } = require("../models");
-const { sendResponse } = require("../services/candidate/responseService");
+// const { sendResponse } = require("../services/admin/responseService");
+const { sendResponse } = require("../services/tokenResponseService");
 const { Op } = require("sequelize");
+const redisClient = require("../config/redisConfig");
 
-//Add
+// Add
 const addDesignation = async (req, res) => {
   try {
-    const { designation, description } = req.body;
+    const { designation } = req.body;
 
     // Check if the designation already exists
-    const existingDesignation = await Designation.findOne({ where: { role } });
+    const existingDesignation = await Designation.findOne({
+      where: { designation },
+    });
     if (existingDesignation) {
-      return sendResponse(res, 400, false, "Designation already exists", null, {
-        designation: "Designation already exists",
-      });
+      return sendResponse(
+        req,
+        res,
+        400,
+        false,
+        "Designation already exists",
+        null,
+        {
+          designation: "Designation already exists",
+        }
+      );
     }
 
-    // Create the new role
-    const newDesignation = await Designation.create({
-      designation,
-      description,
-    });
+    // Create the new designation
+    const newDesignation = await Designation.create({ designation });
 
+    // Invalidate cache by deleting the cached countries key
+    await redisClient.del("countries");
     sendResponse(
+      req,
       res,
       200,
       true,
@@ -29,18 +41,19 @@ const addDesignation = async (req, res) => {
       newDesignation
     );
   } catch (error) {
-    sendResponse(res, 500, false, error.message);
+    sendResponse(req, res, 500, false, error.message);
   }
 };
 
-//update
+// Update
 const updateDesignation = async (req, res) => {
   try {
-    const { designation_id, designation, description } = req.body;
+    const { designation_id, designation } = req.body;
 
-    // Check if the role_id and role are provided
+    // Check if designation_id and designation are provided
     if (!designation_id || !designation) {
       return sendResponse(
+        req,
         res,
         400,
         false,
@@ -52,22 +65,24 @@ const updateDesignation = async (req, res) => {
       );
     }
 
-    // Check if the role exists
+    // Check if the designation exists
     const existingDesignation = await Designation.findOne({
-      where: { designation_id: designation_id },
+      where: { designation_id },
     });
     if (!existingDesignation) {
-      return sendResponse(res, 404, false, "Designation not found", null, {
-        role: "Designation not found",
+      return sendResponse(req, res, 404, false, "Designation not found", null, {
+        designation: "Designation not found",
       });
     }
 
-    // Update the role
+    // Update the designation
     existingDesignation.designation = designation;
-    existingDesignation.description = description;
     await existingDesignation.save();
+    // Invalidate cache by deleting the cached countries key
+    await redisClient.del("countries");
 
     sendResponse(
+      req,
       res,
       200,
       true,
@@ -75,11 +90,11 @@ const updateDesignation = async (req, res) => {
       existingDesignation
     );
   } catch (error) {
-    sendResponse(res, 500, false, error.message);
+    sendResponse(req, res, 500, false, error.message);
   }
 };
 
-//Delete
+// Delete
 const deleteDesignation = async (req, res) => {
   try {
     const { designation_id } = req.body;
@@ -87,18 +102,20 @@ const deleteDesignation = async (req, res) => {
     // Fetch the designation including soft-deleted records
     const designation = await Designation.findOne({
       where: { designation_id },
-      paranoid: false, // Allow fetching of soft-deleted roles
+      paranoid: false, // Allow fetching of soft-deleted countries
     });
 
     if (!designation) {
-      return sendResponse(res, 404, false, "Designation not found");
+      return sendResponse(req, res, 404, false, "Designation not found");
     }
 
-    // If the role is marked as deleted, restore it
+    // If the designation is marked as deleted, restore it
     if (designation.deletedAt) {
-      // Note: Use 'deletedAt' directly instead of 'deleted_at'
-      await designation.restore(); // Restore the record
+      await designation.restore();
+      // Invalidate cache by deleting the cached countries key
+      await redisClient.del("countries");
       return sendResponse(
+        req,
         res,
         200,
         true,
@@ -106,41 +123,60 @@ const deleteDesignation = async (req, res) => {
         designation
       );
     } else {
-      // Soft delete the role
-      await designation.destroy(); // Soft delete the record
+      // Soft delete the designation
+      await designation.destroy();
+      // Invalidate cache by deleting the cached countries key
+      await redisClient.del("countries");
       return sendResponse(
+        req,
         res,
         200,
         true,
         "Designation deleted successfully",
-        role
+        designation
       );
     }
   } catch (error) {
-    console.error("Error in deleteRole function:", error);
+    console.error("Error in deleteDesignation function:", error);
     return sendResponse(res, 500, false, error.message);
   }
 };
 
-// Get Roles Controller with Redis Caching
+// Get
 const getDesignations = async (req, res) => {
   try {
-    // Fetch roles from the database
-    const designations = await Designation.findAll({
-      where: { deletedAt: null }, // Explicitly ensure we only fetch active roles
+    const cachedDesignations = await redisClient.get("countries");
+
+    if (cachedDesignations) {
+      return sendResponse(
+        req,
+        res,
+        200,
+        true,
+        "Designations fetched successfully",
+        JSON.parse(cachedDesignations)
+      );
+    }
+
+    const countries = await Designation.findAll({
+      where: {
+        deletedAt: null, // Explicitly ensure we only fetch active countries
+      },
       order: [["designation_id", "ASC"]],
     });
-
+    // Cache the countries
+    await redisClient.setEx("countries", 3600, JSON.stringify(countries));
     sendResponse(
+      req,
       res,
       200,
       true,
       "Designations fetched successfully",
-      designations
+      countries
     );
   } catch (error) {
-    console.error("Error in getRoles function:", error);
-    sendResponse(res, 500, false, error.message);
+    console.error("Error in getDesignations function:", error);
+    sendResponse(req, res, 500, false, error.message);
   }
 };
 
@@ -163,38 +199,34 @@ const paginateDesignations = async (req, res) => {
     // Implement search filter
     const where = {
       ...(search && {
-        [Op.or]: [
-          { designation: { [Op.iLike]: `%${search}%` } },
-          // Add other fields to search by if necessary
-        ],
+        [Op.or]: [{ designation: { [Op.iLike]: `%${search}%` } }],
       }),
     };
 
-    // Fetch roles with pagination and searching
-    const designations = await Designation.findAndCountAll({
+    // Fetch countries with pagination and searching
+    const countries = await Designation.findAndCountAll({
       where,
       limit: parseInt(limit, 10),
       offset: parseInt(offset, 10),
       order: sort,
     });
-
     const responseData = {
-      data: designations.rows,
-      totalPages: Math.ceil(designations.count / limit),
+      data: countries.rows,
+      totalPages: Math.ceil(countries.count / limit),
       currentPage: parseInt(page, 10),
-      totalItems: designations.count,
+      totalItems: countries.count,
     };
-
     sendResponse(
+      req,
       res,
       200,
       true,
-      "Designation fetched successfully",
+      "Designations fetched successfully",
       responseData
     );
   } catch (error) {
-    console.error("Error in paginateRoles function:", error);
-    sendResponse(res, 500, false, error.message);
+    console.error("Error in paginateDesignations function:", error);
+    sendResponse(req, res, 500, false, error.message);
   }
 };
 

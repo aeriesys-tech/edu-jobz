@@ -264,7 +264,7 @@ const resetPassword = async (req, res) => {
     const adminOtp = await AdminOtp.findOne({
       where: {
         admin_id: admin.admin_id,
-        token: otp,
+        otp: otp,
         expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
       },
     });

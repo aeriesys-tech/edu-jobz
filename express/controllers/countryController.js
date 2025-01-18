@@ -1,155 +1,139 @@
 const { Country } = require("../models");
-const { sendResponse } = require("../services/admin/responseService");
+// const { sendResponse } = require("../services/admin/responseService");
+const { sendResponse } = require("../services/tokenResponseService");
 const { Op } = require("sequelize");
 const redisClient = require("../config/redisConfig");
 
-//Add
+// Add
 const addCountry = async (req, res) => {
   try {
-    const { Country } = req.body;
+    const { country } = req.body;
 
-    // Check if the Country already exists
-    const existingCountry = await Country.findOne({ where: { Country } });
+    // Check if the country already exists
+    const existingCountry = await Country.findOne({
+      where: { country },
+    });
     if (existingCountry) {
-      return sendResponse(res, 400, false, "Country already exists", null, {
-        Country: "Country already exists",
-      });
+      return sendResponse(
+        req,
+        res,
+        400,
+        false,
+        "Country already exists",
+        null,
+        {
+          country: "Country already exists",
+        }
+      );
     }
 
-    // Create the new Country
-    const newCountry = await Country.create({ Country });
+    // Create the new country
+    const newCountry = await Country.create({ country });
 
-    // Invalidate cache by deleting the cached Countries key
-    await redisClient.del("Countries");
-
-    sendResponse(res, 200, true, "Country created successfully", newCountry);
+    // Invalidate cache by deleting the cached countries key
+    await redisClient.del("countries");
+    sendResponse(
+      req,
+      res,
+      200,
+      true,
+      "Country created successfully",
+      newCountry
+    );
   } catch (error) {
-    sendResponse(res, 500, false, error.message);
+    sendResponse(req, res, 500, false, error.message);
   }
 };
 
-//update
+// Update
 const updateCountry = async (req, res) => {
   try {
-    const { Country_id, Country } = req.body;
+    const { country_id, country } = req.body;
 
-    // Check if the Country exists
+    // Check if country_id and country are provided
+    if (!country_id || !country) {
+      return sendResponse(
+        req,
+        res,
+        400,
+        false,
+        "Country ID and country are required",
+        null,
+        {
+          country: "Country ID and country are required",
+        }
+      );
+    }
+
+    // Check if the country exists
     const existingCountry = await Country.findOne({
-      where: { Country_id: Country_id },
+      where: { country_id },
     });
     if (!existingCountry) {
-      return sendResponse(res, 404, false, "Country not found", null, {
-        Country: "Country not found",
+      return sendResponse(req, res, 404, false, "Country not found", null, {
+        country: "Country not found",
       });
     }
 
-    // Update the Country
-    existingCountry.Country = Country;
+    // Update the country
+    existingCountry.country = country;
     await existingCountry.save();
-
-    // Invalidate cache by deleting the cached Countries key
-    await redisClient.del("Countries");
+    // Invalidate cache by deleting the cached countries key
+    await redisClient.del("countries");
 
     sendResponse(
+      req,
       res,
       200,
       true,
       "Country updated successfully",
       existingCountry
     );
-    // Check if the Country_id and Country are provided
-    if (!Country_id || !Country) {
-      return sendResponse(
-        res,
-        400,
-        false,
-        "Country ID and Country are required",
-        null,
-        {
-          Country: "Country ID and Country are required",
-        }
-      );
-    }
   } catch (error) {
-    sendResponse(res, 500, false, error.message);
+    sendResponse(req, res, 500, false, error.message);
   }
 };
 
-const getCountries = async (req, res) => {
-  try {
-    // Define a Redis key for Countries
-    const redisKey = "Countries";
-
-    // Check if data exists in Redis cache
-    const cachedCountries = await redisClient.get(redisKey);
-
-    if (cachedCountries) {
-      // If Countries are found in Redis, parse and return the cached data
-      const Countries = JSON.parse(cachedCountries);
-      return sendResponse(
-        res,
-        200,
-        true,
-        "Countries fetched successfully from cache",
-        Countries
-      );
-    }
-
-    // Fetch Countries from the database
-    const Countries = await Country.findAll({
-      where: { deletedAt: null }, // Explicitly ensure we only fetch active Countries
-      order: [["Country_id", "ASC"]],
-    });
-
-    // Store Countries in Redis for future requests, with a TTL of 1 hour (3600 seconds)
-    await redisClient.setEx(redisKey, 3600, JSON.stringify(Countries));
-
-    sendResponse(res, 200, true, "Countries fetched successfully", Countries);
-  } catch (error) {
-    console.error("Error in getCountries function:", error);
-    sendResponse(res, 500, false, error.message);
-  }
-};
-
-//Delete
+// Delete
 const deleteCountry = async (req, res) => {
   try {
-    const { Country_id } = req.body;
+    const { country_id } = req.body;
 
-    // Fetch the Country including soft-deleted records
-    const Country = await Country.findOne({
-      where: { Country_id },
-      paranoid: false, // Allow fetching of soft-deleted Countries
+    // Fetch the country including soft-deleted records
+    const country = await Country.findOne({
+      where: { country_id },
+      paranoid: false, // Allow fetching of soft-deleted countries
     });
 
-    if (!Country) {
-      return sendResponse(res, 404, false, "Country not found");
+    if (!country) {
+      return sendResponse(req, res, 404, false, "Country not found");
     }
 
-    // If the Country is marked as deleted, restore it
-    if (Country.deletedAt) {
-      // Note: Use 'deletedAt' directly instead of 'deleted_at'
-      await Country.restore(); // Restore the record
-      // Invalidate cache by deleting the cached Countries key
-      await redisClient.del("Countries");
+    // If the country is marked as deleted, restore it
+    if (country.deletedAt) {
+      await country.restore();
+      // Invalidate cache by deleting the cached countries key
+      await redisClient.del("countries");
       return sendResponse(
+        req,
         res,
         200,
         true,
         "Country restored successfully",
-        Country
+        country
       );
     } else {
-      // Soft delete the Country
-      await Country.destroy(); // Soft delete the record
-      // Invalidate cache by deleting the cached Countries key
-      await redisClient.del("Countries");
+      // Soft delete the country
+      await country.destroy();
+      // Invalidate cache by deleting the cached countries key
+      await redisClient.del("countries");
       return sendResponse(
+        req,
         res,
         200,
         true,
         "Country deleted successfully",
-        Country
+        country
       );
     }
   } catch (error) {
@@ -158,9 +142,98 @@ const deleteCountry = async (req, res) => {
   }
 };
 
+// Get
+const getCountries = async (req, res) => {
+  try {
+    const cachedCountries = await redisClient.get("countries");
+
+    if (cachedCountries) {
+      return sendResponse(
+        req,
+        res,
+        200,
+        true,
+        "Countries fetched successfully",
+        JSON.parse(cachedCountries)
+      );
+    }
+
+    const countries = await Country.findAll({
+      where: {
+        deletedAt: null, // Explicitly ensure we only fetch active countries
+      },
+      order: [["country_id", "ASC"]],
+    });
+    // Cache the countries
+    await redisClient.setEx("countries", 3600, JSON.stringify(countries));
+    sendResponse(
+      req,
+      res,
+      200,
+      true,
+      "Countries fetched successfully",
+      countries
+    );
+  } catch (error) {
+    console.error("Error in getCountries function:", error);
+    sendResponse(req, res, 500, false, error.message);
+  }
+};
+
+// Paginate
+const paginateCountries = async (req, res) => {
+  try {
+    const {
+      page = 1,
+      limit = 10,
+      sortBy = "created_at",
+      order = "asc",
+      search = "",
+    } = req.query;
+
+    const offset = (page - 1) * limit;
+
+    // Build the sort object dynamically
+    const sort = [[sortBy, order.toUpperCase()]];
+
+    // Implement search filter
+    const where = {
+      ...(search && {
+        [Op.or]: [{ country: { [Op.iLike]: `%${search}%` } }],
+      }),
+    };
+
+    // Fetch countries with pagination and searching
+    const countries = await Country.findAndCountAll({
+      where,
+      limit: parseInt(limit, 10),
+      offset: parseInt(offset, 10),
+      order: sort,
+    });
+    const responseData = {
+      data: countries.rows,
+      totalPages: Math.ceil(countries.count / limit),
+      currentPage: parseInt(page, 10),
+      totalItems: countries.count,
+    };
+    sendResponse(
+      req,
+      res,
+      200,
+      true,
+      "Countries fetched successfully",
+      responseData
+    );
+  } catch (error) {
+    console.error("Error in paginateCountries function:", error);
+    sendResponse(req, res, 500, false, error.message);
+  }
+};
+
 module.exports = {
   addCountry,
   updateCountry,
-  getCountries,
   deleteCountry,
+  getCountries,
+  paginateCountries,
 };
