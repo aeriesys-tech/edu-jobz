@@ -1,20 +1,17 @@
 
 
-import DashFooter from "../candidate/footer"
+import DashFooter from "../../candidate/footer"
 
-import das1 from '../../assets/img/dash1.svg'
-import das2 from '../../assets/img/dash2.svg'
-import das3 from '../../assets/img/dash3.svg'
-import das4 from '../../assets/img/dash4.svg'
+
 import { Link, useLocation } from 'react-router-dom'
-import logo from '../../assets/img/logo.png'
-import AdminMenu from "./adminmenus"
+import logo from '../../../assets/img/logo.png'
+import AdminMenu from "../adminmenus"
 import DashMenuBar from "./adminconfigmenu"
-import AdminHeader from "./header"
+import AdminHeader from "../header"
 
 
 
-function AdminConfiguration() {
+function AdminState() {
     const location = useLocation();
 
     const isActive = (path) => location.pathname === path;
@@ -40,12 +37,12 @@ function AdminConfiguration() {
                                                         <div class="nk-fmg-body nk-fmg-filebody ">
                                                             <div class="nk-fmg-body-head d-none d-lg-flex">
                                                                 <div class="nk-block-head-content">
-                                                                    <h3 class="nk-block-title page-title">Country</h3>
+                                                                    <h3 class="nk-block-title page-title">States</h3>
                                                                 </div>
                                                                 <div class="nk-fmg-actions">
                                                                     <ul class="nk-block-tools g-3">
 
-                                                                        <li><a href="#file-upload" class="btn btn-primary"
+                                                                        <li><a href="#file-add" class="btn btn-primary"
                                                                             data-bs-toggle="modal"><em class="icon ni ni-plus"></em>
                                                                             <span>Add</span></a>
                                                                         </li>
@@ -61,7 +58,16 @@ function AdminConfiguration() {
                                                                                 <th class="nk-tb-col ">Name</th>
 
                                                                                 <th class="nk-tb-col tb-col-mb" >Added date</th>
-
+                                                                                <th class="nk-tb-col nk-tb-col-tools pl-3">
+                                                                                    <ul class="nk-tb-actions gx-1 my-n1 ">
+                                                                                        <li class="me-n1">
+                                                                                        <td class=" tb-col-mb">
+                                                                                        <a href="#file-upload" class="btn" ><em
+                                                                                        class="icon ni "></em><span>Actions</span></a></td>
+                                                                                            
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -73,22 +79,12 @@ function AdminConfiguration() {
                                                                                 <td class="nk-tb-col nk-tb-col-tools">
                                                                                     <ul class="nk-tb-actions gx-1 my-n1">
                                                                                         <li class="me-n1">
-                                                                                            <div class="dropdown"><a href="#"
-                                                                                                class="dropdown-toggle btn btn-icon btn-trigger"
-                                                                                                data-bs-toggle="dropdown"><em
-                                                                                                    class="icon ni ni-more-h"></em></a>
-                                                                                                <div class="dropdown-menu dropdown-menu-end">
-                                                                                                    <ul class="link-list-opt no-bdr">
-                                                                                                        <li><a href="#"><em
-                                                                                                            class="icon ni ni-edit"></em><span>Edit
-                                                                                                                Product</span></a></li>
-
-                                                                                                        <li><a href="#"><em
-                                                                                                            class="icon ni ni-trash"></em><span>Remove
-                                                                                                                Product</span></a></li>
-                                                                                                    </ul>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                        <td class=" tb-col-mb"><a href="#update" class="btn"
+                                                                                    data-bs-toggle="modal"><em
+                                                                                        class="icon ni ni-edit"></em><span></span></a>
+                                                                                        <a href="#file-upload" class="btn" ><em
+                                                                                        class="icon ni ni-trash"></em><span></span></a></td>
+                                                                                            
                                                                                         </li>
                                                                                     </ul>
                                                                                 </td>
@@ -101,22 +97,12 @@ function AdminConfiguration() {
                                                                                 <td class="nk-tb-col nk-tb-col-tools">
                                                                                     <ul class="nk-tb-actions gx-1 my-n1">
                                                                                         <li class="me-n1">
-                                                                                            <div class="dropdown"><a href="#"
-                                                                                                class="dropdown-toggle btn btn-icon btn-trigger"
-                                                                                                data-bs-toggle="dropdown"><em
-                                                                                                    class="icon ni ni-more-h"></em></a>
-                                                                                                <div class="dropdown-menu dropdown-menu-end">
-                                                                                                    <ul class="link-list-opt no-bdr">
-                                                                                                        <li><a href="#"><em
-                                                                                                            class="icon ni ni-edit"></em><span>Edit
-                                                                                                                Product</span></a></li>
-
-                                                                                                        <li><a href="#"><em
-                                                                                                            class="icon ni ni-trash"></em><span>Remove
-                                                                                                                Product</span></a></li>
-                                                                                                    </ul>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                        <td class=" tb-col-mb"><a href="#update" class="btn"
+                                                                                    data-bs-toggle="modal"><em
+                                                                                        class="icon ni ni-edit"></em><span></span></a>
+                                                                                        <a href="#file-upload" class="btn" ><em
+                                                                                        class="icon ni ni-trash"></em><span></span></a></td>
+                                                                                            
                                                                                         </li>
                                                                                     </ul>
                                                                                 </td>
@@ -129,22 +115,12 @@ function AdminConfiguration() {
                                                                                 <td class="nk-tb-col nk-tb-col-tools">
                                                                                     <ul class="nk-tb-actions gx-1 my-n1">
                                                                                         <li class="me-n1">
-                                                                                            <div class="dropdown"><a href="#"
-                                                                                                class="dropdown-toggle btn btn-icon btn-trigger"
-                                                                                                data-bs-toggle="dropdown"><em
-                                                                                                    class="icon ni ni-more-h"></em></a>
-                                                                                                <div class="dropdown-menu dropdown-menu-end">
-                                                                                                    <ul class="link-list-opt no-bdr">
-                                                                                                        <li><a href="#"><em
-                                                                                                            class="icon ni ni-edit"></em><span>Edit
-                                                                                                                Product</span></a></li>
-
-                                                                                                        <li><a href="#"><em
-                                                                                                            class="icon ni ni-trash"></em><span>Remove
-                                                                                                                Product</span></a></li>
-                                                                                                    </ul>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                        <td class=" tb-col-mb"><a href="#update" class="btn"
+                                                                                    data-bs-toggle="modal"><em
+                                                                                        class="icon ni ni-edit"></em><span></span></a>
+                                                                                        <a href="#file-upload" class="btn" ><em
+                                                                                        class="icon ni ni-trash"></em><span></span></a></td>
+                                                                                            
                                                                                         </li>
                                                                                     </ul>
                                                                                 </td>
@@ -157,22 +133,12 @@ function AdminConfiguration() {
                                                                                 <td class="nk-tb-col nk-tb-col-tools">
                                                                                     <ul class="nk-tb-actions gx-1 my-n1">
                                                                                         <li class="me-n1">
-                                                                                            <div class="dropdown"><a href="#"
-                                                                                                class="dropdown-toggle btn btn-icon btn-trigger"
-                                                                                                data-bs-toggle="dropdown"><em
-                                                                                                    class="icon ni ni-more-h"></em></a>
-                                                                                                <div class="dropdown-menu dropdown-menu-end">
-                                                                                                    <ul class="link-list-opt no-bdr">
-                                                                                                        <li><a href="#"><em
-                                                                                                            class="icon ni ni-edit"></em><span>Edit
-                                                                                                                Product</span></a></li>
-
-                                                                                                        <li><a href="#"><em
-                                                                                                            class="icon ni ni-trash"></em><span>Remove
-                                                                                                                Product</span></a></li>
-                                                                                                    </ul>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                        <td class=" tb-col-mb"><a href="#update" class="btn"
+                                                                                    data-bs-toggle="modal"><em
+                                                                                        class="icon ni ni-edit"></em><span></span></a>
+                                                                                        <a href="#file-upload" class="btn" ><em
+                                                                                        class="icon ni ni-trash"></em><span></span></a></td>
+                                                                                            
                                                                                         </li>
                                                                                     </ul>
                                                                                 </td>
@@ -185,12 +151,12 @@ function AdminConfiguration() {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal fade" tabindex="-1" role="dialog" id="file-upload">
+                                                        <div class="modal fade" tabindex="-1" role="dialog" id="file-add">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title" id="exampleModalLabel">
-                                                                            Add Country</h5>
+                                                                            Add States</h5>
                                                                         <button type="button" class="close"
                                                                             data-bs-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
@@ -200,10 +166,10 @@ function AdminConfiguration() {
                                                                         <form>
                                                                             <div class="form-group">
                                                                                 <label for=""
-                                                                                    class="form-label  fw-bold ">Country Name</label>
+                                                                                    class="form-label  fw-bold ">States</label>
                                                                                 <input type="text" class="form-control"
                                                                                     id="recipient-name"
-                                                                                    placeholder="Enter Skill" />
+                                                                                    placeholder="Enter State" />
                                                                             </div>
 
 
@@ -217,7 +183,38 @@ function AdminConfiguration() {
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="modal fade" tabindex="-1" role="dialog" id="update">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                            Edit </h5>
+                                                                        <button type="button" class="close"
+                                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form>
+                                                                            <div class="form-group">
+                                                                                <label for=""
+                                                                                    class="form-label  fw-bold ">States </label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="recipient-name"
+                                                                                    placeholder="Enter State" />
+                                                                            </div>
 
+
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-primary">Update</button>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <DashMenuBar />
                                                     </div>
                                                 </div>
@@ -238,4 +235,4 @@ function AdminConfiguration() {
         </>
 
     )
-} export default AdminConfiguration
+} export default AdminState

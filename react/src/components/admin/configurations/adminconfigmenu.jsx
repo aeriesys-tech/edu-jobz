@@ -5,6 +5,7 @@ function DashMenuBar() {
     const location = useLocation();
 
     const isActive = (path) => location.pathname === path;
+    const isParentActive = (basePath) => location.pathname.startsWith(basePath);
     
     return (
         <>
@@ -18,14 +19,15 @@ function DashMenuBar() {
                         <ul class="link-list-menu">
                             <li class={isActive('/admin/configurations') ? 'active' : ''}><Link class="" to="/admin/configurations"><em
                                 class="icon ni ni-user-fill-c"></em><span>Country</span></Link></li>
-                                    <li class={isActive('/admin/Configurations/state') ? 'active' : ''}><Link to="/admin/Configurations/state"><em
+                                    <li class={isActive('/admin/configurations/state') ? 'active' : ''}><Link to="/admin/configurations/state"><em
                                 class="icon ni ni-lock-alt-fill"></em><span>State</span></Link></li>
-                            {/*<li class={isActive('/candidate/profile/socialmedia') ? 'active' : ''}><Link
-                                to="/candidate/profile/socialmedia"><em
-                                    class="icon ni ni-bell-fill"></em><span>Social Media</span></Link>
-                            </li>
-                            <li class={isActive('/candidate/profile/experience') ? 'active' : ''}><Link to="/candidate/profile/experience"><em class="icon ni ni-briefcase-fill"></em><span>Experience</span></Link></li>
+                          <li class={isActive('/admin/configurations/city') ? 'active' : ''}><Link to="/admin/configurations/city"><em class="icon ni ni-briefcase-fill"></em><span>City</span></Link></li>
 
+                            <li class={isActive('/admin/configurations/designations') ? 'active' : ''}><Link
+                                to="/admin/configurations/designations"><em
+                                    class="icon ni ni-bell-fill"></em><span>Designations</span></Link>
+                            </li>
+{/*
                             <li class={isActive('/candidate/profile/academic') ? 'active' : ''}><Link to="/candidate/profile/academic"><em class="icon ni ni-medal-fill"></em><span>Education</span></Link></li>
                             <li class={isActive('/candidate/profile/skill') ? 'active' : ''}><Link to="/candidate/profile/skill"><em
                                 class="icon ni ni-activity-round-fill"></em><span>Skill</span></Link></li>

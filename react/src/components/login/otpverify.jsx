@@ -20,6 +20,10 @@ function ResetOTP() {
   const bearerToken = "your_bearer_token_here"; // Replace with your actual token
 
   useEffect(() => {
+    if (storedEmail) {
+      setEmail(storedEmail); // Automatically set the email if it's stored
+    }
+
     if (timer > 0) {
       const interval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
@@ -28,7 +32,7 @@ function ResetOTP() {
     } else {
       setShowResendButton(true);
     }
-  }, [timer]);
+  }, [timer, storedEmail]);
 
   const handleKeyUp = (event, index) => {
     const key = event.key;
@@ -48,65 +52,89 @@ function ResetOTP() {
     setOtp(value);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setLoading(true);
     setErrors({});
 
-    if (newPassword !== confirmPassword) {
-      toast.error("Passwords do not match!");
-      setLoading(false);
-      return;
-    }
+    // Define new API endpoints for resetPassword
+    const candidateUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/resetPassword`;
+    const adminUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/admin/resetPassword`;
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/resetPassword`,
-        {
-          email: storedEmail || email,
-          otp,
-          newPassword,
-          confirmPassword,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${bearerToken}`,
-          },
+        // Send both requests simultaneously for password reset
+        const [adminResponse, candidateResponse] = await Promise.allSettled([
+            axios.post(adminUrl, {
+                email: email,
+                otp: otp,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword,
+            }, {
+                headers: { "Content-Type": "application/json" },
+            }),
+            axios.post(candidateUrl, {
+                email: email,
+                otp: otp,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword,
+            }, {
+                headers: { "Content-Type": "application/json" },
+            }),
+        ]);
+
+        // Handle admin response
+        if (adminResponse.status === "fulfilled" && adminResponse.value.data.success) {
+            toast.success("Admin password reset successfully!");
+        } else if (adminResponse.status === "rejected") {
+            toast.error("Admin password reset failed.");
         }
-      );
 
-      const data = response.data;
+        // Handle candidate response
+        if (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success) {
+            toast.success("Candidate password reset successfully!");
+        } else if (candidateResponse.status === "rejected") {
+            toast.error("Candidate password reset failed.");
+        }
 
-      sessionStorage.setItem("jwt_token", data.token);
-      sessionStorage.setItem("user", JSON.stringify(data.user));
-      sessionStorage.setItem("role", JSON.stringify(data.role));
+        // Navigate to /success if at least one request succeeds
+        if (
+            (adminResponse.status === "fulfilled" && adminResponse.value.data.success) ||
+            (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success)
+        ) {
+            navigate("/success");
+        }
 
-      toast.success("Password reset successfully!");
-      navigate("/success"); // Redirect to login page
     } catch (error) {
-      if (error.response && error.response.data) {
-        const errorMessage = error.response.data.message;
-        setErrors(error.response.data.errors || {});
-        toast.error(errorMessage);
-      } else {
-        console.error("Error occurred:", error);
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+        if (error.response && error.response.data) {
+            const errorData = error.response.data;
+            const errorMessage = errorData.message;
+
+            setErrors(errorData.errors || {});
+            toast.error(errorMessage);
+        } else {
+            console.error("Error occurred:", error);
+            toast.error("An unexpected error occurred. Please try again.");
+        }
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
+
 
   const handleResendOTP = async () => {
     setLoading(true);
     setShowResendButton(false);
     setTimer(60);
 
+    const isAdmin = sessionStorage.getItem("role") === "admin"; // Check if the role is admin
+    const apiEndpoint = isAdmin
+      ? `${import.meta.env.VITE_BASE_API_URL1}/api/admin/resendOtp`
+      : `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/resendOtp`;
+
     try {
       await axios.post(
-        `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/resendOtp`,
-        { email: storedEmail || email },
+        apiEndpoint,
+        { email: email },
         {
           headers: {
             "Content-Type": "application/json",
@@ -117,7 +145,7 @@ function ResetOTP() {
 
       toast.success("OTP resent successfully!");
     } catch (error) {
-      if (error.response && error.response.data) {  
+      if (error.response && error.response.data) {
         const errorMessage = error.response.data.message;
         setErrors(error.response.data.errors || {});
         toast.error(errorMessage);
