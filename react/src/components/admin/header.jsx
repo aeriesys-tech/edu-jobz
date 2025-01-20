@@ -159,8 +159,8 @@ function AdminHeader(){
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
-                                                        <a><em class="icon ni ni-signout"></em><span onClick={handleLogout}>Sign
-                                                                out</span></a>
+                                                        <Link to="/admin/login"><em class="icon ni ni-signout"></em><span onClick={handleLogout}>Sign
+                                                                out</span></Link>
                                                     </li>
                                                 </ul>
                                             </div>

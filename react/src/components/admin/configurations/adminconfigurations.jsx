@@ -17,7 +17,8 @@ function AdminCountry() {
     const token = sessionStorage.getItem("tokenadmin");
     console.log(">>>>>>>>>>>>>>>>>token", token)
     const [newCountry, setNewCountry] = useState('');
-
+    const [selectedCountryId, setSelectedCountryId] = useState(null);
+    const [updatedCountryName, setUpdatedCountryName] = useState('');
 
     const handleAddCountry = () => {
         axios
@@ -35,10 +36,10 @@ function AdminCountry() {
                 setNewCountry(''); // Reset the input field
                 console.log('Country added:', response.data.data);
                 // Close the modal (using Bootstrap's modal close functionality)
-               // Close the modal (using Bootstrap's modal close functionality)
-            const modal = document.getElementById('file-add');
-            const modalInstance = bootstrap.Modal.getInstance(modal);
-            modalInstance.hide(); 
+                // Close the modal (using Bootstrap's modal close functionality)
+                const modal = document.getElementById('file-add');
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                modalInstance.hide();
             })
             .catch((error) => {
                 console.error('Error adding country:', error);
@@ -79,6 +80,77 @@ function AdminCountry() {
             });
     }, []);
 
+    // delete 
+    const handleDeleteCountry = (countryId) => {
+        if (!token) {
+            console.error("Token is missing");
+            alert("Please log in to perform this action.");
+            return;
+        }
+    
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/countries/deleteCountry`,
+                { country_id: countryId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log('Country deleted:', response.data);
+    
+                // Update the state to remove the deleted country from the table
+                setCountries((prev) => prev.filter((country) => country.country_id !== countryId));
+    
+                // alert('Country successfully deleted.');
+            })
+            .catch((error) => {
+                console.error('Error deleting country:', error.response?.data || error);
+                alert('An error occurred while deleting the country.');
+            });
+    };
+    
+
+    // Update
+    const handleUpdateCountry = (countryId, updatedCountryName) => {
+        if (!token) {
+            console.error("Token is missing");
+            alert("Please log in to perform this action.");
+            return;
+        }
+
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/countries/updateCountry`,
+                { country_id: countryId, country: updatedCountryName },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log('Country updated:', response.data);
+                // Update the state with the updated country data
+                setCountries((prev) =>
+                    prev.map((country) =>
+                        country.country_id === countryId
+                            ? { ...country, country: updatedCountryName }
+                            : country
+                    )
+                );
+
+                // Close the modal after updating
+                const modal = document.getElementById('update');
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                modalInstance.hide();
+            })
+            .catch((error) => {
+                console.error('Error updating country:', error.response?.data || error);
+            });
+    };
 
 
     const location = useLocation();
@@ -123,6 +195,7 @@ function AdminCountry() {
                                                                     <table class=" nowrap nk-tb-list nk-tb-ulist" data-auto-responsive="false">
                                                                         <thead>
                                                                             <tr class="nk-tb-item nk-tb-head">
+                                                                                <th class="nk-tb-col ">Id</th>
 
                                                                                 <th class="nk-tb-col ">Name</th>
 
@@ -131,7 +204,7 @@ function AdminCountry() {
                                                                                     <ul class="nk-tb-actions gx-1 my-n1 ">
                                                                                         <li class="me-n1">
                                                                                             <td class=" tb-col-mb">
-                                                                                                <a href="#file-upload" class="btn" ><em
+                                                                                                <a  class="btn" ><em
                                                                                                     class="icon ni "></em><span>Actions</span></a></td>
 
                                                                                         </li>
@@ -140,16 +213,21 @@ function AdminCountry() {
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            {countries.map((country, index) => (
-                                                                                <tr key={index} className="nk-tb-item">
+                                                                            {countries.map((country,index) => (
+                                                                                <tr key={country.id} className="nk-tb-item">
+                                                                                    <td className="nk-tb-col">{index+1}</td>
+
                                                                                     <td className="nk-tb-col">{country.country}</td>
                                                                                     <td className="nk-tb-col nk-tb-col-tools">
                                                                                         <ul className="nk-tb-actions gx-1 my-n1">
                                                                                             <li className="me-n1">
-                                                                                                <a href="#update" className="btn" data-bs-toggle="modal">
+                                                                                                <a href="#update" onClick={() => {
+                                                                                                    setSelectedCountryId(country.country_id);
+                                                                                                    setUpdatedCountryName(country.country);
+                                                                                                }} className="btn" data-bs-toggle="modal">
                                                                                                     <em className="icon ni ni-edit"></em>
                                                                                                 </a>
-                                                                                                <a href="#file-upload" className="btn" data-bs-toggle="modal">
+                                                                                                <a onClick={() => handleDeleteCountry(country.country_id)} className="btn" data-bs-toggle="modal">
                                                                                                     <em className="icon ni ni-trash"></em>
                                                                                                 </a>
                                                                                             </li>
@@ -212,13 +290,18 @@ function AdminCountry() {
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form>
+                                                                        <form onSubmit={(e) => e.preventDefault()}>
                                                                             <div class="form-group">
                                                                                 <label for=""
                                                                                     class="form-label  fw-bold ">Country </label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="recipient-name"
-                                                                                    placeholder="Enter Country" />
+                                                                                <input
+                                                                                    type="text"
+                                                                                    className="form-control"
+                                                                                    id="updated-country-name"
+                                                                                    placeholder="Enter Country"
+                                                                                    value={updatedCountryName}
+                                                                                    onChange={(e) => setUpdatedCountryName(e.target.value)}
+                                                                                />
                                                                             </div>
 
 
@@ -226,7 +309,7 @@ function AdminCountry() {
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button"
-                                                                            class="btn btn-primary">Update</button>
+                                                                            class="btn btn-primary"  onClick={() => handleUpdateCountry(selectedCountryId, updatedCountryName)}>Update</button>
 
                                                                     </div>
                                                                 </div>

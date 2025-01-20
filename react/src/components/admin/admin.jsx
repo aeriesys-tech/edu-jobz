@@ -115,7 +115,7 @@ function AdminLogin() {
                                                     )}
                                                 </div>
                                                 <div class="form-control-wrap">
-                                                    <a tabindex="-1" href="#" class="form-icon form-icon-left passcode-switch lg" data-target="password">
+                                                    <a tabindex="-1"  class="form-icon form-icon-left passcode-switch lg" data-target="password">
                                                         <em class="passcode-icon icon-show icon ni ni-eye"></em><em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
                                                     </a>
                                                     <input

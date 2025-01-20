@@ -27,9 +27,9 @@ function DashMenuBar() {
                                 to="/admin/configurations/designations"><em
                                     class="icon ni ni-bell-fill"></em><span>Designations</span></Link>
                             </li>
-{/*
-                            <li class={isActive('/candidate/profile/academic') ? 'active' : ''}><Link to="/candidate/profile/academic"><em class="icon ni ni-medal-fill"></em><span>Education</span></Link></li>
-                            <li class={isActive('/candidate/profile/skill') ? 'active' : ''}><Link to="/candidate/profile/skill"><em
+
+                            <li class={isActive('/admin/configurations/subject') ? 'active' : ''}><Link to="/admin/configurations/subject"><em class="icon ni ni-medal-fill"></em><span>Subjects</span></Link></li>
+                  {/*         <li class={isActive('/candidate/profile/skill') ? 'active' : ''}><Link to="/candidate/profile/skill"><em
                                 class="icon ni ni-activity-round-fill"></em><span>Skill</span></Link></li>
                             
                             <li class={isActive('/candidate/profile/resume') ? 'active' : ''}><Link to="/candidate/profile/resume"><em class="icon ni ni-briefcase-fill"></em><span>Documents</span></Link></li> */}

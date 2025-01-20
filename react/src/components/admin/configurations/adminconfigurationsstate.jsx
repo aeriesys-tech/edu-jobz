@@ -8,10 +8,174 @@ import logo from '../../../assets/img/logo.png'
 import AdminMenu from "../adminmenus"
 import DashMenuBar from "./adminconfigmenu"
 import AdminHeader from "../header"
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 function AdminState() {
+    const [countries, setCountries] = useState([]);
+    const [states, setStates] = useState([]);
+
+    const token = sessionStorage.getItem("tokenadmin");
+    console.log(">>>>>>>>>>>>>>>>>token", token)
+    const [newState, setNewState] = useState('');
+    const [selectedCountryId, setSelectedCountryId] = useState('');
+    const [updatedStateName, setUpdatedStateName] = useState('');
+   
+    
+
+    useEffect(() => {
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/countries/getCountries`,
+                {
+                    country: countries, // Adjust based on API requirements
+                    filter: 'all',
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+                    },
+                }
+            )
+            .then((response) => {
+                setCountries(response.data.data);
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", response.data.data);
+            })
+            .catch((error) => {
+                if (error.response) {
+                    // Server responded with a status outside the 2xx range
+                    console.error('Response error:', error.response.data);
+                    console.error('Status:', error.response.status);
+                    console.error('Headers:', error.response.headers);
+                } else if (error.request) {
+                    // No response received from server
+                    console.error('Request error:', error.request);
+                } else {
+                    // Other errors
+                    console.error('Error:', error.message);
+                }
+            });
+    }, []);
+
+    useEffect(() => {
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/states/paginateStates`,
+                {
+                    state: states, // Adjust based on API requirements
+                    filter: 'all',
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+                    },
+                }
+            )
+            .then((response) => {
+                setStates(response.data.data.data); // Access the nested "data" array
+                console.log("States:", response.data.data.data);
+            })
+            .catch((error) => {
+                if (error.response) {
+                    // Server responded with a status outside the 2xx range
+                    console.error('Response error:', error.response.data);
+                    console.error('Status:', error.response.status);
+                    console.error('Headers:', error.response.headers);
+                } else if (error.request) {
+                    // No response received from server
+                    console.error('Request error:', error.request);
+                } else {
+                    // Other errors
+                    console.error('Error:', error.message);
+                }
+            });
+    }, []);
+
+
+    // add states
+    const handleAddState = () => {
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/states/addState`,
+                {
+                    state: newState,
+                    country_id: selectedCountryId,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log('State added:', response.data.data);
+                setStates((prevStates) => [...prevStates, response.data.data]); // Add new state to the list
+                setNewState(''); // Reset the input field
+                setSelectedCountryId(''); // Reset the dropdown
+                // Close the modal (using Bootstrap's modal close functionality)
+                const modal = document.getElementById('file-add');
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                modalInstance.hide();
+            })
+            .catch((error) => {
+                console.error('Error adding state:', error);
+            });
+    };
+
+    // update
+    const handleUpdateState = () => {
+        if (!token) {
+            console.error("Token is missing");
+            alert("Please log in to perform this action.");
+            return;
+        }
+    
+        // Ensure both country ID and state name are provided
+        if (!selectedCountryId || !updatedStateName) {
+            alert("Please select a country and enter a state name.");
+            return;
+        }
+    
+        // Assuming stateId is selected or provided somehow (e.g., when editing an existing state)
+        const stateId = selectedStateId; // Make sure this state is also tracked if needed
+    
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/states/updateState`,
+                {
+                    state_id: stateId,         // state ID to be updated
+                    country_id: selectedCountryId, // selected country ID
+                    state: updatedStateName     // updated state name
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log('State updated:', response.data);
+                // Update the state with the updated state and country data
+                setStates((prev) =>
+                    prev.map((state) =>
+                        state.state_id === stateId
+                            ? { ...state, state: updatedStateName, country_id: selectedCountryId }
+                            : state
+                    )
+                );
+    
+                // Close the modal after updating
+                const modal = document.getElementById('update');
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                modalInstance.hide();
+            })
+            .catch((error) => {
+                console.error('Error updating state and country:', error.response?.data || error);
+            });
+    };
+    
+
     const location = useLocation();
 
     const isActive = (path) => location.pathname === path;
@@ -54,98 +218,43 @@ function AdminState() {
                                                                     <table class=" nowrap nk-tb-list nk-tb-ulist" data-auto-responsive="false">
                                                                         <thead>
                                                                             <tr class="nk-tb-item nk-tb-head">
+                                                                                <th class="nk-tb-col ">Id</th>
 
                                                                                 <th class="nk-tb-col ">Name</th>
 
-                                                                                <th class="nk-tb-col tb-col-mb" >Added date</th>
+
                                                                                 <th class="nk-tb-col nk-tb-col-tools pl-3">
                                                                                     <ul class="nk-tb-actions gx-1 my-n1 ">
                                                                                         <li class="me-n1">
-                                                                                        <td class=" tb-col-mb">
-                                                                                        <a href="#file-upload" class="btn" ><em
-                                                                                        class="icon ni "></em><span>Actions</span></a></td>
-                                                                                            
+                                                                                            <td class=" tb-col-mb">
+                                                                                                <a class="btn" ><em
+                                                                                                    class="icon ni "></em><span>Actions</span></a></td>
+
                                                                                         </li>
                                                                                     </ul>
                                                                                 </th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr class="nk-tb-item">
+                                                                            {states.map((state, index) => (
+                                                                                <tr key={state.id} className="nk-tb-item">
+                                                                                    <td className="nk-tb-col">{index + 1}</td>
 
-                                                                                <td class="nk-tb-col ">England</td>
-
-                                                                                <td class="nk-tb-col tb-col-mb">2011/04/25</td>
-                                                                                <td class="nk-tb-col nk-tb-col-tools">
-                                                                                    <ul class="nk-tb-actions gx-1 my-n1">
-                                                                                        <li class="me-n1">
-                                                                                        <td class=" tb-col-mb"><a href="#update" class="btn"
-                                                                                    data-bs-toggle="modal"><em
-                                                                                        class="icon ni ni-edit"></em><span></span></a>
-                                                                                        <a href="#file-upload" class="btn" ><em
-                                                                                        class="icon ni ni-trash"></em><span></span></a></td>
-                                                                                            
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="nk-tb-item">
-
-                                                                                <td class="nk-tb-col " >USA</td>
-
-                                                                                <td class="nk-tb-col tb-col-mb">2011/07/25</td>
-                                                                                <td class="nk-tb-col nk-tb-col-tools">
-                                                                                    <ul class="nk-tb-actions gx-1 my-n1">
-                                                                                        <li class="me-n1">
-                                                                                        <td class=" tb-col-mb"><a href="#update" class="btn"
-                                                                                    data-bs-toggle="modal"><em
-                                                                                        class="icon ni ni-edit"></em><span></span></a>
-                                                                                        <a href="#file-upload" class="btn" ><em
-                                                                                        class="icon ni ni-trash"></em><span></span></a></td>
-                                                                                            
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="nk-tb-item">
-
-                                                                                <td class="nk-tb-col ">Japan</td>
-
-                                                                                <td class="nk-tb-col tb-col-mb">2009/01/12</td>
-                                                                                <td class="nk-tb-col nk-tb-col-tools">
-                                                                                    <ul class="nk-tb-actions gx-1 my-n1">
-                                                                                        <li class="me-n1">
-                                                                                        <td class=" tb-col-mb"><a href="#update" class="btn"
-                                                                                    data-bs-toggle="modal"><em
-                                                                                        class="icon ni ni-edit"></em><span></span></a>
-                                                                                        <a href="#file-upload" class="btn" ><em
-                                                                                        class="icon ni ni-trash"></em><span></span></a></td>
-                                                                                            
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="nk-tb-item">
-
-                                                                                <td class="nk-tb-col">Nepal</td>
-
-                                                                                <td class="nk-tb-col tb-col-mb">2012/03/29</td>
-                                                                                <td class="nk-tb-col nk-tb-col-tools">
-                                                                                    <ul class="nk-tb-actions gx-1 my-n1">
-                                                                                        <li class="me-n1">
-                                                                                        <td class=" tb-col-mb"><a href="#update" class="btn"
-                                                                                    data-bs-toggle="modal"><em
-                                                                                        class="icon ni ni-edit"></em><span></span></a>
-                                                                                        <a href="#file-upload" class="btn" ><em
-                                                                                        class="icon ni ni-trash"></em><span></span></a></td>
-                                                                                            
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </td>
-                                                                            </tr >
-
-
-
+                                                                                    <td className="nk-tb-col">{state.state}</td>
+                                                                                    <td className="nk-tb-col nk-tb-col-tools">
+                                                                                        <ul className="nk-tb-actions gx-1 my-n1">
+                                                                                            <li className="me-n1">
+                                                                                                <a href="#update" className="btn" data-bs-toggle="modal">
+                                                                                                    <em className="icon ni ni-edit"></em>
+                                                                                                </a>
+                                                                                                <a className="btn" data-bs-toggle="modal">
+                                                                                                    <em className="icon ni ni-trash"></em>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            ))}
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -162,14 +271,37 @@ function AdminState() {
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
+                                                                    <div className="modal-body">
+                                                                        <div className="form-group">
+                                                                            <label className="form-label">Country</label>
+                                                                            <select
+                                                                                id="countrySelect"
+                                                                                className="form-select"
+                                                                                value={selectedCountryId}
+                                                                                onChange={(e) => setSelectedCountryId(e.target.value)}
+                                                                            >
+                                                                                <option value="">Select Country</option>
+                                                                                {countries.map((country) => (
+                                                                                    <option key={country.country_id} value={country.country_id}>
+                                                                                        {country.country}
+                                                                                    </option>
+                                                                                ))}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="modal-body">
                                                                         <form>
                                                                             <div class="form-group">
                                                                                 <label for=""
                                                                                     class="form-label  fw-bold ">States</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="recipient-name"
-                                                                                    placeholder="Enter State" />
+                                                                                <input
+                                                                                    type="text"
+                                                                                    id="stateName"
+                                                                                    className="form-control"
+                                                                                    placeholder="Enter State"
+                                                                                    value={newState}
+                                                                                    onChange={(e) => setNewState(e.target.value)}
+                                                                                />
                                                                             </div>
 
 
@@ -177,7 +309,12 @@ function AdminState() {
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button"
-                                                                            class="btn btn-primary">Submit</button>
+                                                                            class="btn btn-primary" onClick={() => {
+                                                                                handleAddState();
+                                                                                const modal = document.getElementById('file-add');
+                                                                                const modalInstance = bootstrap.Modal.getInstance(modal);
+                                                                                modalInstance.hide();
+                                                                            }}>Submit</button>
 
                                                                     </div>
                                                                 </div>
@@ -187,34 +324,47 @@ function AdminState() {
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                                            Edit </h5>
-                                                                        <button type="button" class="close"
-                                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form>
-                                                                            <div class="form-group">
-                                                                                <label for=""
-                                                                                    class="form-label  fw-bold ">States </label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="recipient-name"
-                                                                                    placeholder="Enter State" />
-                                                                            </div>
-
-
-                                                                        </form>
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Country</label>
+                                                                            <select
+                                                                                id="countrySelect"
+                                                                                class="form-select"
+                                                                                value={selectedCountryId}
+                                                                                onChange={(e) => setSelectedCountryId(e.target.value)}
+                                                                            >
+                                                                                <option value="">Select Country</option>
+                                                                                {countries.map((country) => (
+                                                                                    <option key={country.country_id} value={country.country_id}>
+                                                                                        {country.country}
+                                                                                    </option>
+                                                                                ))}
+                                                                            </select>
+                                                                        </div>
+                                                                        <div className="form-group">
+                                                                            <label for="" class="form-label fw-bold">State</label>
+                                                                            <input
+                                                                                type="text"
+                                                                                class="form-control"
+                                                                                id="stateInput"
+                                                                                placeholder="Enter State"
+                                                                                value={updatedStateName}
+                                                                                onChange={(e) => setUpdatedStateName(e.target.value)}
+                                                                            />
+                                                                        </div>
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary">Update</button>
-
+                                                                        <button type="button" class="btn btn-primary" onClick={handleUpdateState}>Update</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                         <DashMenuBar />
                                                     </div>
                                                 </div>

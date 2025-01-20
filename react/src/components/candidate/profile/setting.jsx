@@ -13,27 +13,29 @@ function ProfileSettings() {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
-    
+    const [email, setEmail] = useState("");
+    const [otp, setOtp] = useState("");
+
     const bearerToken = sessionStorage.getItem("token123"); // Replace with actual token retrieval logic
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setErrors({});  // Reset errors
-    
+
         // Validation
         if (!oldPassword.trim() || !newPassword.trim() || !confirmPassword.trim()) {
             toast.error("All fields are required!");
             setLoading(false);
             return;
         }
-    
+
         if (newPassword !== confirmPassword) {
             toast.error("Passwords do not match!");
             setLoading(false);
             return;
         }
-    
+
         try {
             const response = await axios.post(
                 `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/updatePassword`, // Replace with the actual endpoint
@@ -49,14 +51,14 @@ function ProfileSettings() {
                     },
                 }
             );
-    
+
             const data = response.data;
-    
+
             // Save token and user data to sessionStorage
             sessionStorage.setItem("jwt_token", data.token);
             sessionStorage.setItem("user", JSON.stringify(data.user));
             sessionStorage.setItem("role", JSON.stringify(data.role));
-    
+
             toast.success("Password updated successfully!");
             // navigate("/"); // Redirect to success page
         } catch (error) {
@@ -73,7 +75,85 @@ function ProfileSettings() {
             setLoading(false);
         }
     };
+
+    // verify email
+    const handleVerifyEmail = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setErrors({}); // Reset errors
+
+        // Validation
+        if (!email.trim() || !otp.trim()) {
+            toast.error("Email and OTP are required!");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/verifyEmail`,
+                {
+                    email,
+                    otp,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const data = response.data;
+
+            toast.success("Email verified successfully!");
+            // Additional actions if needed, such as navigation
+            // navigate("/");
+        } catch (error) {
+            // Handle API error
+            if (error.response && error.response.data) {
+                const errorMessage = error.response.data.message || "Failed to verify email.";
+                setErrors(error.response.data.errors || {});
+                toast.error(errorMessage);
+            } else {
+                console.error("Error occurred:", error);
+                toast.error("An unexpected error occurred. Please try again.");
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+    const sendOtpHandler = async () => {
+        if (!email.trim()) {
+            toast.error("Please enter a valid email address!");
+            return;
+        }
     
+        try {
+            setLoading(true);
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/sendOtp`, // Replace with the actual OTP endpoint
+                { email },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+    
+            toast.success("OTP sent successfully to your email!");
+        } catch (error) {
+            if (error.response && error.response.data) {
+                const errorMessage = error.response.data.message || "Failed to send OTP.";
+                toast.error(errorMessage);
+            } else {
+                console.error("Error occurred:", error);
+                toast.error("An unexpected error occurred. Please try again.");
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
             <body class="nk-body bg-lighter npc-general has-sidebar ">
@@ -165,10 +245,9 @@ function ProfileSettings() {
                                                                                 <p>Activate logs </p>
                                                                             </div>
                                                                             <div class="nk-block-actions flex-shrink-sm-0">
-                                                                                <ul
-                                                                                    class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
+                                                                                <ul class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
                                                                                     <li class="order-md-last">
-                                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verify2" >Verify...</button>
+                                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verify2">Verify...</button>
                                                                                         <div class="modal fade" id="verify2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                                             <div class="modal-dialog" role="document">
                                                                                                 <div class="modal-content">
@@ -181,35 +260,62 @@ function ProfileSettings() {
                                                                                                     <div class="card-body">
                                                                                                         <div class="row">
                                                                                                             <div class="col-sm-12">
-                                                                                                                <div>
-                                                                                                                    <label className="form-label"> Enter Email</label>
-                                                                                                                    <input type="email" class="form-control " />
-
-                                                                                                                </div>
-                                                                                                                <div class="my-3">
-                                                                                                                    <label class="form-label">Enter OTP  </label>
-                                                                                                                    <input type="password" class="form-control " />
-                                                                                                                </div>
-
-                                                                                                                <label class="form-label pt-3 " >Resend OTP ? </label>
-
-
+                                                                                                                <form onSubmit={handleVerifyEmail}>
+                                                                                                                    <div>
+                                                                                                                        <label className="form-label">Enter Email</label>
+                                                                                                                        <input
+                                                                                                                            type="email"
+                                                                                                                            class="form-control"
+                                                                                                                            value={email}
+                                                                                                                            onChange={(e) => setEmail(e.target.value)}
+                                                                                                                            required
+                                                                                                                        />
+                                                                                                                    </div>
+                                                                                                                    {/* <button
+                                                                                                                        type="button"
+                                                                                                                        class="btn btn-primary mt-2"
+                                                                                                                        onClick={sendOtpHandler}
+                                                                                                                    >
+                                                                                                                        Send OTP
+                                                                                                                    </button> */}
+                                                                                                                    <div class="my-3">
+                                                                                                                        <label class="form-label">Enter OTP</label>
+                                                                                                                        <input
+                                                                                                                            type="password"
+                                                                                                                            class="form-control"
+                                                                                                                            value={otp}
+                                                                                                                            onChange={(e) => setOtp(e.target.value)}
+                                                                                                                            required
+                                                                                                                        />
+                                                                                                                    </div>
+                                                                                                                    <label class="form-label pt-3">Resend OTP?</label>
+                                                                                                                </form>
                                                                                                             </div>
-
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="modal-footer">
-                                                                                                        <button type="button" class="btn btn-primary">Verify</button>
-
-                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                                        <button
+                                                                                                            type="submit"
+                                                                                                            class="btn btn-primary"
+                                                                                                            onClick={handleVerifyEmail}
+                                                                                                        >
+                                                                                                            Verify
+                                                                                                        </button>
+                                                                                                        <button
+                                                                                                            type="button"
+                                                                                                            class="btn btn-secondary"
+                                                                                                            data-bs-dismiss="modal"
+                                                                                                        >
+                                                                                                            Close
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
-
                                                                                 </ul>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="card-inner">
@@ -294,7 +400,7 @@ function ProfileSettings() {
                                                                                                         </div>
                                                                                                     </div>
 
-                                                                                                
+
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>

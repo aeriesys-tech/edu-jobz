@@ -45,6 +45,8 @@ import AdminCountry from './components/admin/configurations/adminconfigurations'
 import AdminState from './components/admin/configurations/adminconfigurationsstate';
 import AdminDesignations from './components/admin/configurations/adminconfigurationdesignations';
 import AdminCity from './components/admin/configurations/adminconfigurationcity';
+import AdminSubjectApp from './components/admin/configurations/adminconfigurationssubjects';
+import AdminDesignationsApp from './components/admin/configurations/adminconfigurationdesignations';
 
 function App() {
 
@@ -59,8 +61,9 @@ function App() {
                                         <Route path='/admin/profile' element={<Adminprofile />} />
                                         <Route path='/admin/configurations/state' element={<AdminState />} />
                                         <Route path='/admin/configurations/city' element={<AdminCity />} />
+                                        <Route path='/admin/configurations/subject' element={<AdminSubjectApp />} />
 
-                                        <Route path='/admin/configurations/designations' element={<AdminDesignations/>} />
+                                        <Route path='/admin/configurations/designations' element={<AdminDesignationsApp/>} />
 
                                         <Route path='/' element={<Login />} />
                                         <Route path='/signup' element={<Register />} />
