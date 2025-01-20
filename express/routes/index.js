@@ -8,7 +8,10 @@ const adminsAuthRoutes = require("./admin/authRoutes");
 const adminRoutes = require("./admin/adminRoutes");
 const designationRoutes = require("./designationRoutes");
 const stateRoutes = require("./stateRoutes");
-// const priorityRoutes = require("./priorityRoutes");
+const cityRoutes = require("./cityRoutes");
+const subjectRoutes = require("./subjectRoutes");
+const typeOfInstituteRoutes = require("./typeOfInstituteRoutes");
+require;
 
 router.use("/candidate", candidatesAuthRoutes);
 router.use("/employer", employersAuthRoutes);
@@ -17,6 +20,9 @@ router.use("/admin", adminsAuthRoutes);
 router.use("/admin", adminRoutes);
 router.use("/states", stateRoutes);
 router.use("/designations", designationRoutes);
+router.use("/cities", cityRoutes);
+router.use("/subjects", subjectRoutes);
+router.use("/types_of_institutes", typeOfInstituteRoutes);
 
 // router.use("/priorities", priorityRoutes);
 

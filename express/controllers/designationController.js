@@ -30,8 +30,8 @@ const addDesignation = async (req, res) => {
     // Create the new designation
     const newDesignation = await Designation.create({ designation });
 
-    // Invalidate cache by deleting the cached countries key
-    await redisClient.del("countries");
+    // Invalidate cache by deleting the cached designations key
+    await redisClient.del("designations");
     sendResponse(
       req,
       res,
@@ -78,8 +78,8 @@ const updateDesignation = async (req, res) => {
     // Update the designation
     existingDesignation.designation = designation;
     await existingDesignation.save();
-    // Invalidate cache by deleting the cached countries key
-    await redisClient.del("countries");
+    // Invalidate cache by deleting the cached designations key
+    await redisClient.del("designations");
 
     sendResponse(
       req,
@@ -102,7 +102,7 @@ const deleteDesignation = async (req, res) => {
     // Fetch the designation including soft-deleted records
     const designation = await Designation.findOne({
       where: { designation_id },
-      paranoid: false, // Allow fetching of soft-deleted countries
+      paranoid: false, // Allow fetching of soft-deleted designations
     });
 
     if (!designation) {
@@ -112,8 +112,8 @@ const deleteDesignation = async (req, res) => {
     // If the designation is marked as deleted, restore it
     if (designation.deletedAt) {
       await designation.restore();
-      // Invalidate cache by deleting the cached countries key
-      await redisClient.del("countries");
+      // Invalidate cache by deleting the cached designations key
+      await redisClient.del("designations");
       return sendResponse(
         req,
         res,
@@ -125,8 +125,8 @@ const deleteDesignation = async (req, res) => {
     } else {
       // Soft delete the designation
       await designation.destroy();
-      // Invalidate cache by deleting the cached countries key
-      await redisClient.del("countries");
+      // Invalidate cache by deleting the cached designations key
+      await redisClient.del("designations");
       return sendResponse(
         req,
         res,
@@ -145,7 +145,7 @@ const deleteDesignation = async (req, res) => {
 // Get
 const getDesignations = async (req, res) => {
   try {
-    const cachedDesignations = await redisClient.get("countries");
+    const cachedDesignations = await redisClient.get("designations");
 
     if (cachedDesignations) {
       return sendResponse(
@@ -158,21 +158,21 @@ const getDesignations = async (req, res) => {
       );
     }
 
-    const countries = await Designation.findAll({
+    const designations = await Designation.findAll({
       where: {
-        deletedAt: null, // Explicitly ensure we only fetch active countries
+        deletedAt: null, // Explicitly ensure we only fetch active designations
       },
       order: [["designation_id", "ASC"]],
     });
-    // Cache the countries
-    await redisClient.setEx("countries", 3600, JSON.stringify(countries));
+    // Cache the designations
+    await redisClient.setEx("designations", 3600, JSON.stringify(designations));
     sendResponse(
       req,
       res,
       200,
       true,
       "Designations fetched successfully",
-      countries
+      designations
     );
   } catch (error) {
     console.error("Error in getDesignations function:", error);
@@ -203,18 +203,18 @@ const paginateDesignations = async (req, res) => {
       }),
     };
 
-    // Fetch countries with pagination and searching
-    const countries = await Designation.findAndCountAll({
+    // Fetch designations with pagination and searching
+    const designations = await Designation.findAndCountAll({
       where,
       limit: parseInt(limit, 10),
       offset: parseInt(offset, 10),
       order: sort,
     });
     const responseData = {
-      data: countries.rows,
-      totalPages: Math.ceil(countries.count / limit),
+      data: designations.rows,
+      totalPages: Math.ceil(designations.count / limit),
       currentPage: parseInt(page, 10),
-      totalItems: countries.count,
+      totalItems: designations.count,
     };
     sendResponse(
       req,

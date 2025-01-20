@@ -1,26 +1,20 @@
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  const State = sequelize.define(
-    "State",
+  const TypeOfInstitute = sequelize.define(
+    "TypeOfInstitute",
     {
-      state_id: {
+      type_of_institute_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      country_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        index: true,
-        references: {
-          model: "countries",
-          key: "country_id",
-        },
-      },
-      state: {
+      type_of_institute: {
         type: DataTypes.STRING(100),
         allowNull: false,
         index: true,
       },
+
       created_at: {
         type: DataTypes.DATE,
         allowNull: true,
@@ -39,18 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      modelName: "state",
-      tableName: "states",
-      timestamps: false,
-      underscored: true, // This will create columns like `created_at` and `updated_at`
+      modelName: "TypeOfInstitute",
+      tableName: "type_of_institutes",
+      paranoid: true, // Enables soft deletes
+      underscored: true,
     }
   );
-
-  State.associate = (models) => {
-    State.belongsTo(models.Country, {
-      foreignKey: "country_id",
-    });
-  };
-
-  return State;
+  return TypeOfInstitute;
 };

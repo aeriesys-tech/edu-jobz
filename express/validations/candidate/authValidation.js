@@ -52,30 +52,11 @@ const loginValidation = (req, res, next) => {
 // Validation for update
 const updateProfileValidation = (req, res, next) => {
   return Validate([
-    check("name")
-      .optional()
-      .isString()
-      .withMessage("Name must be a string")
-      .trim()
-      .escape()
+    body("candidate_id")
+      .isInt()
+      .withMessage("Candidate ID must be an integer")
       .notEmpty()
-      .withMessage("Name cannot be empty"),
-
-    check("mobile_no")
-      .isString()
-      .withMessage("Mobile number must be a string")
-      .trim()
-      .isMobilePhone("en-IN")
-      .withMessage("Enter a valid mobile number")
-      .isLength({ min: 10, max: 10 })
-      .withMessage("Mobile number must be exactly 10 digits long")
-      .notEmpty()
-      .withMessage("Mobile number is required"),
-
-    check("avatar")
-      .optional()
-      .isString()
-      .withMessage("Avatar must be a string"),
+      .withMessage("Candidate ID is required"),
   ])(req, res, next);
 };
 

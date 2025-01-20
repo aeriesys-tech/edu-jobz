@@ -1,7 +1,12 @@
-const { Candidate, CandidateToken, CandidateOtp } = require("../../models");
+const {
+  Candidate,
+  CandidateToken,
+  CandidateOtp,
+  CandidatePersonalInformation,
+} = require("../../models");
 const { sendResponse } = require("../../services/candidate/responseService");
 const { sendOtp } = require("../../services/messageService");
-const { Op, Sequelize } = require("sequelize");
+const { Op, Sequelize, where } = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -306,88 +311,68 @@ const updatePassword = async (req, res) => {
 };
 
 //Update Profile
-const updateProfile = async (req, res) => {
+const updateCandidatePersonalInformation = async (req, res) => {
   const candidateId = req.candidate.candidate_id; // Extract user ID from the authenticated user object
   const {
-    name,
-    mobile_no,
-    email,
-    gender,
-    d_o_b,
-    role,
+    candidate_id,
     employer_type,
+    designation_id,
     experience,
     salary_expectation,
     notice_period,
     hear_about_us,
-    subjects,
-    type_of_institute,
+    subject_id,
+    type_of_institute_id,
     address,
-    state,
-    city,
-    country,
+    state_id,
+    city_id,
+    country_id,
     pincode,
   } = req.body;
-  const avatar = req.file ? req.file.filename : null; // Get the uploaded file name if present
+  // const avatar = req.file ? req.file.filename : null; // Get the uploaded file name if present
 
   try {
     // Check if the username, mobile number, or personal email already exists and belongs to a different user
-    const existingCandidate = await Candidate.findOne({
+    const existingCandidate = await CandidatePersonalInformation.findOne({
       where: {
-        [Op.or]: [{ email }, { mobile_no }],
         candidate_id: { [Op.ne]: candidateId }, // Exclude the current user from the check
       },
     });
 
-    if (existingCandidate) {
-      const errors = {};
-      if (existingCandidate.email === email) {
-        errors.email = "Candidate with the same email already exists";
-      }
-      if (existingUser.mobile_no === mobile_no) {
-        errors.mobile_no =
-          "Candidate with the same mobile number already exists";
-      }
-      return sendResponse(res, 400, false, "Validation Error", null, errors);
-    }
-
     // Update user details in the database
-    const updateData = {
-      name,
-      email,
-      mobile_no,
-      gender,
-      d_o_b,
-      role,
+    const data = {
+      candidate_id,
+      designation_id,
       employer_type,
       experience,
       salary_expectation,
       notice_period,
       hear_about_us,
-      subjects,
-      type_of_institute,
+      subject_id,
+      type_of_institute_id,
       address,
-      state,
-      city,
-      country,
+      state_id,
+      city_id,
+      country_id,
       pincode,
     };
-    if (avatar) {
-      updateData.avatar = avatar; // Add avatar to the update data if a file was uploaded
+    if (existingCandidate) {
+      await CandidatePersonalInformation.update(data, {
+        where: { candidate_id: candidateId },
+      });
+    } else {
+      await CandidatePersonalInformation.create(data);
     }
 
-    await Candidate.update(updateData, {
-      where: { candidate_id: candidateId },
-    });
-
     // Retrieve updated user details, explicitly excluding the password and timestamp fields
-    const candidate = await Candidate.findByPk(candidateId, {
+    const candidateInfo = await CandidatePersonalInformation.findOne({
+      where: { candidate_id: candidateId },
       attributes: {
         exclude: ["password", "created_at", "updated_at", "deleted_at"],
       },
     });
-
-    sendResponse(res, 200, true, "Profile updated successfully", candidate);
+    console.log("candidateLogssssssssssssss", candidateInfo);
+    sendResponse(res, 200, true, "Profile updated successfully", candidateInfo);
   } catch (error) {
     console.error("Error in updateProfile function:", error.message); // Log the error message
     sendResponse(res, 500, false, error.message);
@@ -572,7 +557,7 @@ module.exports = {
   forgotPassword,
   updatePassword,
   resetPassword,
-  updateProfile,
+  updateCandidatePersonalInformation,
   verifyEmail,
   verifyMobile,
   login,

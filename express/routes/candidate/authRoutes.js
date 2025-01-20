@@ -21,11 +21,11 @@ router.post("/register", registrationValidation, authController.register);
 router.post("/login", loginValidation, authController.login);
 
 router.post(
-  "/updateProfile",
+  "/updateCandidatePersonalInformation",
   upload.single("avatar"), // Add multer middleware for handling file uploads
   updateProfileValidation,
   authMiddleware,
-  authController.updateProfile
+  authController.updateCandidatePersonalInformation
 );
 
 router.post(

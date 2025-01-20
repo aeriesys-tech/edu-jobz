@@ -2,69 +2,69 @@ const { body } = require("express-validator");
 const { Validate } = require("../middleware/validationMiddleware");
 
 // Validation for adding a new state
-const addStateValidation = (req, res, next) => {
+const addCityValidation = (req, res, next) => {
   return Validate([
-    body("state")
+    body("city")
       .isString()
-      .withMessage("State name must be a string")
+      .withMessage("City name must be a string")
       .trim()
       .notEmpty()
-      .withMessage("State name is required"),
-    body("country_id")
+      .withMessage("City name is required"),
+    body("state_id")
       .isInt()
-      .withMessage("Country ID must be a number")
+      .withMessage("State ID must be a number")
       .trim()
       .notEmpty()
-      .withMessage("Country ID is required"),
+      .withMessage("State ID is required"),
   ])(req, res, next);
 };
 
 // Validation for updating a state
-const updateStateValidation = (req, res, next) => {
+const updateCityValidation = (req, res, next) => {
   return Validate([
+    body("city_id")
+      .isInt()
+      .withMessage("City ID must be an integer")
+      .notEmpty()
+      .withMessage("City ID is required"),
     body("state_id")
       .isInt()
       .withMessage("State ID must be an integer")
       .notEmpty()
       .withMessage("State ID is required"),
-    body("country_id")
-      .isInt()
-      .withMessage("Country ID must be an integer")
+    body("city")
       .notEmpty()
-      .withMessage("Country ID is required"),
-    body("state")
-      .notEmpty()
-      .withMessage("State is required")
+      .withMessage("City is required")
       .isString()
-      .withMessage("State must be a string")
+      .withMessage("City must be a string")
       .trim(),
   ])(req, res, next);
 };
 
 // Validation for deleting a state
-const deleteStateValidation = (req, res, next) => {
+const deleteCityValidation = (req, res, next) => {
+  return Validate([
+    body("city_id")
+      .isInt()
+      .withMessage("City ID must be an integer")
+      .notEmpty()
+      .withMessage("City ID is required"),
+  ])(req, res, next);
+};
+
+// Validation for getting all states
+const getCitiesValidation = (req, res, next) => {
   return Validate([
     body("state_id")
       .isInt()
       .withMessage("State ID must be an integer")
       .notEmpty()
       .withMessage("State ID is required"),
-  ])(req, res, next);
-};
-
-// Validation for getting all states
-const getStatesValidation = (req, res, next) => {
-  return Validate([
-    body("country_id")
-      .isInt()
-      .withMessage("Country ID must be an integer")
-      .notEmpty()
-      .withMessage("Country ID is required"),
   ])(req, res, next); // No specific validation needed
 };
 
 // Validation for paginating states
-const paginateStatesValidation = (req, res, next) => {
+const paginateCitiesValidation = (req, res, next) => {
   return Validate([
     body("page")
       .optional()
@@ -90,9 +90,9 @@ const paginateStatesValidation = (req, res, next) => {
 };
 
 module.exports = {
-  addStateValidation,
-  updateStateValidation,
-  deleteStateValidation,
-  getStatesValidation,
-  paginateStatesValidation,
+  addCityValidation,
+  updateCityValidation,
+  deleteCityValidation,
+  getCitiesValidation,
+  paginateCitiesValidation,
 };

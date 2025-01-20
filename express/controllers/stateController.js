@@ -131,6 +131,20 @@ const deleteState = async (req, res) => {
 // Get
 const getStates = async (req, res) => {
   try {
+    const { country_id } = req.body;
+    if (!country_id) {
+      return sendResponse(
+        req,
+        res,
+        400,
+        false,
+        "Country Id is required",
+        null,
+        {
+          country_id: "Country ID are required",
+        }
+      );
+    }
     const cachedStates = await redisClient.get("states");
 
     if (cachedStates) {
@@ -146,6 +160,7 @@ const getStates = async (req, res) => {
 
     const states = await State.findAll({
       where: {
+        country_id,
         deleted_at: null, // Explicitly ensure we only fetch active states
       },
       order: [["state_id", "ASC"]],

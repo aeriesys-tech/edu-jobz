@@ -1,26 +1,27 @@
 module.exports = (sequelize, DataTypes) => {
-  const State = sequelize.define(
-    "State",
+  const City = sequelize.define(
+    "City",
     {
-      state_id: {
+      city_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      country_id: {
+      state_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         index: true,
         references: {
-          model: "countries",
-          key: "country_id",
+          model: "states",
+          key: "state_id",
         },
       },
-      state: {
+      city: {
         type: DataTypes.STRING(100),
         allowNull: false,
         index: true,
       },
+
       created_at: {
         type: DataTypes.DATE,
         allowNull: true,
@@ -39,18 +40,18 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      modelName: "state",
-      tableName: "states",
+      modelName: "city",
+      tableName: "cities",
       timestamps: false,
       underscored: true, // This will create columns like `created_at` and `updated_at`
     }
   );
 
-  State.associate = (models) => {
-    State.belongsTo(models.Country, {
-      foreignKey: "country_id",
+  City.associate = (models) => {
+    City.belongsTo(models.State, {
+      foreignKey: "state_id",
     });
   };
 
-  return State;
+  return City;
 };
