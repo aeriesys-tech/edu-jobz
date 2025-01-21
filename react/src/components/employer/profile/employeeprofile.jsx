@@ -4,9 +4,10 @@ import { Link } from "react-router-dom"
 
 
 import EmployeeSideBar from "../employeesidebar"
-import DashHeader from "../../candidate/header"
+
 import DashFooter from "../../candidate/footer"
 import EmployeeMenuBar from "./employeeprofilemenu"
+import DashHeaderE from "../header"
 
 function EmployeeProfile() {
  
@@ -18,7 +19,7 @@ function EmployeeProfile() {
                         <EmployeeSideBar />
                         <div class="nk-wrap ">
 
-                            <DashHeader />
+                            <DashHeaderE/>
                            
                              <div class="nk-content">
                     <div class="container-fluid" >

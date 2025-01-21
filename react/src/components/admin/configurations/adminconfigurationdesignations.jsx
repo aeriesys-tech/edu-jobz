@@ -167,9 +167,9 @@ function AdminDesignations() {
                                                                     <table class=" nowrap nk-tb-list nk-tb-ulist" data-auto-responsive="false">
                                                                         <thead>
                                                                             <tr class="nk-tb-item nk-tb-head">
-                                                                                <th class="nk-tb-col ">Id</th>
+                                                                                <th class="nk-tb-col ">Sr. no</th>
 
-                                                                                <th class="nk-tb-col ">Name</th>
+                                                                                <th class="nk-tb-col nk-tb-col-tools">Designations</th>
 
 
                                                                                 <th class="nk-tb-col nk-tb-col-tools pl-3">
@@ -189,7 +189,7 @@ function AdminDesignations() {
                                                                                 <tr key={designation.id} className="nk-tb-item">
                                                                                     <td className="nk-tb-col">{index+1}</td>
 
-                                                                                    <td className="nk-tb-col">{designation.designation}</td>
+                                                                                    <td className="nk-tb-col nk-tb-col-tools">{designation.designation}</td>
                                                                                     <td className="nk-tb-col nk-tb-col-tools">
                                                                                         <ul className="nk-tb-actions gx-1 my-n1">
                                                                                             <li className="me-n1">

@@ -60,10 +60,11 @@ function ResetOTP() {
     // Define new API endpoints for resetPassword
     const candidateUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/resetPassword`;
     const adminUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/admin/resetPassword`;
+    const employerUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/employer/resetPassword`;
 
     try {
         // Send both requests simultaneously for password reset
-        const [adminResponse, candidateResponse] = await Promise.allSettled([
+        const [adminResponse, candidateResponse,employerResponse] = await Promise.allSettled([
             axios.post(adminUrl, {
                 email: email,
                 otp: otp,
@@ -80,6 +81,14 @@ function ResetOTP() {
             }, {
                 headers: { "Content-Type": "application/json" },
             }),
+            axios.post(employerUrl, {
+              email: email,
+              otp: otp,
+              newPassword: newPassword,
+              confirmPassword: confirmPassword,
+          }, {
+              headers: { "Content-Type": "application/json" },
+          }),
         ]);
 
         // Handle admin response
@@ -95,11 +104,20 @@ function ResetOTP() {
         } else if (candidateResponse.status === "rejected") {
             toast.error("Candidate password reset failed.");
         }
+         // Handle candidate response
+         if (employerResponse.status === "fulfilled" && employerResponse.value.data.success) {
+          toast.success("employer password reset successfully!");
+      } else if (employerResponse.status === "rejected") {
+          toast.error("employer password reset failed.");
+      }
+
 
         // Navigate to /success if at least one request succeeds
         if (
             (adminResponse.status === "fulfilled" && adminResponse.value.data.success) ||
-            (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success)
+            (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success) ||
+            (employerResponse.status === "fulfilled" && employerResponse.value.data.success)
+
         ) {
             navigate("/success");
         }
@@ -129,7 +147,9 @@ function ResetOTP() {
     const isAdmin = sessionStorage.getItem("role") === "admin"; // Check if the role is admin
     const apiEndpoint = isAdmin
       ? `${import.meta.env.VITE_BASE_API_URL1}/api/admin/resendOtp`
-      : `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/resendOtp`;
+      : `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/resendOtp`
+      || `${import.meta.env.VITE_BASE_API_URL1}/api/employer/resendOtp`;
+
 
     try {
       await axios.post(

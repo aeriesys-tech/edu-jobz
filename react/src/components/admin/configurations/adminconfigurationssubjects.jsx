@@ -162,20 +162,33 @@ function AdminSubjects() {
                                                             </div>
                                                             <div className="card-inner">
                                                                 <table className="nk-tb-list nk-tb-ulist" data-auto-responsive="false">
-                                                                    <thead>
-                                                                        <tr className="nk-tb-item nk-tb-head">
-                                                                            <th className="nk-tb-col">Id</th>
-                                                                            <th className="nk-tb-col">Name</th>
-                                                                            <th className="nk-tb-col nk-tb-col-tools">Actions</th>
-                                                                        </tr>
-                                                                    </thead>
+                                                                <thead>
+                                                                            <tr class="nk-tb-item nk-tb-head">
+                                                                                <th class="nk-tb-col ">Sr. no</th>
+                                                                                <th class="nk-tb-col nk-tb-col-tools">Subjects</th>
+
+                                                                               
+
+
+                                                                                <th class="nk-tb-col nk-tb-col-tools pl-3">
+                                                                                    <ul class="nk-tb-actions gx-1 my-n1 ">
+                                                                                        <li class="me-n1">
+                                                                                            <td class=" tb-col-mb">
+                                                                                                <a href="#file-upload" class="btn" ><em
+                                                                                                    class="icon ni "></em><span>Actions</span></a></td>
+
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
                                                                     <tbody>
                                                                         {subjects.map((subject, index) => (
                                                                             <tr key={subject.subject_id} className="nk-tb-item">
                                                                                 <td className="nk-tb-col">{index + 1}</td>
-                                                                                <td className="nk-tb-col">{subject.subject}</td>
+                                                                                <td className="nk-tb-col nk-tb-col-tools">{subject.subject}</td>
                                                                                 <td className="nk-tb-col nk-tb-col-tools">
-                                                                                    <ul className="nk-tb-actions">
+                                                                                    <ul className="nk-tb-actions gx-1 my-n1">
                                                                                         <li>
                                                                                             <a
                                                                                                 href="#update-subject"

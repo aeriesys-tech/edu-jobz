@@ -1,11 +1,12 @@
 
 import DashFooter from "../candidate/footer"
-import DashHeader from "../candidate/header"
+
 import EmployeeSideBar from "./employeesidebar"
 import das1 from '../../assets/img/dash1.svg'
 import das2 from '../../assets/img/dash2.svg'
 import das3 from '../../assets/img/dash3.svg'
 import das4 from '../../assets/img/dash4.svg'
+import DashHeaderE from "./header"
 
 
 
@@ -17,7 +18,7 @@ function EmployeeDashboard() {
                     <div class="nk-main">
                         <EmployeeSideBar />
                         <div class="nk-wrap">
-                            <DashHeader />
+                            <DashHeaderE/>
                             <div class="nk-content pb-0">
                                 <div class="container-fluid">
                                     <div class="nk-content-inner">

@@ -16,7 +16,7 @@ function ProfileSettings() {
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
 
-    const bearerToken = sessionStorage.getItem("token123"); // Replace with actual token retrieval logic
+    const bearerToken = sessionStorage.getItem("tokencandidate"); // Replace with actual token retrieval logic
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -122,37 +122,7 @@ function ProfileSettings() {
             setLoading(false);
         }
     };
-    const sendOtpHandler = async () => {
-        if (!email.trim()) {
-            toast.error("Please enter a valid email address!");
-            return;
-        }
-    
-        try {
-            setLoading(true);
-            const response = await axios.post(
-                `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/sendOtp`, // Replace with the actual OTP endpoint
-                { email },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-    
-            toast.success("OTP sent successfully to your email!");
-        } catch (error) {
-            if (error.response && error.response.data) {
-                const errorMessage = error.response.data.message || "Failed to send OTP.";
-                toast.error(errorMessage);
-            } else {
-                console.error("Error occurred:", error);
-                toast.error("An unexpected error occurred. Please try again.");
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
+
 
     return (
         <>
@@ -377,7 +347,12 @@ function ProfileSettings() {
                                                                                                                         />
                                                                                                                     </div>
                                                                                                                     <div class="modal-footer">
-                                                                                                                        <button type="submit" class="btn btn-primary">
+                                                                                                                        <button type="submit" class="btn btn-primary" onClick={() => {
+                                                                                                                            handleSubmit();
+                                                                                                                            const modal = document.getElementById('change');
+                                                                                                                            const modalInstance = bootstrap.Modal.getInstance(modal);
+                                                                                                                            modalInstance.hide();
+                                                                                                                        }}>
                                                                                                                             Change
                                                                                                                         </button>
                                                                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

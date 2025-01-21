@@ -4,10 +4,85 @@ import facebook from '../../../assets/img/facebook.svg'
 import google from '../../../assets/img/google.svg'
 import linkedin from '../../../assets/img/linkedin.svg'
 import login from '../../../assets/img/teacher.webp'
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 
 function EmployeeLogin() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
+
+    const navigate = useNavigate();
+    const passwordRef = useRef(null);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        setErrors({});
+
+        // Store the full email in session storage
+        sessionStorage.setItem("email", email);
+
+        const data = { email, password };
+
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/employer/login`,
+                data,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            // Save the token in session storage
+            sessionStorage.setItem("tokenemployee", response.data.data.token);
+
+            // Handle success
+            toast.success("Login successful!");
+            setLoading(false);
+            navigate("/employee/dashboard");
+        } catch (error) {
+            if (error.response) {
+                // Server responded with an error status
+                const errorMessage = error.response.data.message || "An error occurred";
+                const errorDetails = error.response.data.errors || {};
+
+                setErrors(errorDetails);
+                toast.error(errorMessage);
+            } else {
+                // Network or other errors
+                console.error("Error occurred:", error);
+                toast.error("An unexpected error occurred. Please try again.");
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleEmailKeyDown = (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            passwordRef.current.focus();
+        }
+    };
+
+    const handlePasswordKeyDown = (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            handleSubmit(event);
+        }
+    };
+
+
     return (
+
         <>
 
             <body class="nk-body bg-white npc-default pg-auth">
@@ -27,7 +102,7 @@ function EmployeeLogin() {
                                             </div>
                                             <div class="nk-block-head">
                                                 <div class="nk-block-head-content">
-                                                <h6 class="nk-block-title">Employer</h6>
+                                                    <h6 class="nk-block-title">Employer</h6>
 
                                                     <h5 class="nk-block-title">Sign-In</h5>
                                                     <div class="nk-block-des">
@@ -35,10 +110,23 @@ function EmployeeLogin() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <form action="#">
+                                            <form onSubmit={handleSubmit}>
                                                 <div class="form-group">
                                                     <div class="form-label-group"><label class="form-label" for="default-01">Email or Username</label><a class="link link-primary link-sm" tabindex="-1" href="#"></a></div>
-                                                    <div class="form-control-wrap"><input type="text" class="form-control form-control-lg" id="default-01" placeholder="Enter your email address or username" /></div>
+                                                    <div class="form-control-wrap"> <input
+                                                        className={`form-control form-control-lg ${errors.email ? "is-invalid" : ""}`}
+
+                                                        type="email"
+                                                        value={email}
+                                                        onChange={(e) => setEmail(e.target.value)}
+                                                        onKeyDown={handleEmailKeyDown}
+                                                        placeholder="Email"
+                                                        required
+                                                    />
+                                                      {errors.email && (
+                                                    <p className="error-message text-danger">{errors.email}</p>
+                                                )}
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-label-group"><label class="form-label" for="password">Password</label><Link class="link  link-sm" tabindex="-1" to="/reset" style={{ color: 'blue' }}>Forgot Password?</Link></div>
@@ -46,10 +134,23 @@ function EmployeeLogin() {
                                                         <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
                                                             <em class="passcode-icon icon-show icon ni ni-eye"></em><em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
                                                         </a>
-                                                        <input type="password" class="form-control form-control-lg" id="password" placeholder="Enter your Password" />
+                                                        <input
+                                                         className={`form-control form-control-lg ${errors.password ? "is-invalid" : ""
+                                                         }`}
+                                                            type={passwordVisible ? "text" : "password"}
+                                                            value={password}
+                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            ref={passwordRef}
+                                                            onKeyDown={handlePasswordKeyDown}
+                                                            placeholder="Password"
+                                                            required
+                                                        />
+                                                        {errors.password && (
+                                                            <div className="invalid-feedback">{errors.password}</div>
+                                                        )}
                                                     </div>
                                                 </div>
-                                                <div class="form-group"><Link to="/employee/dashboard"><button class="btn btn-lg btn-primary btn-block" >Sign in</button></Link></div>
+                                                <div class="form-group"><Link ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit} >Sign in</button></Link></div>
                                             </form>
                                             <div class="text-center pt-3 pb-1">
                                                 <h6 class="overline-title overline-title-sap"><span>OR</span></h6>
@@ -78,8 +179,8 @@ function EmployeeLogin() {
                                         </div>
                                     </div>
                                     {/* <div class="nk-split-content nk-split-stretch bg-abstract"></div> */}
-                                    <img src={login} alt="" style={{width:'960px'}}/>
-                                
+                                    <img src={login} alt="" style={{ width: '960px' }} />
+
                                 </div>
                             </div>
                         </div>

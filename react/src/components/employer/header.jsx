@@ -1,14 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../assets/img/Edujobs.svg'
 
-function DashHeader(){
+function DashHeaderE(){
 const Navigate=useNavigate();
     const handleLogout = () => {
         // Clear all session storage data
-        sessionStorage.clear("tokencandidate");
+        sessionStorage.clear("tokenemployee");
     
         // Optionally, redirect to the login page or homepage after logging out
-        Navigate("/");
+        Navigate("/employee/login");
     };
     return(
         <>
@@ -159,7 +159,7 @@ const Navigate=useNavigate();
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
-                                                        <Link to="/"><em class="icon ni ni-signout"></em><span onClick={handleLogout}>Sign
+                                                        <Link to="/employee/login"><em class="icon ni ni-signout"></em><span onClick={handleLogout}>Sign
                                                                 out</span></Link>
                                                     </li>
                                                 </ul>
@@ -174,4 +174,4 @@ const Navigate=useNavigate();
         </>
     )
 }
-export default DashHeader
+export default DashHeaderE

@@ -47,6 +47,7 @@ import AdminDesignations from './components/admin/configurations/adminconfigurat
 import AdminCity from './components/admin/configurations/adminconfigurationcity';
 import AdminSubjectApp from './components/admin/configurations/adminconfigurationssubjects';
 import AdminDesignationsApp from './components/admin/configurations/adminconfigurationdesignations';
+import AdminInstituteApp from './components/admin/configurations/adminconfig_typeofinstitute';
 
 function App() {
 
@@ -62,6 +63,7 @@ function App() {
                                         <Route path='/admin/configurations/state' element={<AdminState />} />
                                         <Route path='/admin/configurations/city' element={<AdminCity />} />
                                         <Route path='/admin/configurations/subject' element={<AdminSubjectApp />} />
+                                        <Route path='/admin/configurations/typeofinstitute' element={<AdminInstituteApp/>} />
 
                                         <Route path='/admin/configurations/designations' element={<AdminDesignationsApp/>} />
 

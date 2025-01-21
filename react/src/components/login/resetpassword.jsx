@@ -61,49 +61,60 @@ function ResetPassword() {
         event.preventDefault();
         setLoading(true);
         setErrors({});
-    
+
         try {
             // Define API endpoints
             const candidateUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/forgotPassword`;
             const adminUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/admin/forgotPassword`;
-    
+            const employerUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/employer/forgotPassword`;
+
             // Send both requests simultaneously
-            const [candidateResponse, adminResponse] = await Promise.allSettled([
+            const [candidateResponse, adminResponse, employerResponse] = await Promise.allSettled([
                 axios.post(candidateUrl, { email: email }, {
                     headers: { "Content-Type": "application/json" },
                 }),
                 axios.post(adminUrl, { email: email }, {
                     headers: { "Content-Type": "application/json" },
                 }),
+                axios.post(employerUrl, { email: email }, {
+                    headers: { "Content-Type": "application/json" },
+                }),
             ]);
-    
+
             // Handle candidate response
             if (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success) {
                 toast.success("Candidate password reset email sent successfully!");
             } else if (candidateResponse.status === "rejected") {
                 toast.error("Candidate API request failed.");
             }
-    
+
             // Handle admin response
             if (adminResponse.status === "fulfilled" && adminResponse.value.data.success) {
                 toast.success("Admin password reset email sent successfully!");
             } else if (adminResponse.status === "rejected") {
                 toast.error("Admin API request failed.");
             }
-    
+            // Handle candidate response
+            if (employerResponse.status === "fulfilled" && employerResponse.value.data.success) {
+                toast.success("Employee password reset email sent successfully!");
+            } else if (employerResponse.status === "rejected") {
+                toast.error("Employer API request failed.");
+            }
             // Navigate to /otpverify if at least one request succeeds
             if (
                 (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success) ||
-                (adminResponse.status === "fulfilled" && adminResponse.value.data.success)
+                (adminResponse.status === "fulfilled" && adminResponse.value.data.success)  ||
+                (employerResponse.status === "fulfilled" && employerResponse.value.data.success)
+
             ) {
                 navigate("/otpverify");
             }
-    
+
         } catch (error) {
             if (error.response && error.response.data) {
                 const errorData = error.response.data;
                 const errorMessage = errorData.message;
-    
+
                 setErrors(errorData.errors || {});
                 toast.error(errorMessage);
             } else {
@@ -114,8 +125,8 @@ function ResetPassword() {
             setLoading(false);
         }
     };
-    
-    
+
+
 
     const currentYear = new Date().getFullYear();
 
@@ -160,7 +171,7 @@ function ResetPassword() {
                                                             name="email"
                                                             placeholder="Enter your email"
                                                             className={`form-control form-control-lg ${errors.email ? "is-invalid" : ""}`}
-                                                            value={email}
+
                                                             onChange={(e) => setEmail(e.target.value)}
                                                             autoComplete="off"
                                                         />

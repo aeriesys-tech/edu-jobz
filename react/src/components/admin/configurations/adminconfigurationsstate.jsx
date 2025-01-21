@@ -20,9 +20,11 @@ function AdminState() {
     console.log(">>>>>>>>>>>>>>>>>token", token)
     const [newState, setNewState] = useState('');
     const [selectedCountryId, setSelectedCountryId] = useState('');
+    const [selectedStateId, setSelectedStateId] = useState('');
+
     const [updatedStateName, setUpdatedStateName] = useState('');
-   
-    
+
+
 
     useEffect(() => {
         axios
@@ -130,16 +132,16 @@ function AdminState() {
             alert("Please log in to perform this action.");
             return;
         }
-    
+
         // Ensure both country ID and state name are provided
         if (!selectedCountryId || !updatedStateName) {
             alert("Please select a country and enter a state name.");
             return;
         }
-    
+
         // Assuming stateId is selected or provided somehow (e.g., when editing an existing state)
         const stateId = selectedStateId; // Make sure this state is also tracked if needed
-    
+
         axios
             .post(
                 `${import.meta.env.VITE_BASE_API_URL1}/api/states/updateState`,
@@ -156,7 +158,7 @@ function AdminState() {
             )
             .then((response) => {
                 console.log('State updated:', response.data);
-                // Update the state with the updated state and country data
+             
                 setStates((prev) =>
                     prev.map((state) =>
                         state.state_id === stateId
@@ -164,8 +166,8 @@ function AdminState() {
                             : state
                     )
                 );
-    
-                // Close the modal after updating
+
+              
                 const modal = document.getElementById('update');
                 const modalInstance = bootstrap.Modal.getInstance(modal);
                 modalInstance.hide();
@@ -174,7 +176,37 @@ function AdminState() {
                 console.error('Error updating state and country:', error.response?.data || error);
             });
     };
-    
+    const handleDeleteState = (stateId) => {
+        if (!token) {
+            console.error("Token is missing");
+            alert("Please log in to perform this action.");
+            return;
+        }
+
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/states/deleteState`,
+                { state_id: stateId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log('State deleted:', response.data);
+
+                // Update the state to remove the deleted state from the table
+                setStates((prev) => prev.filter((state) => state.state_id !== stateId));
+
+                // alert('State successfully deleted.');
+            })
+            .catch((error) => {
+                console.error('Error deleting state:', error.response?.data || error);
+                alert('An error occurred while deleting the state.');
+            });
+    };
+
 
     const location = useLocation();
 
@@ -218,9 +250,10 @@ function AdminState() {
                                                                     <table class=" nowrap nk-tb-list nk-tb-ulist" data-auto-responsive="false">
                                                                         <thead>
                                                                             <tr class="nk-tb-item nk-tb-head">
-                                                                                <th class="nk-tb-col ">Id</th>
+                                                                                <th class="nk-tb-col ">Sr. no</th>
+                                                                                <th class="nk-tb-col nk-tb-col-tools ">Country</th>
 
-                                                                                <th class="nk-tb-col ">Name</th>
+                                                                                <th class="nk-tb-col nk-tb-col-tools">State</th>
 
 
                                                                                 <th class="nk-tb-col nk-tb-col-tools pl-3">
@@ -239,17 +272,24 @@ function AdminState() {
                                                                             {states.map((state, index) => (
                                                                                 <tr key={state.id} className="nk-tb-item">
                                                                                     <td className="nk-tb-col">{index + 1}</td>
+                                                                                    <td className="nk-tb-col " > {countries.find((country) => country.country_id === state.country_id)?.country || "Unknown"}</td>
 
-                                                                                    <td className="nk-tb-col">{state.state}</td>
+                                                                                    <td className="nk-tb-col nk-tb-col-tools">{state.state}</td>
                                                                                     <td className="nk-tb-col nk-tb-col-tools">
                                                                                         <ul className="nk-tb-actions gx-1 my-n1">
                                                                                             <li className="me-n1">
-                                                                                                <a href="#update" className="btn" data-bs-toggle="modal">
+                                                                                            <td className="tb-col-mb">
+                                                                                                <a onClick={() => {
+                                                                                                    setSelectedStateId(state.state_id);
+                                                                                                    setUpdatedStateName(state.state);
+                                                                                                    setSelectedCountryId(state.country_id);
+                                                                                                }} href="#update" className="btn" data-bs-toggle="modal">
                                                                                                     <em className="icon ni ni-edit"></em>
                                                                                                 </a>
-                                                                                                <a className="btn" data-bs-toggle="modal">
+                                                                                                <a onClick={() => handleDeleteState(state.state_id)} className="btn" data-bs-toggle="modal">
                                                                                                     <em className="icon ni ni-trash"></em>
                                                                                                 </a>
+                                                                                                </td>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </td>
@@ -331,7 +371,7 @@ function AdminState() {
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="form-group">
-                                                                            <label class="form-label">Country</label>
+                                                                            <label class="form-label fw-bold">Country</label>
                                                                             <select
                                                                                 id="countrySelect"
                                                                                 class="form-select"

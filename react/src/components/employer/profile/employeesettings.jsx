@@ -1,11 +1,85 @@
-import { Link } from "react-router-dom"
-import DashHeader from "../../candidate/header"
+import { Link, useNavigate } from "react-router-dom"
+
 import EmployeeSideBar from "../employeesidebar"
 import EmployeeMenuBar from "./employeeprofilemenu"
 import DashFooter from "../../candidate/footer"
-
+import DashHeaderE from "../header"
+import { useState } from "react"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 function EmployeeSettings() {
+
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [otp, setOtp] = useState("");
+
+    const bearerToken = sessionStorage.getItem("tokenemployee"); // Replace with actual token retrieval logic
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setErrors({});  // Reset errors
+
+        // Validation
+        if (!oldPassword.trim() || !newPassword.trim() || !confirmPassword.trim()) {
+            toast.error("All fields are required!");
+            setLoading(false);
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            toast.error("Passwords do not match!");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/employer/updatePassword`, // Replace with the actual endpoint
+                {
+                    oldPassword,
+                    newPassword,
+                    confirmPassword,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${bearerToken}`,
+                    },
+                }
+            );
+
+            const data = response.data;
+
+            // Save token and user data to sessionStorage
+            sessionStorage.setItem("jwt_token", data.token);
+            sessionStorage.setItem("user", JSON.stringify(data.user));
+            sessionStorage.setItem("role", JSON.stringify(data.role));
+
+            toast.success("Password updated successfully!");
+            // navigate("/"); // Redirect to success page
+        } catch (error) {
+            // Handle API error
+            if (error.response && error.response.data) {
+                const errorMessage = error.response.data.message || "Failed to update password.";
+                setErrors(error.response.data.errors || {});
+                toast.error(errorMessage);
+            } else {
+                console.error("Error occurred:", error);
+                toast.error("An unexpected error occurred. Please try again.");
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
     return (
         <>
             <body class="nk-body bg-lighter npc-general has-sidebar ">
@@ -14,7 +88,7 @@ function EmployeeSettings() {
                         <EmployeeSideBar />
                         <div class="nk-wrap ">
 
-                            <DashHeader />
+                            <DashHeaderE/>
                             <div class="nk-content ">
                                 <div class="container-fluid">
                                     <div class="nk-content-inner">
@@ -162,18 +236,55 @@ function EmployeeSettings() {
                                                                                                     <div class="card-body">
                                                                                                         <div class="row">
                                                                                                             <div class="col-sm-12">
+                                                                                                            <form onSubmit={handleSubmit}>
                                                                                                                 <div class="mb-3">
                                                                                                                     <label class="form-label">Old Password</label>
-                                                                                                                    <input type="password" class="form-control" />
+                                                                                                                    <input
+                                                                                                                            type="password"
+                                                                                                                            class="form-control"
+                                                                                                                            value={oldPassword}
+                                                                                                                            onChange={(e) => setOldPassword(e.target.value)}
+                                                                                                                            placeholder="Enter old password"
+                                                                                                                            required
+                                                                                                                        />
                                                                                                                 </div>
                                                                                                                 <div class="mb-3">
                                                                                                                     <label class="form-label">New Password</label>
-                                                                                                                    <input type="password" class="form-control" />
+                                                                                                                    <input
+                                                                                                                            type="password"
+                                                                                                                            class="form-control"
+                                                                                                                            value={newPassword}
+                                                                                                                            onChange={(e) => setNewPassword(e.target.value)}
+                                                                                                                            placeholder="Enter new password"
+                                                                                                                            required
+                                                                                                                        />
+                                                                                                                   
                                                                                                                 </div>
                                                                                                                 <div class="mb-3">
                                                                                                                     <label class="form-label">Confirm Password</label>
-                                                                                                                    <input type="password" class="form-control" />
+                                                                                                                    <input
+                                                                                                                            type="password"
+                                                                                                                            class="form-control"
+                                                                                                                            value={confirmPassword}
+                                                                                                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                                                                                                            placeholder="Confirm new password"
+                                                                                                                            required
+                                                                                                                        />
                                                                                                                 </div>
+                                                                                                                <div class="modal-footer">
+                                                                                                                        <button type="submit" class="btn btn-primary" onClick={() => {
+                                                                                                                            handleSubmit();
+                                                                                                                            const modal = document.getElementById('change');
+                                                                                                                            const modalInstance = bootstrap.Modal.getInstance(modal);
+                                                                                                                            modalInstance.hide();
+                                                                                                                        }}>
+                                                                                                                            Change
+                                                                                                                        </button>
+                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                                                                            Close
+                                                                                                                        </button>
+                                                                                                                    </div>
+                                                                                                                </form>
                                                                                                             </div>
                                                                                                             <div class="col-sm-12">
                                                                                                                 <h5>New password must contain:</h5>
@@ -188,11 +299,7 @@ function EmployeeSettings() {
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="modal-footer">
-                                                                                                        <button type="button" class="btn btn-primary">Change</button>
-
-                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                                                    </div>
+                                                                                                 
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>

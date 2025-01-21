@@ -29,10 +29,10 @@ function DashMenuBar() {
                             </li>
 
                             <li class={isActive('/admin/configurations/subject') ? 'active' : ''}><Link to="/admin/configurations/subject"><em class="icon ni ni-medal-fill"></em><span>Subjects</span></Link></li>
-                  {/*         <li class={isActive('/candidate/profile/skill') ? 'active' : ''}><Link to="/candidate/profile/skill"><em
-                                class="icon ni ni-activity-round-fill"></em><span>Skill</span></Link></li>
+                        <li class={isActive('/admin/configurations/typeofinstitute') ? 'active' : ''}><Link to="/admin/configurations/typeofinstitute"><em
+                                class="icon ni ni-activity-round-fill"></em><span>Type Of Institutes</span></Link></li>
                             
-                            <li class={isActive('/candidate/profile/resume') ? 'active' : ''}><Link to="/candidate/profile/resume"><em class="icon ni ni-briefcase-fill"></em><span>Documents</span></Link></li> */}
+                            {/* <li class={isActive('/candidate/profile/resume') ? 'active' : ''}><Link to="/candidate/profile/resume"><em class="icon ni ni-briefcase-fill"></em><span>Documents</span></Link></li> */}
                         </ul>
                     </div>
                     <div class="card-inner">

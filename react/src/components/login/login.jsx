@@ -118,7 +118,7 @@ function Login() {
                 }
             );
             console.log("-------Added------", response.data.data.token);
-            sessionStorage.setItem("token123", response.data.data.token)
+            sessionStorage.setItem("tokencandidate", response.data.data.token)
             console.log("-------77777777777777777777------", response.data.token);
             // Handle success
             toast.success("Login successful!");

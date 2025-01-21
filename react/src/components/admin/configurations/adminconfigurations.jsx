@@ -195,9 +195,9 @@ function AdminCountry() {
                                                                     <table class=" nowrap nk-tb-list nk-tb-ulist" data-auto-responsive="false">
                                                                         <thead>
                                                                             <tr class="nk-tb-item nk-tb-head">
-                                                                                <th class="nk-tb-col ">Id</th>
+                                                                                <th class="nk-tb-col ">Sr. no</th>
 
-                                                                                <th class="nk-tb-col ">Name</th>
+                                                                                <th class="nk-tb-col nk-tb-col-tools">Country</th>
 
                                                                                 {/* <th class="nk-tb-col tb-col-mb" >Added date</th> */}
                                                                                 <th class="nk-tb-col nk-tb-col-tools pl-3">
