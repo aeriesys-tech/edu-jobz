@@ -1,20 +1,28 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  const TypeOfInstitute = sequelize.define(
-    "TypeOfInstitute",
+  const EmployerPlan = sequelize.define(
+    "EmployerPlan",
     {
-      type_of_institute_id: {
+      employer_plan_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      type_of_institute: {
-        type: DataTypes.STRING,
+      employer_subscription_feature_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        index: true,
+        references: {
+          model: "employer_subscription_features",
+          key: "employer_subscription_feature_id",
+        },
+      },
+      feature_value: {
+        type: DataTypes.STRING(),
         allowNull: false,
         index: true,
       },
-
       created_at: {
         type: DataTypes.DATE,
         allowNull: true,
@@ -33,11 +41,16 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      modelName: "TypeOfInstitute",
-      tableName: "type_of_institutes",
+      modelName: "EmployerPlan",
+      tableName: "employer_plans",
       paranoid: true, // Enables soft deletes
       underscored: true,
     }
   );
-  return TypeOfInstitute;
+  EmployerPlan.associate = (models) => {
+    EmployerPlan.belongsTo(models.EmployerSubscriptionFeature, {
+      foreignKey: "employer_subscription_feature_id",
+    });
+  };
+  return EmployerPlan;
 };

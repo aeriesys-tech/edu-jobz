@@ -37,7 +37,6 @@ const candidateToken = async (req, res, next) => {
   if (!token) {
     return null;
   }
-
   try {
     let decoded = await jwtVerify(token, user_jwt.jwt_constant);
     if (!decoded) {
@@ -89,6 +88,8 @@ const employerToken = async (req, res, next) => {
         },
       });
 
+      console.log("678687686",employer)
+
       let employer_token = await EmployerToken.findOne({
         where: {
           employer_id: decoded.employer_id,
@@ -97,7 +98,7 @@ const employerToken = async (req, res, next) => {
       });
 
       if (employer && employer_token) {
-        req.employer_id = decoded.employer;
+        req.employer_id = decoded.employer_id;
         return decoded.employer_id;
       } else {
         return null;

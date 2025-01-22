@@ -1,91 +1,74 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  const CandidatePersonalInformation = sequelize.define(
-    "CandidatePersonalInformation",
+  const EmployerInformation = sequelize.define(
+    "EmployerInformation",
     {
-      candidate_personal_information_id: {
+      employer_information_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      candidate_id: {
+      employer_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         index: true,
         references: {
-          model: "candidates",
-          key: "candidate_id",
+          model: "employers",
+          key: "employer_id",
         },
       },
-      gender: {
-        type: DataTypes.STRING(20),
+      whatsapp_no: {
+        type: DataTypes.STRING,
         allowNull: true,
+        index: true,
+      },
+      is_email_verified: {
+        type: DataTypes.BOOLEAN(false),
+        allowNull: true,
+        index: true,
+        unique: true,
+        defaultValue: false,
+      },
+      is_mobile_no_verified: {
+        type: DataTypes.BOOLEAN(false),
+        allowNull: true,
+        index: true,
+        defaultValue: false,
+      },
+      gender: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        index: true,
       },
       d_o_b: {
         type: DataTypes.DATE,
-        allowNull: true,
-      },
-      employer_type: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-      },
-      designation_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         index: true,
-        references: {
-          model: "designations",
-          key: "designation_id",
-        },
-      },
-      experience: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      salary_expectation: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      notice_period: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      hear_about_us: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      subject_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: "subjects",
-          key: "subject_id",
-        },
-      },
-      join_time: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
       },
       type_of_institute_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        index: true,
         references: {
           model: "type_of_institutes",
           key: "type_of_institute_id",
         },
       },
+      institution_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        index: true,
+      },
       address: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.TEXT,
         allowNull: true,
+        index: true,
       },
       state_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        index: true,
         references: {
           model: "states",
           key: "state_id",
@@ -93,7 +76,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       city_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        index: true,
         references: {
           model: "cities",
           key: "city_id",
@@ -101,15 +85,22 @@ module.exports = (sequelize, DataTypes) => {
       },
       country_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        index: true,
         references: {
           model: "countries",
           key: "country_id",
         },
       },
       pincode: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
+        allowNull: false,
+        index: true,
+      },
+      avatar: {
+        type: DataTypes.STRING,
         allowNull: true,
+        defaultValue: "avatar.png",
       },
       created_at: {
         type: DataTypes.DATE,
@@ -129,16 +120,28 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      modelName: "CandidatePersonalInformation",
-      tableName: "candidate_personal_informations",
+      modelName: "EmployerInformation",
+      tableName: "employer_informations",
       paranoid: true, // Enables soft deletes
       underscored: true,
     }
   );
-  CandidatePersonalInformation.associate = (models) => {
-    CandidatePersonalInformation.belongsTo(models.Candidate, {
-      foreignKey: "candidate_id",
+  EmployerInformation.associate = (models) => {
+    EmployerInformation.belongsTo(models.Employer, {
+      foreignKey: "employer_id",
+    });
+    EmployerInformation.belongsTo(models.State, {
+      foreignKey: "state_id",
+    });
+    EmployerInformation.belongsTo(models.City, {
+      foreignKey: "city_id",
+    });
+    EmployerInformation.belongsTo(models.Country, {
+      foreignKey: "country_id",
+    });
+    EmployerInformation.belongsTo(models.TypeOfInstitute, {
+      foreignKey: "type_of_institute_id",
     });
   };
-  return CandidatePersonalInformation;
+  return EmployerInformation;
 };

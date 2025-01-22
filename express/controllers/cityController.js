@@ -119,12 +119,12 @@ const deleteCity = async (req, res) => {
         200,
         true,
         "City deleted successfully",
-        state
+        city
       );
     }
   } catch (error) {
     console.error("Error in deleteCity function:", error);
-    return sendResponse(res, 500, false, error.message);
+    return sendResponse(req,res, 500, false, error.message);
   }
 };
 

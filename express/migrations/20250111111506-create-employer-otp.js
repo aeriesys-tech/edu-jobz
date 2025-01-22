@@ -18,12 +18,12 @@ module.exports = {
         },
       },
       verification_type: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING,
         allowNull: false,
         index: true,
       },
       send_to: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING,
         allowNull: false,
         index: true,
       },

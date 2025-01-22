@@ -73,5 +73,10 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+  Candidate.associate = (models) => {
+    Candidate.hasOne(models.CandidatePersonalInformation, {
+      foreignKey: "candidate_id"
+    });
+  };
   return Candidate;
 };

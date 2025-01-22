@@ -55,13 +55,8 @@ const deleteStateValidation = (req, res, next) => {
 // Validation for getting all states
 const getStatesValidation = (req, res, next) => {
   return Validate([
-    body("country_id")
-      .isInt()
-      .withMessage("Country ID must be an integer")
-      .notEmpty()
-      .withMessage("Country ID is required"),
   ])(req, res, next); // No specific validation needed
-};
+};  
 
 // Validation for paginating states
 const paginateStatesValidation = (req, res, next) => {

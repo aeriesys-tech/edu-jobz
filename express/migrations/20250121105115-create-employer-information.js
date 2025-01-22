@@ -2,75 +2,45 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("candidate_personal_informations", {
-      candidate_personal_information_id: {
+    await queryInterface.createTable("employer_informations", {
+      employer_information_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      candidate_id: {
+      employer_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "candidates",
-          key: "candidate_id",
+          model: "employers",
+          key: "employer_id",
         },
       },
+      whatsapp_no: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+        index: true,
+      },
+      is_email_verified: {
+        type: Sequelize.BOOLEAN(false),
+        allowNull: true,
+        index: true,
+      },
+      is_mobile_no_verified: {
+        type: Sequelize.BOOLEAN(false),
+        allowNull: true,
+        index: true,
+      },
       gender: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING,
         allowNull: true,
         index: true,
       },
       d_o_b: {
         type: Sequelize.DATE,
-        allowNull: true,
-        index: true,
-      },
-      employer_type: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-        index: true,
-      },
-      designation_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: "designations",
-          key: "designation_id",
-        },
-      },
-      experience: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      salary_expectation: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      notice_period: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      hear_about_us: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      subject_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: "subjects",
-          key: "subject_id",
-        },
-      },
-      join_time: {
-        type: Sequelize.STRING(),
-        allowNull: true,
+        allowNull: false,
         index: true,
       },
       type_of_institute_id: {
@@ -81,9 +51,15 @@ module.exports = {
           key: "type_of_institute_id",
         },
       },
+      institution_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        index: true,
+      },
       address: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.TEXT,
         allowNull: true,
+        index: true,
       },
       state_id: {
         type: Sequelize.INTEGER,
@@ -110,8 +86,14 @@ module.exports = {
         },
       },
       pincode: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
+        type: Sequelize.STRING(10),
+        allowNull: false,
+        index: true,
+      },
+      avatar: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        index: true,
       },
       created_at: {
         allowNull: true,
@@ -132,6 +114,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("candidate_personal_informations");
+    await queryInterface.dropTable("employer_informations");
   },
 };

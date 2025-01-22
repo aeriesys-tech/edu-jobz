@@ -311,10 +311,84 @@ const updatePassword = async (req, res) => {
 };
 
 //Update Profile
-const updateCandidatePersonalInformation = async (req, res) => {
+// const updateCandidate = async (req, res) => {
+//   const candidateId = req.candidate.candidate_id; // Extract user ID from the authenticated user object
+//   const {
+//     candidate_id,
+//     employer_type,
+//     designation_id,
+//     experience,
+//     salary_expectation,
+//     notice_period,
+//     hear_about_us,
+//     subject_id,
+//     type_of_institute_id,
+//     address,
+//     state_id,
+//     city_id,
+//     country_id,
+//     pincode,
+//   } = req.body;
+//   // const avatar = req.file ? req.file.filename : null; // Get the uploaded file name if present
+
+//   try {
+//     // Check if the username, mobile number, or personal email already exists and belongs to a different user
+//     const existingCandidate = await CandidatePersonalInformation.findOne({
+//       where: {
+//         candidate_id: { [Op.ne]: candidateId }, // Exclude the current user from the check
+//       },
+//     });
+
+//     // Update user details in the database
+//     const data = {
+//       candidate_id,
+//       designation_id,
+//       employer_type,
+//       experience,
+//       salary_expectation,
+//       notice_period,
+//       hear_about_us,
+//       subject_id,
+//       type_of_institute_id,
+//       address,
+//       state_id,
+//       city_id,
+//       country_id,
+//       pincode,
+//     };
+//     if (existingCandidate) {
+//       await CandidatePersonalInformation.update(data, {
+//         where: { candidate_id: candidateId },
+//       });
+//     } else {
+//       await CandidatePersonalInformation.create(data);
+//     }
+
+//     // Retrieve updated user details, explicitly excluding the password and timestamp fields
+//     const candidateInfo = await CandidatePersonalInformation.findOne({
+//       where: { candidate_id: candidateId },
+//       attributes: {
+//         exclude: ["password", "created_at", "updated_at", "deleted_at"],
+//       },
+//     });
+//     console.log("candidateLogssssssssssssss", candidateInfo);
+//     sendResponse(res, 200, true, "Profile updated successfully", candidateInfo);
+//   } catch (error) {
+//     console.error("Error in updateProfile function:", error.message); // Log the error message
+//     sendResponse(res, 500, false, error.message);
+//   }
+// };
+
+//Update Profile
+const updateCandidate = async (req, res) => {
   const candidateId = req.candidate.candidate_id; // Extract user ID from the authenticated user object
   const {
-    candidate_id,
+    name,
+    email,
+    mobile_no,
+    gender,
+    d_o_b,
+    join_time,
     employer_type,
     designation_id,
     experience,
@@ -335,47 +409,46 @@ const updateCandidatePersonalInformation = async (req, res) => {
     // Check if the username, mobile number, or personal email already exists and belongs to a different user
     const existingCandidate = await CandidatePersonalInformation.findOne({
       where: {
-        candidate_id: { [Op.ne]: candidateId }, // Exclude the current user from the check
-      },
+        candidate_id: candidateId }, // Exclude the current user from the check
     });
 
     // Update user details in the database
     const data = {
-      candidate_id,
-      designation_id,
-      employer_type,
-      experience,
-      salary_expectation,
-      notice_period,
-      hear_about_us,
-      subject_id,
-      type_of_institute_id,
-      address,
-      state_id,
-      city_id,
-      country_id,
-      pincode,
+    candidate_id:candidateId,
+    name,
+    email,
+    mobile_no,
+    gender,
+    d_o_b,
+    employer_type,
+    designation_id,
+    experience,
+    salary_expectation,
+    notice_period,
+    hear_about_us,
+    subject_id,
+    join_time,
+    type_of_institute_id,
+    address,
+    state_id,
+    city_id,
+    country_id,
+    pincode,
     };
     if (existingCandidate) {
+      await Candidate.update(data, {
+        where: { candidate_id: candidateId },
+      });
       await CandidatePersonalInformation.update(data, {
         where: { candidate_id: candidateId },
       });
     } else {
       await CandidatePersonalInformation.create(data);
     }
-
-    // Retrieve updated user details, explicitly excluding the password and timestamp fields
-    const candidateInfo = await CandidatePersonalInformation.findOne({
-      where: { candidate_id: candidateId },
-      attributes: {
-        exclude: ["password", "created_at", "updated_at", "deleted_at"],
-      },
-    });
-    console.log("candidateLogssssssssssssss", candidateInfo);
-    sendResponse(res, 200, true, "Profile updated successfully", candidateInfo);
+    sendResponse(res, 200, true, "Profile updated successfully");
   } catch (error) {
     console.error("Error in updateProfile function:", error.message); // Log the error message
-    sendResponse(res, 500, false, error.message);
+    sendResponse(res,500, false, error.message);
   }
 };
 
@@ -552,15 +625,45 @@ async function verify_email(mailOptions) {
   });
 }
 
+const showCandidate = async(req,res)=>{
+  const candidateId = req.candidate.candidate_id; // Extract user ID from the authenticated user object
+  req.token_type = {
+    type: "candidate",
+  };
+  try {
+    // Check if the username, mobile number, or personal email already exists and belongs to a different user
+    const existingCandidate = await Candidate.findOne({
+      where: {
+        candidate_id: candidateId, // Exclude the current user from the check
+      },
+      include: [
+        {
+          model: CandidatePersonalInformation
+        },
+      ],
+      
+    });
+    if (existingCandidate) {
+      // sendResponse(req,res, 200, true, "show Candidate successfully",existingCandidate); 
+      sendResponse(res, 200, true, "show Candidate successfully",existingCandidate);
+    } 
+    
+  } catch (error) {
+    console.error("Error in show Candidate function:", error.message); // Log the error message
+    sendResponse(res, 500, false, error.message);
+  }
+}
+
 module.exports = {
   register,
   forgotPassword,
   updatePassword,
   resetPassword,
-  updateCandidatePersonalInformation,
+  updateCandidate,
   verifyEmail,
   verifyMobile,
   login,
   logout,
+  showCandidate,
   // google_login,
 };

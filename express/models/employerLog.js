@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         index: true,
       },
       ip_address: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       message: {

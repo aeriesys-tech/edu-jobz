@@ -15,10 +15,9 @@ const sendResponse = async (
 
   if (data !== null) response.data = data;
   if (errors !== null) response.errors = errors;
-
   // Prepare the API log details
   const employerApiLog = {
-    employer_id: res.locals.admin ? res.locals.employer.id : null, // Retrieve admin ID from locals
+    employer_id: res.locals.employer ? res.locals.employer.id : null, // Retrieve admin ID from locals
     api_name: res.req.originalUrl, // API endpoint
     api_request: JSON.stringify(res.req.body), // Request payload
     status: statusCode,

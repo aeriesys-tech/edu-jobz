@@ -17,12 +17,12 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       verification_type: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
         allowNull: false,
         index: true,
       },
       send_to: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
         allowNull: false,
         index: true,
       },

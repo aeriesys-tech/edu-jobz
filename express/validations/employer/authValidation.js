@@ -23,50 +23,12 @@ const registrationValidation = (req, res, next) => {
       .notEmpty()
       .withMessage("Email is required"),
 
-    body("whatsapp_no")
-      .isMobilePhone()
-      .withMessage("Invalid mobile number format")
-      .notEmpty()
-      .withMessage("Mobile number is required"),
-
-    body("mobile_no")
-      .isMobilePhone()
-      .withMessage("Invalid is_mobile_no_verified format")
-      .notEmpty()
-      .withMessage("is_mobile_no_verified is required"),
-
     body("password")
       .isLength({ min: 8 })
       .withMessage("Password must be at least 8 characters long")
       .notEmpty()
       .withMessage("Password is required"),
 
-    body("gender").isString().withMessage("gender must be a string").trim(),
-
-    body("d_o_b").isString().withMessage("Invalid d_o_b format"),
-
-    body("type_of_institute")
-      .isString()
-      .withMessage("Type of institute must be a string")
-      .trim(),
-
-    body("institution_name")
-      .isString()
-      .withMessage("Institution Name must be a string")
-      .trim()
-      .notEmpty()
-      .withMessage("Name is required"),
-
-    body("address").isString().withMessage("Address must be a string").trim(),
-    body("state").isString().withMessage("State must be a string").trim(),
-    body("city").isString().withMessage("City must be a string").trim(),
-    body("country").isString().withMessage("Country must be a string").trim(),
-    body("pincode")
-      .isString()
-      .withMessage("Pincode must be a string")
-      .trim()
-      .notEmpty()
-      .withMessage("Pincode is required"),
     body("avatar").optional().isString().withMessage("Avatar must be a string"),
   ])(req, res, next);
 };
@@ -84,32 +46,66 @@ const loginValidation = (req, res, next) => {
 // Validation for update
 const updateProfileValidation = (req, res, next) => {
   return Validate([
-    check("name")
-      .optional()
-      .isString()
-      .withMessage("Name must be a string")
-      .trim()
-      .escape()
+    body("employer_id")
+    .isInt()
+    .withMessage("Employer ID must be a number")
+    .trim()
+    .notEmpty()
+    .withMessage("Employer ID is required"),
+    body("whatsapp_no")
+      .isMobilePhone()
+      .withMessage("Invalid mobile number format")
       .notEmpty()
-      .withMessage("Name cannot be empty"),
-
-    check("mobile_no")
-      .isString()
-      .withMessage("Mobile number must be a string")
+      .withMessage("whatsapp number is required"),
+    body("gender").isString().withMessage("gender must be a string").trim(),
+    body("d_o_b").isString().withMessage("Invalid d_o_b format"),
+    body("type_of_institute_id")
+      .isInt()
+      .withMessage("Type Of Institute ID must be a number")
       .trim()
-      .isMobilePhone("en-IN")
-      .withMessage("Enter a valid mobile number")
-      .isLength({ min: 10, max: 10 })
-      .withMessage("Mobile number must be exactly 10 digits long")
       .notEmpty()
-      .withMessage("Mobile number is required"),
-
-    check("avatar")
-      .optional()
+      .withMessage("Type Of Institute ID is required"),
+    body("institution_name")
       .isString()
-      .withMessage("Avatar must be a string"),
+      .withMessage("Institution Name must be a string")
+      .trim()
+      .notEmpty()
+      .withMessage("Institue Name is required"),
+    body("address").isString().withMessage("Address must be a string").trim(),
+    body("state_id")
+    .isInt()
+    .withMessage("State ID must be a number")
+    .trim()
+    .notEmpty()
+    .withMessage("State ID is required"),
+    body("city_id")
+      .isInt()
+      .withMessage("City ID must be a number")
+      .trim()
+      .notEmpty()
+      .withMessage("City ID is required"),
+      body("country_id")
+      .isInt()
+      .withMessage("Country ID must be a number")
+      .trim()
+      .notEmpty()
+      .withMessage("Country ID is required"),
+    body("pincode")
+      .isString()
+      .withMessage("Pincode must be a string")
+      .trim()
+      .notEmpty()
+      .withMessage("Pincode is required"),
+    body("avatar").optional().isString().withMessage("Avatar must be a string"),
   ])(req, res, next);
 };
+
+
+
+
+
+
+
 
 const updatePasswordValidation = (req, res, next) => {
   return Validate([

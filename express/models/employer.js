@@ -30,12 +30,6 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         index: true,
       },
-      whatsapp_no: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
-        unique: true,
-        index: true,
-      },
       is_email_verified: {
         type: DataTypes.BOOLEAN(false),
         allowNull: true,
@@ -47,51 +41,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         index: true,
         defaultValue: false,
-      },
-      gender: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      d_o_b: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        index: true,
-      },
-      type_of_institute: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
-        index: true,
-      },
-      institution_name: {
-        type: DataTypes.STRING(500),
-        allowNull: false,
-        index: true,
-      },
-      address: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-        index: true,
-      },
-      state: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-        index: true,
-      },
-      city: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-        index: true,
-      },
-      country: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-        index: true,
-      },
-      pincode: {
-        type: DataTypes.STRING(10),
-        allowNull: false,
-        index: true,
       },
 
       avatar: {
@@ -124,5 +73,10 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+  Employer.associate = (models) => {
+    Employer.hasOne(models.EmployerInformation, {
+      foreignKey: "employer_id"
+    });
+  };
   return Employer;
 };

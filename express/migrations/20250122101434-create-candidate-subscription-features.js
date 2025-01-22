@@ -2,48 +2,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("employers", {
-      employer_id: {
+    await queryInterface.createTable("candidate_subscription_features", {
+      candidate_subscription_feature_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
+      feature_name: {
         type: Sequelize.STRING(100),
         allowNull: false,
         index: true,
-      },
-      email: {
-        type: Sequelize.STRING(120),
-        allowNull: false,
         unique: true,
-        index: true,
       },
-      password: {
-        type: Sequelize.STRING(120),
-        allowNull: false,
-      },
-      mobile_no: {
-        type: Sequelize.STRING(20),
-        allowNull: false,
-        unique: true,
-        index: true,
-      },
-      is_email_verified: {
-        type: Sequelize.BOOLEAN(false),
+      description: {
+        type: Sequelize.TEXT(250),
         allowNull: true,
-        index: true,
-      },
-      is_mobile_no_verified: {
-        type: Sequelize.BOOLEAN(false),
-        allowNull: true,
-        index: true,
-      },
-      avatar: {
-        type: Sequelize.STRING(50),
-        allowNull: false,
-        index: true,
       },
       created_at: {
         allowNull: true,
@@ -64,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("employers");
+    await queryInterface.dropTable("candidate_subscription_features");
   },
 };

@@ -21,14 +21,6 @@ router.post("/register", registrationValidation, authController.register);
 router.post("/login", loginValidation, authController.login);
 
 router.post(
-  "/updateCandidatePersonalInformation",
-  upload.single("avatar"), // Add multer middleware for handling file uploads
-  updateProfileValidation,
-  authMiddleware,
-  authController.updateCandidatePersonalInformation
-);
-
-router.post(
   "/updatePassword",
   updatePasswordValidation,
   authMiddleware,
@@ -54,6 +46,17 @@ router.post(
   resetPasswordValidation,
   authController.resetPassword
 );
+router.post(
+  "/showCandidate",
+  authMiddleware,
+  authController.showCandidate
+);
+router.post(
+  "/updateCandidate",
+  authMiddleware,
+  authController.updateCandidate
+);
+
 router.post("/logout", authMiddleware, authController.logout);
 
 module.exports = router;

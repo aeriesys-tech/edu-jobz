@@ -11,7 +11,8 @@ const stateRoutes = require("./stateRoutes");
 const cityRoutes = require("./cityRoutes");
 const subjectRoutes = require("./subjectRoutes");
 const typeOfInstituteRoutes = require("./typeOfInstituteRoutes");
-require;
+const employerSubscriptionFeatureRoutes = require("./employerSubscriptionFeatureRoutes")
+const candidateSubscriptionFeatureRoutes = require("./candidateSubscriptionFeatureRoutes")
 
 router.use("/candidate", candidatesAuthRoutes);
 router.use("/employer", employersAuthRoutes);
@@ -23,6 +24,8 @@ router.use("/designations", designationRoutes);
 router.use("/cities", cityRoutes);
 router.use("/subjects", subjectRoutes);
 router.use("/types_of_institutes", typeOfInstituteRoutes);
+router.use("/employer_subscription_features", employerSubscriptionFeatureRoutes);
+router.use("/candidate_subscription_features", candidateSubscriptionFeatureRoutes);
 
 // router.use("/priorities", priorityRoutes);
 

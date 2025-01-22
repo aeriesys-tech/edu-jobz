@@ -1,20 +1,24 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  const TypeOfInstitute = sequelize.define(
-    "TypeOfInstitute",
+  const CandidateSubscriptionFeature = sequelize.define(
+    "CandidateSubscriptionFeature",
     {
-      type_of_institute_id: {
+      candidate_subscription_feature_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      type_of_institute: {
-        type: DataTypes.STRING,
+      feature_name: {
+        type: DataTypes.STRING(100),
         allowNull: false,
         index: true,
+        unique:true
       },
-
+      description:{
+        type: DataTypes.TEXT(250),
+        allowNull: true,
+      },
       created_at: {
         type: DataTypes.DATE,
         allowNull: true,
@@ -33,11 +37,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      modelName: "TypeOfInstitute",
-      tableName: "type_of_institutes",
+      modelName: "CandidateSubscriptionFeature",
+      tableName: "candidate_subscription_features",
       paranoid: true, // Enables soft deletes
       underscored: true,
     }
   );
-  return TypeOfInstitute;
+  return CandidateSubscriptionFeature;
 };
