@@ -1,48 +1,48 @@
-const { Candidate, CandidateToken, CandidateOtp } = require("../../models");
-<<<<<<< HEAD
-<<<<<<< HEAD
-const { sendResponse } = require("../../services/candidate/responseService");
-=======
-const { sendResponse } = require("../../services/responseService");
->>>>>>> cef6f50 (verify email and verify mobile)
-=======
-const { sendResponse } = require("../../services/candidate/responseService");
->>>>>>> 8fdea84 (employee auth)
+const { Employee, EmployeeToken, EmployeeOtp } = require("../../models");
+const { sendResponse } = require("../../services/employee/responseService");
 const { sendOtp } = require("../../services/messageService");
 const { Op, Sequelize } = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-// const auth = require("../../services/authService");
 const passport = require("passport");
-<<<<<<< HEAD
-const { sendEmail } = require("../../services/emailService");
-const fs = require("fs");
-const path = require("path");
-=======
->>>>>>> 8fdea84 (employee auth)
 
 // Registration
 const register = async (req, res) => {
   try {
-    const { name, mobile_no, email, password } = req.body;
+    const {
+      name,
+      mobile_no,
+      email,
+      password,
+      whatsapp_no,
+      gender,
+      d_o_b,
+      type_of_institute,
+      institution_name,
+      address,
+      state,
+      city,
+      country,
+      pincode,
+    } = req.body;
 
     // Check if email or mobile_no already exists
-    const existingCandidate = await Candidate.findOne({
+    const existingEmployee = await Employee.findOne({
       where: {
         [Op.or]: [{ email }, { mobile_no }],
       },
     });
 
-    if (existingCandidate) {
+    if (existingEmployee) {
       const errors = {};
-      if (existingCandidate.email === email) {
-        errors.email = "Candidate with the same email already exists";
+      if (existingEmployee.email === email) {
+        errors.email = "Employee with the same email already exists";
       }
-      if (existingCandidate.mobile_no === mobile_no) {
+      if (existingEmployee.mobile_no === mobile_no) {
         errors.mobile_no =
-          "Candidate with the same mobile number already exists";
+          "Employee with the same mobile number already exists";
       }
       return sendResponse(res, 400, false, "Validation Error", null, errors);
     }
@@ -51,65 +51,62 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the new Candidate
-    const newCandidate = await Candidate.create({
+    const newEmployee = await Employee.create({
       name,
       mobile_no,
       email,
       password: hashedPassword,
+      whatsapp_no,
+      gender,
+      d_o_b,
+      type_of_institute,
+      institution_name,
+      address,
+      state,
+      city,
+      country,
+      pincode,
     });
 
     const otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
     const expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
 
-    await CandidateOtp.create({
-      candidate_id: newCandidate.candidate_id,
+    await EmployeeOtp.create({
+      employee_id: newEmployee.employee_id,
       verification_type: "Email",
       otp: otp,
-      send_to: newCandidate.email,
+      send_to: newEmployee.email,
       created_at: new Date(),
       expire_at: expireAt,
     });
-
-    // Read the HTML template
-    const templatePath = path.join(
-      __dirname,
-      "../../templates/verifyEmail.html"
-    );
-    let htmlContent = fs.readFileSync(templatePath, "utf8");
-
-    // Replace placeholders with dynamic values
-    htmlContent = htmlContent.replace("{{otp}}", otp);
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Your OTP for Email Verification",
-      html: htmlContent, // Use the HTML content as email body
+      text: `Hello,
+
+We received a request for Email verification for your account. Please use the One-Time Password (OTP) provided below to complete the process.
+
+OTP: ${otp}
+
+This OTP is valid for the next 15 minutes. If you did not request a password reset, please ignore this email.
+
+Thank you,
+Aeriesys Team`,
     };
     const mobile_otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
     const mobile_expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
 
-<<<<<<< HEAD
-    const mobile_otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
-    const mobile_expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
-
-=======
->>>>>>> cef6f50 (verify email and verify mobile)
-    await CandidateOtp.create({
-      candidate_id: newCandidate.candidate_id,
+    await EmployeeOtp.create({
+      employee_id: newEmployee.employee_id,
       verification_type: "Mobile",
       otp: mobile_otp,
-      send_to: newCandidate.mobile_no,
+      send_to: newEmployee.mobile_no,
       created_at: new Date(),
       expire_at: mobile_expireAt,
     });
 
-<<<<<<< HEAD
-    // Send email
-    await sendEmail(mailOptions);
-
-    // Call a function to send mobile OTP (assume it's implemented elsewhere)
-=======
     await verify_email(mailOptions);
 
     // await userotp.sendOtp(newCandidate.mobile_no, mobile_otp);
@@ -121,15 +118,14 @@ const register = async (req, res) => {
     //   sendResponse(res, 200, true, "Email verification email sent");
     // });
 
->>>>>>> cef6f50 (verify email and verify mobile)
-    await send_mobile_otp(newCandidate.mobile_no, mobile_otp);
+    await send_mobile_otp(newEmployee.mobile_no, mobile_otp);
 
     return sendResponse(
       res,
       201,
       true,
-      "Candidate created successfully",
-      newCandidate
+      "Employee created successfully",
+      newEmployee
     );
   } catch (error) {
     console.error("Error in Registration function:", error);
@@ -137,63 +133,16 @@ const register = async (req, res) => {
   }
 };
 
-// Forgot Password function
-const forgotPassword = async (req, res) => {
-  const { email } = req.body;
-
-  try {
-    const candidate = await Candidate.findOne({ where: { email } });
-    if (!candidate) {
-      return sendResponse(res, 404, false, "Candidate not found", null, {
-        email: "Candidate not found",
-      });
-    }
-
-    const otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
-    const expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
-
-    await CandidateOtp.create({
-      candidate_id: candidate.candidate_id,
-      otp: otp,
-      verification_type: "null",
-      send_to: candidate.candidate_id,
-      expire_at: expireAt,
-    });
-
-    // Read the HTML template
-    const templatePath = path.join(
-      __dirname,
-      "../../templates/forgotPassword.html"
-    );
-    let htmlContent = fs.readFileSync(templatePath, "utf8");
-
-    // Replace placeholders with dynamic values
-    htmlContent = htmlContent.replace("{{otp}}", otp);
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Your OTP for Resetting Your Password",
-      html: htmlContent, // Use the HTML content as email body
-    };
-    // Send email
-    await sendEmail(mailOptions);
-
-    return sendResponse(res, 201, true, "Reset password email sent");
-  } catch (error) {
-    sendResponse(res, 500, false, error.message);
-  }
-};
 // Login function
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const candidate = await Candidate.findOne({
+    const employee = await Employee.findOne({
       where: { email: email },
     });
 
-    if (!candidate) {
+    if (!employee) {
       return sendResponse(res, 400, false, "Email is incorrect", null, {
         email: "Invalid Email",
         password: "Invalid Password",
@@ -201,7 +150,7 @@ const login = async (req, res) => {
     }
 
     // Validate password
-    const validPassword = await bcrypt.compare(password, candidate.password);
+    const validPassword = await bcrypt.compare(password, employee.password);
     if (!validPassword) {
       return sendResponse(res, 400, false, "Password is incorrect", null, {
         email: "Invalid Email",
@@ -210,13 +159,13 @@ const login = async (req, res) => {
     }
 
     // Clear existing tokens for the user
-    await CandidateToken.destroy({
-      where: { candidate_id: candidate.candidate_id },
+    await EmployeeToken.destroy({
+      where: { employee_id: employee.employee_id },
     });
 
     // Generate JWT token
     const token = jwt.sign(
-      { candidate_id: candidate.candidate_id },
+      { employee_id: employee.employee_id },
       process.env.JWT_SECRET,
       {
         expiresIn: process.env.TOKEN_EXPIRY,
@@ -228,31 +177,42 @@ const login = async (req, res) => {
     expireAt.setHours(expireAt.getHours() + parseInt(process.env.TOKEN_EXPIRY));
 
     // Save token to the UserToken table
-    await CandidateToken.create({
-      candidate_id: candidate.candidate_id,
+    await EmployeeToken.create({
+      employee_id: employee.employee_id,
       token: token,
       expire_at: expireAt,
     });
 
-    if (!candidate) {
+    if (!employee) {
       return sendResponse(res, 400, false, "Email not found", null, {
         email: "Invalid email or email not found",
       });
     }
 
-    const candidateWithoutPassword = await Candidate.findOne({
-      where: {
-        candidate_id: candidate.candidate_id,
-      },
-      attributes: {
-        exclude: ["password"],
-      },
-    });
+    // Construct the user response without password
+    const employeeWithoutPassword = {
+      employee_id: employee.employee_id,
+      name: employee.name,
+      email: employee.email,
+      mobile_no: employee.mobile_no,
+
+      whatsapp_no: employee.whatsapp_no,
+      gender: employee.gender,
+      d_o_b: employee.d_o_b,
+      type_of_institute: employee.type_of_institute,
+      institution_name: employee.institution_name,
+      address: employee.address,
+      state: employee.state,
+      city: employee.city,
+      country: employee.country,
+      pincode: employee.pincode,
+      created_at: employee.created_at,
+    };
 
     // Send the response with token and user data
     return sendResponse(res, 200, true, "Login successful", {
       token,
-      candidate: candidateWithoutPassword,
+      employee: employeeWithoutPassword,
     });
   } catch (error) {
     console.error("Error in login function:", error);
@@ -260,10 +220,6 @@ const login = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 8fdea84 (employee auth)
 // const google_login = (req, res) => {
 //   app.get(
 //     "/auth/google",
@@ -280,14 +236,9 @@ const login = async (req, res) => {
 //   );
 // };
 
-<<<<<<< HEAD
-=======
->>>>>>> cef6f50 (verify email and verify mobile)
-=======
->>>>>>> 8fdea84 (employee auth)
 // updatePassword
 const updatePassword = async (req, res) => {
-  const candidateId = req.candidate.candidate_id; // Extract user ID from the authenticated user object
+  const employeeId = req.employee.employee_id; // Extract user ID from the authenticated user object
   const { oldPassword, newPassword, confirmPassword } = req.body;
 
   // Validate the new password and confirm password
@@ -302,23 +253,20 @@ const updatePassword = async (req, res) => {
 
   try {
     // Find the user by ID
-    const candidate = await Candidate.findByPk(candidateId);
+    const employee = await Employee.findByPk(employeeId);
 
-    if (!candidate) {
-      return sendResponse(res, 404, false, "Candidate not found");
+    if (!employee) {
+      return sendResponse(res, 404, false, "Employee not found");
     }
 
     // Check if the old password is valid
-    const validPassword = await bcrypt.compare(oldPassword, candidate.password);
+    const validPassword = await bcrypt.compare(oldPassword, employee.password);
     if (!validPassword) {
       return sendResponse(res, 400, false, "Invalid old password");
     }
 
     // Check if the new password is the same as the old password
-    const isSamePassword = await bcrypt.compare(
-      newPassword,
-      candidate.password
-    );
+    const isSamePassword = await bcrypt.compare(newPassword, employee.password);
     if (isSamePassword) {
       return sendResponse(
         res,
@@ -332,9 +280,9 @@ const updatePassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // Update the user's password in the database
-    await Candidate.update(
+    await Employee.update(
       { password: hashedPassword },
-      { where: { candidate_id: candidateId } } // Ensure you are using the correct user_id field
+      { where: { employee_id: employeeId } } // Ensure you are using the correct user_id field
     );
 
     sendResponse(res, 200, true, "Password updated successfully");
@@ -346,46 +294,27 @@ const updatePassword = async (req, res) => {
 
 //Update Profile
 const updateProfile = async (req, res) => {
-  const candidateId = req.candidate.candidate_id; // Extract user ID from the authenticated user object
-  const {
-    name,
-    mobile_no,
-    email,
-    gender,
-    d_o_b,
-    role,
-    employer_type,
-    experience,
-    salary_expectation,
-    notice_period,
-    hear_about_us,
-    subjects,
-    type_of_institute,
-    address,
-    state,
-    city,
-    country,
-    pincode,
-  } = req.body;
+  const employeeId = req.employee.employee_id; // Extract user ID from the authenticated user object
+  const { name, email, mobile_no } = req.body;
   const avatar = req.file ? req.file.filename : null; // Get the uploaded file name if present
 
   try {
     // Check if the username, mobile number, or personal email already exists and belongs to a different user
-    const existingCandidate = await Candidate.findOne({
+    const existingEmployee = await Employee.findOne({
       where: {
         [Op.or]: [{ email }, { mobile_no }],
-        candidate_id: { [Op.ne]: candidateId }, // Exclude the current user from the check
+        employee_id: { [Op.ne]: employeeId }, // Exclude the current user from the check
       },
     });
 
-    if (existingCandidate) {
+    if (existingEmployee) {
       const errors = {};
-      if (existingCandidate.email === email) {
-        errors.email = "Candidate with the same email already exists";
+      if (existingEmployee.email === email) {
+        errors.email = "Employee with the same email already exists";
       }
-      if (existingUser.mobile_no === mobile_no) {
+      if (existingEmployee.mobile_no === mobile_no) {
         errors.mobile_no =
-          "Candidate with the same mobile number already exists";
+          "Employee with the same mobile number already exists";
       }
       return sendResponse(res, 400, false, "Validation Error", null, errors);
     }
@@ -395,40 +324,81 @@ const updateProfile = async (req, res) => {
       name,
       email,
       mobile_no,
-      gender,
-      d_o_b,
-      role,
-      employer_type,
-      experience,
-      salary_expectation,
-      notice_period,
-      hear_about_us,
-      subjects,
-      type_of_institute,
-      address,
-      state,
-      city,
-      country,
-      pincode,
     };
     if (avatar) {
       updateData.avatar = avatar; // Add avatar to the update data if a file was uploaded
     }
 
-    await Candidate.update(updateData, {
-      where: { candidate_id: candidateId },
+    await Employee.update(updateData, {
+      where: { employee_id: employeeId },
     });
 
     // Retrieve updated user details, explicitly excluding the password and timestamp fields
-    const candidate = await Candidate.findByPk(candidateId, {
+    const employee = await Employee.findByPk(employeeId, {
       attributes: {
         exclude: ["password", "created_at", "updated_at", "deleted_at"],
       },
     });
 
-    sendResponse(res, 200, true, "Profile updated successfully", candidate);
+    sendResponse(res, 200, true, "Profile updated successfully", employee);
   } catch (error) {
     console.error("Error in updateProfile function:", error.message); // Log the error message
+    sendResponse(res, 500, false, error.message);
+  }
+};
+
+// Update Password function
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+// Forgot Password function
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const employee = await Employee.findOne({ where: { email } });
+    if (!employee) {
+      return sendResponse(res, 404, false, "Employee not found", null, {
+        email: "Employee not found",
+      });
+    }
+
+    const otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
+    const expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
+
+    await EmployeeToken.create({
+      employee_id: employee.employee_id,
+      token: otp,
+      expire_at: expireAt,
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Your OTP for Resetting Your Password",
+      text: `Hello,
+
+We received a request to reset the password for your account. Please use the One-Time Password (OTP) provided below to complete the process.
+
+OTP: ${otp}
+
+This OTP is valid for the next 15 minutes. If you did not request a password reset, please ignore this email.
+
+Thank you,
+Aeriesys Team`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return sendResponse(res, 500, false, error.message);
+      }
+      sendResponse(res, 200, true, "Reset password email sent");
+    });
+  } catch (error) {
     sendResponse(res, 500, false, error.message);
   }
 };
@@ -444,34 +414,34 @@ const resetPassword = async (req, res) => {
   }
 
   try {
-    const candidate = await Candidate.findOne({ where: { email } });
-    if (!candidate) {
-      return sendResponse(res, 404, false, "Candidate not found", null, {
-        email: "Candidate not found",
+    const employee = await Employee.findOne({ where: { email } });
+    if (!employee) {
+      return sendResponse(res, 404, false, "Employee not found", null, {
+        email: "Employee not found",
       });
     }
 
-    const candidateOtp = await CandidateOtp.findOne({
+    const employeeToken = await EmployeeToken.findOne({
       where: {
-        candidate_id: candidate.candidate_id,
-        otp: otp,
+        employee_id: employee.employee_id,
+        token: otp,
         expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
       },
     });
 
-    if (!candidateOtp) {
+    if (!employeeToken) {
       return sendResponse(res, 400, false, "Invalid OTP", null, {
         otp: "Invalid or expired OTP",
       });
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await Candidate.update({ password: hashedPassword }, { where: { email } });
+    await Employee.update({ password: hashedPassword }, { where: { email } });
 
-    // // Optionally, delete the used token
-    // await CandidateToken.destroy({
-    //   where: { candidate_id: candidate.candidate_id, token: otp },
-    // });
+    // Optionally, delete the used token
+    await EmployeeToken.destroy({
+      where: { employee_id: employee.employee_id, token: otp },
+    });
 
     sendResponse(res, 200, true, "Password reset successfully");
   } catch (error) {
@@ -490,29 +460,29 @@ const verifyEmail = async (req, res) => {
   // }
 
   try {
-    const candidate = await Candidate.findOne({ where: { email } });
-    if (!candidate) {
+    const employee = await Employee.findOne({ where: { email } });
+    if (!employee) {
       return sendResponse(res, 404, false, "Email not found", null, {
         email: "Email not found",
       });
     }
 
-    const candidateOtp = await CandidateOtp.findOne({
+    const employeeOtp = await EmployeeOtp.findOne({
       where: {
-        candidate_id: candidate.candidate_id,
+        employee_id: employee.employee_id,
         verification_type: "Email",
         otp: otp,
         expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
       },
     });
 
-    if (!candidateOtp) {
+    if (!employeeOtp) {
       return sendResponse(res, 400, false, "Invalid OTP", null, {
         otp: "Invalid or expired OTP",
       });
     }
 
-    await Candidate.update({ is_email_verified: "true" }, { where: { email } });
+    await Employee.update({ is_email_verified: "true" }, { where: { email } });
 
     sendResponse(res, 200, true, "Email is verified successfully");
   } catch (error) {
@@ -531,29 +501,29 @@ const verifyMobile = async (req, res) => {
   // }
 
   try {
-    const candidate = await Candidate.findOne({ where: { mobile_no } });
-    if (!candidate) {
+    const employee = await Employee.findOne({ where: { mobile_no } });
+    if (!employee) {
       return sendResponse(res, 404, false, "Mobile not found", null, {
         email: "Mobile no not found",
       });
     }
 
-    const candidateOtp = await CandidateOtp.findOne({
+    const employeeOtp = await EmployeeOtp.findOne({
       where: {
-        candidate_id: candidate.candidate_id,
+        employee_id: employee.employee_id,
         verfiication_type: "Moble",
         otp: otp,
         expire_at: { [Sequelize.Op.gt]: new Date() }, // Ensure OTP is not expired
       },
     });
 
-    if (!candidateOtp) {
+    if (!employeeOtp) {
       return sendResponse(res, 400, false, "Invalid OTP", null, {
         otp: "Invalid or expired OTP",
       });
     }
 
-    await Candidate.update(
+    await Employee.update(
       { is_mobile_no_verified: "true" },
       { where: { mobile_no } }
     );
@@ -577,10 +547,10 @@ const logout = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Delete the token from the UserToken table
-    await CandidateToken.destroy({
+    await EmployeeToken.destroy({
       where: {
         token: token,
-        candidate_id: decoded.candidate_id,
+        employee_id: decoded.employee_id,
       },
     });
 

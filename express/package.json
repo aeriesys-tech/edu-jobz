@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon index.js",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "model:generate": "npx sequelize-cli model:generate",
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:down": "npx sequelize-cli db:migrate:undo",
@@ -14,6 +15,11 @@
 		"migrate:up": "npx sequelize-cli db:migrate",
 		"migrate:down": "npx sequelize-cli db:migrate:undo",
 >>>>>>> cef6f50 (verify email and verify mobile)
+=======
+    "model:generate": "npx sequelize-cli model:generate",
+    "migrate:up": "npx sequelize-cli db:migrate",
+    "migrate:down": "npx sequelize-cli db:migrate:undo",
+>>>>>>> 8fdea84 (employee auth)
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

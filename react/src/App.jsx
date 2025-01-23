@@ -48,6 +48,7 @@ import AdminCity from './components/admin/configurations/adminconfigurationcity'
 import AdminSubjectApp from './components/admin/configurations/adminconfigurationssubjects';
 import AdminDesignationsApp from './components/admin/configurations/adminconfigurationdesignations';
 import AdminInstituteApp from './components/admin/configurations/adminconfig_typeofinstitute';
+import AdminSubscriptions from './components/admin/adminsubscriptions';
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
                                         <Route path='/admin/configurations/typeofinstitute' element={<AdminInstituteApp/>} />
 
                                         <Route path='/admin/configurations/designations' element={<AdminDesignationsApp/>} />
+                                        <Route path='/admin/dashboard/subscriiptions' element={<AdminSubscriptions />} />
 
                                         <Route path='/' element={<Login />} />
                                         <Route path='/signup' element={<Register />} />

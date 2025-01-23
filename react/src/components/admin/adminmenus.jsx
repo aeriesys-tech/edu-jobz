@@ -83,14 +83,14 @@ function AdminMenu() {
                                                 <span class="nk-menu-text">Configurations</span>
                                             </Link>
                                         </li>
-                                       {/* <li class={`nk-menu-item ${isActive('/candidate/dashboard/subscription') ? 'active' : ''}`}>
-                                            <Link to="#" class="nk-menu-link">
+                                       <li class={`nk-menu-item ${isActive('/admin/dashboard/subscriiptions') ? 'active' : ''}`}>
+                                            <Link to="/admin/dashboard/subscriiptions" class="nk-menu-link">
                                                 <span class="nk-menu-icon"><em
                                                         class="icon ni ni-medal"></em></span><span
                                                     class="nk-menu-text">Subscriptions</span>
                                             </Link>
                                         </li>   
-                                        <li class={`nk-menu-item ${isActive('/candidate/list') ? 'active' : ''}`}>
+                                      {/*}  <li class={`nk-menu-item ${isActive('/candidate/list') ? 'active' : ''}`}>
                                             <Link to="#" class="nk-menu-link">
                                                 <span class="nk-menu-icon">
                                                     <em class="icon ni ni-search"></em>

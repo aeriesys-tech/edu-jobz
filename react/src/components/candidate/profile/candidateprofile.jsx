@@ -3,9 +3,135 @@ import SideBar from "../dashboardslidebar"
 import DashFooter from "../footer"
 import DashHeader from "../header"
 import MenuBar from "./profilemenu"
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 function Profile() {
- 
+    const token = sessionStorage.getItem("tokencandidate");
+    console.log("Token being used:", token);
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        mobile_no: "",
+    });
+
+    const [Candidateform, setCandidateForm] = useState({
+        designation_id: "",
+        gender: "",
+        d_o_b: "",
+        employer_type: "",
+        experience: "",
+        salary_expectation: "",
+        notice_period: "",
+        hear_about_us: "",
+        subject_id: "",
+        join_time: "",
+        type_of_institute_id: "",
+        address: "",
+        state_id: null,
+        city_id: null,
+        country_id: null,
+        pincode: "",
+    });
+
+    const [designations, setDesignations] = useState([]);
+    const [subjects, setSubjects] = useState([]);
+    const [types_of_institutes, setTypesOfInstitutes] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Fetch candidate data
+    useEffect(() => {
+        if (!token) {
+            console.error("Token is missing!");
+            setError("Token is required to fetch data.");
+            setLoading(false);
+            return;
+        }
+
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/showCandidate`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log("API Response for Candidate:", response.data);
+
+                if (response.data?.data) {
+                    setFormData(response.data.data);
+                    setCandidateForm(response.data.data.CandidatePersonalInformation);
+                } else {
+                    console.error("Data is missing in the API response");
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching candidate data:", error);
+                setError("Failed to fetch candidate data. Please try again later.");
+            })
+            .finally(() => {
+                setLoading(false); // Ensure loading state is updated
+            });
+    }, [token]);
+
+    // Fetch designations
+    useEffect(() => {
+        if (!token) return;
+
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/designations/getdesignations`,
+                { filter: "all" },
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+            .then((response) => {
+                setDesignations(response.data.data || []);
+            })
+            .catch((error) => {
+                console.error("Error fetching designations:", error);
+            });
+    }, [token]);
+
+    // Fetch subjects
+    useEffect(() => {
+        if (!token) return;
+
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/subjects/getSubjects`,
+                { filter: "all" },
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+            .then((response) => {
+                setSubjects(response.data.data || []);
+            })
+            .catch((error) => {
+                console.error("Error fetching subjects:", error);
+            });
+    }, [token]);
+
+    // Fetch types of institutes
+    useEffect(() => {
+        if (!token) return;
+
+        axios
+            .post(
+                `${import.meta.env.VITE_BASE_API_URL1}/api/types_of_institutes/getTypeOfInstitutes`,
+                { filter: "all" },
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+            .then((response) => {
+                setTypesOfInstitutes(response.data.data || []);
+            })
+            .catch((error) => {
+                console.error("Error fetching types of institutes:", error);
+            });
+    }, [token]);
+
     return (
         <>
             <body class="nk-body bg-lighter npc-general has-sidebar ">
@@ -43,7 +169,8 @@ function Profile() {
                                                                         class="form-label">Name <span
                                                                             class="text-danger">*</span></label></div>
                                                                 <div class="form-control-group"><input type="text"
-                                                                        class="form-control" placeholder="Adu"/></div>
+                                                                        class="form-control"  value={formData.name || ""}
+                                                                        /></div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -54,7 +181,7 @@ function Profile() {
                                                                 </div>
                                                                 <div class="form-control-group"><input type="text"
                                                                         class="form-control"
-                                                                        placeholder="+91 12345-67890"/></div>
+                                                                        value={formData.mobile_no || ""}/></div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -64,7 +191,7 @@ function Profile() {
                                                                             class="text-danger">*</span></label></div>
                                                                 <div class="form-control-group"><input type="text"
                                                                         class="form-control"
-                                                                        placeholder="adu@gmail.com"/></div>
+                                                                        value={formData.email || ""}/></div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -83,7 +210,7 @@ function Profile() {
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-control-group">
-                                                                    <input type="" class="form-control date-picker-alt" placeholder="01/01/2000"/>
+                                                                    <input type="" class="form-control date-picker-alt"  value={formData.d_o_b}/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -91,6 +218,7 @@ function Profile() {
                                                             <div class="form-group">
                                                                 <label class="form-label">Employee Type</label>
                                                                 <select class="form-select js-select2">
+                                                                    
                                                                     <option>Full time</option>
                                                                     <option>Part time</option>
                                                                     <option>Intern</option>
