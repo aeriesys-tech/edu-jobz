@@ -1,8 +1,9 @@
 
 import { Link } from 'react-router-dom';
 import EmployeeSideBar from './employeesidebar';
-import DashHeader from '../candidate/header';
+
 import DashFooter from '../candidate/footer';
+import DashHeaderE from './header';
 
 
 function EmployeeMessage(){
@@ -13,7 +14,7 @@ function EmployeeMessage(){
                     <div class="nk-main ">
                        <EmployeeSideBar/>
                         <div class="nk-wrap ">
-                           <DashHeader/>
+                           <DashHeaderE/>
                            
                            
                             <div class="nk-content p-0">

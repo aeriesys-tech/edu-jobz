@@ -14,7 +14,7 @@ import Message from './components/candidate/message'
 
 import Details from './components/candidate/profileDetails'
 import Skills from './components/candidate/profile/skill'
-import Resume from './components/candidate/profile/resume'
+import Resume from './components/candidate/profile/documents'
 import ResetPassword from './components/login/resetpassword'
 import Success from './components/login/success'
 import Page404 from './components/login/404'
@@ -36,6 +36,18 @@ import EmployeeMessage from './components/employer/employeemessage'
 import Events from './components/candidate/dashboardevent'
 import Terms from './components/login/terms-condition'
 import ResetOTP from './components/login/otpverify';
+import ChangePassword from './components/login/changepassword';
+import AdminLogin from './components/admin/admin';
+import AdminDashboard from './components/admin/admindashboard';
+import AdminSettings from './components/admin/adminsettings';
+import Adminprofile from './components/admin/adminprofile';
+import AdminSubjectApp from './components/admin/configurations/adminconfigurationssubjects';
+import AdminDesignationsApp from './components/admin/configurations/adminconfigurationdesignations';
+import AdminInstituteApp from './components/admin/configurations/adminconfig_typeofinstitute';
+import AdminCityApp from './components/admin/configurations/adminconfigurationcity';
+import AdminStatesApp from './components/admin/configurations/adminconfigurationsstate';
+import AdminCountrysApp from './components/admin/configurations/adminconfigurations';
+import AdminSubscriptions from './components/admin/adminsubscriptions';
 
 function App() {
 
@@ -43,6 +55,21 @@ function App() {
                 <>
                         <HashRouter>
                                 <Routes>
+                                        {/* Admin */}
+                                        <Route path='/admin/login' element={<AdminLogin />} />
+                                        <Route path='/admin/dashboard' element={<AdminDashboard />} />
+                                        <Route path='/admin/configurations' element={<AdminCountrysApp />} />
+                                        <Route path='/admin/settings' element={<AdminSettings />} />
+                                        <Route path='/admin/profile' element={<Adminprofile />} />
+                                        <Route path='/admin/configurations/state' element={<AdminStatesApp />} />
+                                        <Route path='/admin/configurations/city' element={<AdminCityApp />} />
+                                        <Route path='/admin/configurations/subject' element={<AdminSubjectApp />} />
+                                        <Route path='/admin/configurations/typeofinstitute' element={<AdminInstituteApp/>} />
+
+                                        <Route path='/admin/configurations/designations' element={<AdminDesignationsApp/>} />
+                                        <Route path='/admin/dashboard/subscriptions' element={<AdminSubscriptions />} />
+
+{/* Auth*/}
                                         <Route path='/' element={<Login />} />
                                         <Route path='/signup' element={<Register />} />
                                         <Route path='/reset' element={<ResetPassword />} />
@@ -52,6 +79,8 @@ function App() {
                                         <Route path='/404' element={<Page404 />} />
                                         <Route path='/504' element={<Page504 />} />
                                         <Route path='/terms' element={<Terms />} />
+                                        <Route path='/changepassword' element={<ChangePassword />} />
+
 
                                         <Route path='/employee/login' element={<EmployeeLogin />} />
                                         <Route path='/employee/signup' element={<EmployeeSignUp />} />

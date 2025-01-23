@@ -1,8 +1,10 @@
 import SideBar from "./dashboardslidebar"
 import DashFooter from "./footer"
 import DashHeader from "./header"
-
-
+import das1 from '../../assets/img/dash1.svg'
+import das2 from '../../assets/img/dash2.svg'
+import das3 from '../../assets/img/dash3.svg'
+import das4 from '../../assets/img/dash4.svg'
 function Dashboard() {
     return (
         <>
@@ -70,63 +72,7 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <div class="nk-content pt-0">
-                    <div class="nk-block">
-                        <div class="row g-gs">
-                            <div class="col-sm-3">
-                                <div class="card card-full bg-primary">
-                                    <div class="card-inner">
-                                        <div class="d-flex align-items-center justify-content-between mb-1">
-                                            <h5 class="fs-1 text-white">452</h5>
-
-                                        </div>
-                                        <div class="fs-6 text-white text-opacity-75 mb-0">My Applications</div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="card card-full bg-warning is-dark">
-                                    <div class="card-inner">
-                                        <div class="d-flex align-items-center justify-content-between mb-1">
-                                            <h5 class="fs-1 text-white">3</h5>
-
-                                        </div>
-                                        <div class="fs-6 text-white text-opacity-75 mb-0">Accepted Applications</div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="card card-full bg-info is-dark">
-                                    <div class="card-inner">
-                                        <div class="d-flex align-items-center justify-content-between mb-1">
-                                            <h5 class="fs-1 text-white">6</h5>
-
-                                        </div>
-                                        <div class="fs-6 text-white text-opacity-75 mb-0">Interview Invitations</div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="card card-full bg-danger is-dark">
-                                    <div class="card-inner">
-                                        <div class="d-flex align-items-center justify-content-between mb-1">
-                                            <h5 class="fs-1 text-white">12</h5>
-
-                                        </div>
-                                        <div class="fs-6 text-white text-opacity-75 mb-0">My Subscription
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
+              
              <DashFooter/>
             </div>
         </div>

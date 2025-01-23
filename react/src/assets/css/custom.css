@@ -233,14 +233,14 @@ input[type="file"] {
 		width: 40px;
 		height: 40px;
 		background-color: #f4f4f4;
-		border: none;
+		border: 2px ;
 		line-height: 50px;
 		text-align: center;
 		font-size: 24px;
 		font-family: 'Raleway', sans-serif;
-		font-weight: 200;
+		font-weight: 500;
 		color: black;
-		margin: 0 2px;
+		margin: 2px;
 	}
 
 	.splitter {
@@ -255,8 +255,84 @@ input[type="file"] {
 	font-size: 20px;
 	color: white;
 }
-
+/* Error  */
+.custom-file-input~.error,
+.custom-file-input~.invalid,
+.dual-listbox .dual-listbox__search~.error,
+.dual-listbox .dual-listbox__search~.invalid,
+.form-control~.error,
+.form-control~.invalid,
+.form-select~.error,
+.form-select~.invalid,
+.input-group~.error,
+.input-group~.invalid,
+.js-select2~.error,
+.js-select2~.invalid,
+div.dt-container div.dt-search input~.error,
+div.dt-container div.dt-search input~.invalid {
+    color: #e85347;
+ 
+}
 /* .nav-switch .nav-link.active {
   background: #0059b3;
   color: #fff
 } */
+.nk-split-stretch, .bg-abstract{
+  background-image: url('../img/DALL.webp');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+.nk-split-stretcht, .bg-abstractt{
+  background-image: url('../img/teacher.webp');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+/* input border color  */
+.dual-listbox .dual-listbox__search:focus,
+.form-control:focus,
+div.dt-container div.dt-search input:focus {
+    color: #3c4d62;
+    background-color: #fff;
+    border-color: #0059b3;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgb(0, 89, 179,0.2)
+}
+
+
+.nk-sidebar.is-collapsed {
+  width: 62px; /* Example collapsed width */
+  overflow: hidden;
+  opacity: 1;
+}
+.nk-sidebar.is-collapsed .nk-menu-text {
+  transition: opacity 0.3s ease;/* Hide menu text */
+}
+.nk-sidebar.is-collapsed:hover{
+  width: 290px;
+}
+
+/* .nk-sidebar {
+    width: 80px;
+    transition: width 0.3s ease;
+    overflow: hidden; 
+} */
+
+/* Expanded sidebar on hover */
+/* .nk-sidebar:hover {
+    width: 250px; 
+} */
+
+/* Ensure menu text is visible only in expanded state */
+/* .nk-sidebar .nk-menu-text {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+} */
+
+/* .nk-sidebar:hover .nk-menu-text {
+    opacity: 1;
+} */
+ 

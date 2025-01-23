@@ -1,70 +1,146 @@
+import React from "react";
+import { useState, useRef } from "react"
+import axios from "axios";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../assets/img/logo.png'
 
 import facebook from '../../assets/img/facebook.svg'
 import google from '../../assets/img/google.svg'
 import linkedin from '../../assets/img/linkedin.svg'
-import login from '../../assets/img/bg3.jpg'
-import { useRef, useState } from 'react'
+import login from '../../assets/img/DALL.webp'
+
 
 
 function Login() {
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+
+    // const [loginError, setLoginError] = useState("");
+
+    // const [errors, setErrors] = useState({});
+
+    // const [loading, setLoading] = useState(false);
+    // const [passwordVisible, setPasswordVisible] = useState(false);
+
+    // const navigate = useNavigate();
+    // const passwordRef = useRef(null);
+
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+    //     setErrors({});
+
+    //     // Store the full email in session storage
+    //     sessionStorage.setItem("email", email);
+
+    //     const data = { email, password };
+
+    //     try {
+    //         const response = await fetch(
+    //             `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/login`,
+    //             {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify(data),
+    //             }
+    //         );
+
+    //         if (!response.ok) {
+    //             const errorData = await response.json();
+    //             const errorMessage = errorData.message;
+
+    //             setErrors(errorData.errors || {});
+    //             toast.error(errorMessage);
+    //             setLoading(false);
+    //             return;
+    //         }
+
+    //         setLoading(false);
+    //         navigate("/candidate/dashboard");
+    //     } catch (error) {
+    //         console.error("Error occurred:", error);
+    //         toast.error("An unexpected error occurred. Please try again.");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+
+    // const handleEmailKeyDown = (event) => {
+    //     if (event.key === "Enter") {
+    //         event.preventDefault();
+    //         passwordRef.current.focus();
+    //     }
+    // };
+
+    // const handlePasswordKeyDown = (event) => {
+    //     if (event.key === "Enter") {
+    //         event.preventDefault();
+    //         handleSubmit(event);
+    //     }
+    // };
+
+    // const currentYear = new Date().getFullYear();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const [loginError, setLoginError] = useState("");
-
     const [errors, setErrors] = useState({});
-
     const [loading, setLoading] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const navigate = useNavigate();
     const passwordRef = useRef(null);
 
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
         setErrors({});
-    
+
         // Store the full email in session storage
         sessionStorage.setItem("email", email);
-    
+
         const data = { email, password };
-    
+
         try {
-            const response = await fetch(
+            const response = await axios.post(
                 `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/login`,
+                data,
                 {
-                    method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(data),
                 }
             );
-    
-            if (!response.ok) {
-                const errorData = await response.json();
-                const errorMessage = errorData.message;
-    
-                setErrors(errorData.errors || {});
-                toast.error(errorMessage);
-                setLoading(false);
-                return;
-            }
-    
+            console.log("-------Added------", response.data.data.token);
+            sessionStorage.setItem("tokencandidate", response.data.data.token)
+            console.log("-------77777777777777777777------", response.data.token);
+            // Handle success
+            toast.success("Login successful!");
             setLoading(false);
             navigate("/candidate/dashboard");
         } catch (error) {
-            console.error("Error occurred:", error);
-            toast.error("An unexpected error occurred. Please try again.");
+            if (error.response) {
+                // Server responded with an error status
+                const errorMessage = error.response.data.message || "An error occurred";
+                const errorDetails = error.response.data.errors || {};
+
+                setErrors(errorDetails);
+                toast.error(errorMessage);
+            } else {
+                // Network or other errors
+                console.error("Error occurred:", error);
+                toast.error("An unexpected error occurred. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
     };
-    
 
     const handleEmailKeyDown = (event) => {
         if (event.key === "Enter") {
@@ -91,9 +167,8 @@ function Login() {
                         <div class="nk-wrap nk-wrap-nosidebar">
                             <div class="nk-content">
                                 <div class="nk-split nk-split-page nk-split-md">
-                                    <img src={login} alt="" style={{ width: '860px', objectFit: 'cover' }} />
 
-                                    <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white">
+                                    <div class=" nk-block-area nk-block-area-column nk-auth-container bg-white">
                                         <div class="nk-block nk-block-middle nk-auth-body">
                                             <div class="brand-logo justify-center pb-5">
                                                 <Link to="/" class="logo-link">
@@ -110,14 +185,23 @@ function Login() {
                                                 </div>
                                             </div>
                                             <form onSubmit={handleSubmit}>
-                                                <div class="form-group">
-                                                    <div class="form-label-group"><label class="form-label" for="default-01">Email or Username</label><a class="link link-primary link-sm" tabindex="-1" href="#"></a></div>
-                                                    <div class="form-control-wrap"><input type="text" className={`form-control form-control-lg  ${errors.email ? "is-invalid" : ""
-                                                        }`} id="email" name='email' onChange={(e) => setEmail(e.target.value)} onKeyDown={handleEmailKeyDown} autoComplete='off' placeholder="Enter your email address or username" /></div>
-                                                    {errors.email && (
-                                                        <div className="invalid-feedback">{errors.email}</div>
-                                                    )}
+                                                <div className="form-control-wrap">
+                                                    <input
+                                                        type="email"
+                                                        className={`form-control form-control-lg ${errors.email ? "is-invalid" : ""}`}
+                                                        id="email"
+                                                        name="email"
+                                                        value={email}
+                                                        onChange={(e) => setEmail(e.target.value)}
+                                                        onKeyDown={handleEmailKeyDown}
+                                                        autoComplete="off"
+                                                        placeholder="Enter your email address or username"
+                                                    />
                                                 </div>
+                                                {errors.email && (
+                                                    <p className="error-message text-danger">{errors.email}</p>
+                                                )}
+
                                                 <div class="form-group">
                                                     <div class="form-label-group"><label class="form-label" for="password">Password</label>
                                                         <Link class="link  link-sm" tabindex="-1" to="/reset" style={{ color: 'blue' }}>Forgot Password?</Link>
@@ -126,7 +210,7 @@ function Login() {
                                                         )}
                                                     </div>
                                                     <div class="form-control-wrap">
-                                                        <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
+                                                        <a tabindex="-1" href="#" class="form-icon form-icon-left passcode-switch lg" data-target="password">
                                                             <em class="passcode-icon icon-show icon ni ni-eye"></em><em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
                                                         </a>
                                                         <input
@@ -147,11 +231,10 @@ function Login() {
                                                         {/* <input id='password' name='password' type="password" class="form-control form-control-lg"  placeholder="Enter your Password" /> */}
                                                     </div>
                                                 </div>
-                                                {/* <div class="form-group"><Link to="/candidate/dashboard" ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit} >Sign in</button></Link></div> */}
-                                                <div class="form-group"><Link to="/candidate/dashboard" ><button class="btn btn-lg btn-primary btn-block" type='submit'  >Sign in</button></Link></div>
-                                           
+                                                <div class="form-group"><Link ><button class="btn btn-lg btn-primary btn-block" type='submit' onClick={handleSubmit} >Sign in</button></Link></div>
+
                                             </form>
-                                            <div class="text-center pt-4 pb-3">
+                                            <div class="text-center pt-3 pb-2">
                                                 <h6 class="overline-title overline-title-sap"><span>OR</span></h6>
                                             </div>
                                             <ul class="nav justify-center gx-4">
@@ -161,7 +244,7 @@ function Login() {
 
                                             </ul>
 
-                                          
+
                                             <div class="text-center mt-4">
                                                 <span class="fw-500">New on our platform? <Link to="/signup">Create an account</Link></span><br />
                                                 <Link to="/employee/login">Employee Sign in</Link>
@@ -181,7 +264,8 @@ function Login() {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <div class="nk-split-content nk-split-stretch bg-abstract"></div> */}
+                                    <div class="nk-split-content nk-split-stretch bg-abstract"></div>
+                                    {/* <img src={login} alt=""  /> */}
 
                                 </div>
                             </div>
@@ -189,10 +273,10 @@ function Login() {
 
 
                     </div>
-                </div>
+                </div >
 
-             
-            </body>
+
+            </body >
         </>
     )
 }

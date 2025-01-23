@@ -1,6 +1,7 @@
 import DashFooter from "../candidate/footer"
-import DashHeader from "../candidate/header"
+
 import EmployeeSideBar from "./employeesidebar"
+import DashHeaderE from "./header"
 
 
 
@@ -16,7 +17,7 @@ function EmployeeNotification() {
                         <EmployeeSideBar />
                         <div class="nk-wrap ">
 
-                            <DashHeader />
+                            <DashHeaderE />
                             <div class="nk-content ">
                     <div class="container-fluid">
                         <div class="nk-content-inner">

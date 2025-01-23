@@ -30,10 +30,10 @@ function DashFooter(){
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a data-bs-toggle="modal" href="#region" class="nav-link" style={{color:'#003366'}}    >
+                                        <Link  to="/terms" class="nav-link" style={{color:'#003366'}}    >
 
                                             <span class="">Term & Conditions</span>
-                                        </a>
+                                        </Link>
                                     </li>
 
                                     <li class="nav-item">

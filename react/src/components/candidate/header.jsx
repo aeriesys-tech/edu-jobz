@@ -1,7 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../assets/img/Edujobs.svg'
 
 function DashHeader(){
+const Navigate=useNavigate();
+    const handleLogout = () => {
+        // Clear all session storage data
+        sessionStorage.clear("tokencandidate");
+    
+        // Optionally, redirect to the login page or homepage after logging out
+        Navigate("/");
+    };
     return(
         <>
         <div class="nk-header nk-header-fixed is-light">
@@ -151,8 +159,8 @@ function DashHeader(){
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
-                                                        <a href="#"><em class="icon ni ni-signout"></em><span>Sign
-                                                                out</span></a>
+                                                        <Link to="/"><em class="icon ni ni-signout"></em><span onClick={handleLogout}>Sign
+                                                                out</span></Link>
                                                     </li>
                                                 </ul>
                                             </div>

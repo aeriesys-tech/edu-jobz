@@ -1,8 +1,12 @@
 
 import DashFooter from "../candidate/footer"
-import DashHeader from "../candidate/header"
-import EmployeeSideBar from "./employeesidebar"
 
+import EmployeeSideBar from "./employeesidebar"
+import das1 from '../../assets/img/dash1.svg'
+import das2 from '../../assets/img/dash2.svg'
+import das3 from '../../assets/img/dash3.svg'
+import das4 from '../../assets/img/dash4.svg'
+import DashHeaderE from "./header"
 
 
 
@@ -14,7 +18,7 @@ function EmployeeDashboard() {
                     <div class="nk-main">
                         <EmployeeSideBar />
                         <div class="nk-wrap">
-                            <DashHeader />
+                            <DashHeaderE/>
                             <div class="nk-content pb-0">
                                 <div class="container-fluid">
                                     <div class="nk-content-inner">
@@ -79,11 +83,15 @@ function EmployeeDashboard() {
                                         <div class="col-sm-3">
                                             <div class="card card-full bg-primary">
                                                 <div class="card-inner">
+                                                    <div>
+                                                        <img class="w-20" src={das1} />
+                                                    </div>
+                                                    <div class="fs-6 text-white text-opacity-75 my-1">My Staffs</div>
+                                                    
                                                     <div class="d-flex align-items-center justify-content-between mb-1">
                                                         <h5 class="fs-1 text-white">52</h5>
 
                                                     </div>
-                                                    <div class="fs-6 text-white text-opacity-75 mb-0">My Staffs</div>
 
                                                 </div>
                                             </div>
@@ -91,11 +99,15 @@ function EmployeeDashboard() {
                                         <div class="col-sm-3">
                                             <div class="card card-full bg-warning is-dark">
                                                 <div class="card-inner">
+                                                <div>
+                                                        <img class="w-20" src={das2} />
+                                                    </div>
+                                                <div class="fs-6 text-white text-opacity-75 mb-0">Accepted Researchers</div>
+
                                                     <div class="d-flex align-items-center justify-content-between mb-1">
                                                         <h5 class="fs-1 text-white">3</h5>
 
                                                     </div>
-                                                    <div class="fs-6 text-white text-opacity-75 mb-0">Accepted Researchers</div>
 
 
                                                 </div>
@@ -104,11 +116,15 @@ function EmployeeDashboard() {
                                         <div class="col-sm-3">
                                             <div class="card card-full bg-info is-dark">
                                                 <div class="card-inner">
+                                                <div>
+                                                        <img class="w-20" src={das3} />
+                                                    </div>
+                                                <div class="fs-6 text-white text-opacity-75 mb-0">Interview Invitations</div>
+
                                                     <div class="d-flex align-items-center justify-content-between mb-1">
                                                         <h5 class="fs-1 text-white">6</h5>
 
                                                     </div>
-                                                    <div class="fs-6 text-white text-opacity-75 mb-0">Interview Invitations</div>
 
                                                 </div>
                                             </div>
@@ -116,11 +132,15 @@ function EmployeeDashboard() {
                                         <div class="col-sm-3">
                                             <div class="card card-full bg-danger is-dark">
                                                 <div class="card-inner">
+                                                <div>
+                                                        <img class="w-20" src={das4} />
+                                                    </div>
+                                                <div class="fs-6 text-white text-opacity-75 mb-0">My Subscription
+
                                                     <div class="d-flex align-items-center justify-content-between mb-1">
                                                         <h5 class="fs-1 text-white">12</h5>
 
                                                     </div>
-                                                    <div class="fs-6 text-white text-opacity-75 mb-0">My Subscription
                                                     </div>
 
                                                 </div>
@@ -158,97 +178,7 @@ function EmployeeDashboard() {
                                                         </div>
                                                     </div>           </div>        </div>
                                         </div></div>
-                                    <div class="card mt-4">
-                                        <div class="card-inner mb-n2">
-                                            <div class="card-title-group">
-                                                <div class="card-title">
-                                                    <h6 class="title">Subscriptions Overview</h6>
-                                                    <p>Top Subscriptions </p>
-                                                </div>
-                                                <div class="card-tools">
-                                                    <div class="drodown">
-                                                        <a to="#" class="dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white" data-bs-toggle="dropdown">30 Days</a>
-                                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                                            <ul class="link-list-opt no-bdr">
-                                                                <li><a href="#"><span>7 Days</span></a></li>
-                                                                <li><a href="#"><span>15 Days</span></a></li>
-                                                                <li><a href="#"><span>30 Days</span></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="nk-tb-list is-loose traffic-channel-table ">
-                                            <div class="nk-tb-item nk-tb-head">
-                                                <div class="nk-tb-col nk-tb-channel"><span>Plans</span></div>
-                                                <div class="nk-tb-col nk-tb-sessions"><span>Sessions</span></div>
-                                                <div class="nk-tb-col nk-tb-prev-sessions"><span>Prev Sessions</span></div>
-                                                <div class="nk-tb-col nk-tb-change"><span>Change</span></div>
-                                               
-                                            </div>
-                                            <div class="nk-tb-item">
-                                                <div class="nk-tb-col nk-tb-channel">
-                                                    <span class="tb-lead">Standard</span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-sessions">
-                                                    <span class="tb-sub tb-amount"><span>305</span></span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-prev-sessions">
-                                                    <span class="tb-sub tb-amount"><span>129</span></span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-change">
-                                                    <span class="tb-sub"><span>4.29%</span> <span class="change up"><em class="icon ni ni-arrow-long-up"></em></span></span>
-                                                </div>
-                                               
-                                            </div>
-                                            <div class="nk-tb-item">
-                                                <div class="nk-tb-col nk-tb-channel">
-                                                    <span class="tb-lead">Pro</span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-sessions">
-                                                    <span class="tb-sub tb-amount"><span>859</span></span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-prev-sessions">
-                                                    <span class="tb-sub tb-amount"><span>936</span></span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-change">
-                                                    <span class="tb-sub"><span>15.8%</span>
-                                                        <span class="change down"><em class="icon ni ni-arrow-long-down"></em></span></span>
-                                                </div>
-                                              
-                                            </div>
-                                            <div class="nk-tb-item">
-                                                <div class="nk-tb-col nk-tb-channel">
-                                                    <span class="tb-lead">Utra Pros</span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-sessions">
-                                                    <span class="tb-sub tb-amount"><span>482</span></span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-prev-sessions">
-                                                    <span class="tb-sub tb-amount"><span>793</span></span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-change">
-                                                    <span class="tb-sub"><span>41.3%</span> <span class="change down"><em class="icon ni ni-arrow-long-down"></em></span></span>
-                                                </div>
-                                               
-                                            </div>       <div class="nk-tb-item">
-                                                <div class="nk-tb-col nk-tb-channel">
-                                                    <span class="tb-lead">Others</span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-sessions">
-                                                    <span class="tb-sub tb-amount"><span>138</span></span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-prev-sessions">
-                                                    <span class="tb-sub tb-amount"><span>97</span></span>
-                                                </div>
-                                                <div class="nk-tb-col nk-tb-change">
-                                                    <span class="tb-sub"><span>12.6%</span> <span class="change up"><em class="icon ni ni-arrow-long-up"></em></span></span>
-                                                </div>
-                                               
-                                            </div>
-                                        </div>
-                                    </div>
+                                  
 
                                 </div>
                             </div>

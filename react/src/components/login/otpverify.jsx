@@ -1,156 +1,266 @@
-import { Link, useNavigate } from 'react-router-dom'
-import logo from '../../assets/img/logo.png'
-import { useState } from 'react';
-
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/img/logo.png";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function ResetOTP() {
-    $('.digit-group').find('input').each(function() {
-        $(this).attr('maxlength', 1);
-        $(this).on('keyup', function(e) {
-            var parent = $($(this).parent());
-            
-            if(e.keyCode === 8 || e.keyCode === 37) {
-                var prev = parent.find('input#' + $(this).data('previous'));
-                
-                if(prev.length) {
-                    $(prev).select();
-                }
-            } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
-                var next = parent.find('input#' + $(this).data('next'));
-                
-                if(next.length) {
-                    $(next).select();
-                } else {
-                    if(parent.data('autosubmit')) {
-                        parent.submit();
-                    }
-                }
-            }
-        });
-    });
-    return (
-        <>
-            <body class="nk-body bg-white npc-default pg-auth">
-                <div class="nk-app-root">
-                    <div class="nk-main ">
-                        <div class="nk-wrap nk-wrap-nosidebar">
-                            <div class="nk-content ">
-                                <div class="nk-split nk-split-page nk-split-lg">
-                                    <div
-                                        class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white w-lg-45">
-                                        <div class="absolute-top-right d-lg-none p-3 p-sm-5"><a href="#"
-                                            class="toggle btn btn-white btn-icon btn-light" data-target="athPromo"><em
-                                                class="icon ni ni-info"></em></a></div>
-                                        <div class="nk-block nk-block-middle nk-auth-body mt-4">
-                                            <div class="brand-logo justify-center pb-5"><Link to="/" class="logo-link"><img
-                                                class="logo-light logo-img logo-img-lg" src={logo}
-                                                srcset="/demo2/images/logo2x.png 2x" alt="logo" /><img
-                                                    class="logo-dark logo-img logo-img-lg" src={logo}
-                                                    srcset="/demo2/images/logo-dark2x.png 2x" alt="logo-dark" /></Link></div>
-                                            <div class="nk-block-head">
-                                                <div class="nk-block-head-content">
-                                                    <h5 class="nk-block-title">Reset password</h5>
-                                                    <div class="nk-block-des">
-                                                        <p>Set a New Password and Reconnect with Opportunities.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <form >
-                                                <div class="form-group">
-                                                    <div class="nk-block-head-content"><label class="form-label"
-                                                        for="default-01">OTP Verification</label><a class="link link-primary link-sm"
-                                                            href="#"></a>
-                                                        <div class="nk-block-title">
-                                                            <p>Enter the OTP sent on your email / phone number</p>
-                                                        </div>
-                                                        <form method="get" class="digit-group my-3" data-group-name="digits" data-autosubmit="false" autocomplete="off">
-                                                            <input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
-                                                            <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
-                                                            <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
-                                                            <span class="splitter">&ndash;</span>
-                                                            <input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
-                                                            <input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
-                                                            <input type="text" id="digit-6" name="digit-6" data-previous="digit-5" />
-                                                        </form>
-                                                    </div>
+  const inputRefs = useRef([]);
+  const [otp, setOtp] = useState("");
+  const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [timer, setTimer] = useState(60);
+  const [showResendButton, setShowResendButton] = useState(false);
+  const navigate = useNavigate();
 
-                                                    <div class="form-label-group"><label class="form-label"
-                                                        for="default-01">Email</label><a class="link link-primary link-sm"
-                                                            href="#"></a></div>
+  const storedEmail = sessionStorage.getItem("email");
+  const bearerToken = "your_bearer_token_here"; // Replace with your actual token
 
-                                                    <div class="form-control-wrap"><input
-                                                        id="email"
-                                                        name="email"
-                                                        placeholder="Enter your email"
-                                                        className="form-control form-control-lg"
+  useEffect(() => {
+    if (storedEmail) {
+      setEmail(storedEmail); // Automatically set the email if it's stored
+    }
 
-                                                        autoComplete="off"
-                                                    />
-                                                    </div>
-                                                    <div class="form-group my-2"><label class="form-label" for="password">New Password</label>
-                                                        <div class="form-control-wrap"><a tabindex="-1" href="#"
-                                                            class="form-icon form-icon-right passcode-switch lg"
-                                                            data-target="newpassword"><em
-                                                                class="passcode-icon icon-show icon ni ni-eye"></em><em
-                                                                    class="passcode-icon icon-hide icon ni ni-eye-off"></em></a>
-                                                            <input
-                                                                id="newpassword"
-                                                                class="form-control form-control-lg"
-                                                                type="password"
-                                                                placeholder="Enter your password"
+    if (timer > 0) {
+      const interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    } else {
+      setShowResendButton(true);
+    }
+  }, [timer, storedEmail]);
+
+  const handleKeyUp = (event, index) => {
+    const key = event.key;
+    if (key === "Backspace" || key === "ArrowLeft") {
+      if (index > 0) {
+        inputRefs.current[index - 1].focus();
+      }
+    } else if (/^[0-9a-zA-Z]$/.test(key) || key === "ArrowRight") {
+      if (index < inputRefs.current.length - 1) {
+        inputRefs.current[index + 1].focus();
+      }
+    }
+  };
+
+  const handleOtpChange = () => {
+    const value = inputRefs.current.map((input) => input.value).join("");
+    setOtp(value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setErrors({});
+
+    // Define new API endpoints for resetPassword
+    const candidateUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/resetPassword`;
+    const adminUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/admin/resetPassword`;
+    const employerUrl = `${import.meta.env.VITE_BASE_API_URL1}/api/employer/resetPassword`;
+
+    try {
+        // Send both requests simultaneously for password reset
+        const [adminResponse, candidateResponse,employerResponse] = await Promise.allSettled([
+            axios.post(adminUrl, {
+                email: email,
+                otp: otp,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword,
+            }, {
+                headers: { "Content-Type": "application/json" },
+            }),
+            axios.post(candidateUrl, {
+                email: email,
+                otp: otp,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword,
+            }, {
+                headers: { "Content-Type": "application/json" },
+            }),
+            axios.post(employerUrl, {
+              email: email,
+              otp: otp,
+              newPassword: newPassword,
+              confirmPassword: confirmPassword,
+          }, {
+              headers: { "Content-Type": "application/json" },
+          }),
+        ]);
+
+        // Handle admin response
+        if (adminResponse.status === "fulfilled" && adminResponse.value.data.success) {
+            toast.success("Admin password reset successfully!");
+        } else if (adminResponse.status === "rejected") {
+            toast.error("Admin password reset failed.");
+        }
+
+        // Handle candidate response
+        if (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success) {
+            toast.success("Candidate password reset successfully!");
+        } else if (candidateResponse.status === "rejected") {
+            toast.error("Candidate password reset failed.");
+        }
+         // Handle candidate response
+         if (employerResponse.status === "fulfilled" && employerResponse.value.data.success) {
+          toast.success("employer password reset successfully!");
+      } else if (employerResponse.status === "rejected") {
+          toast.error("employer password reset failed.");
+      }
 
 
-                                                                required
-                                                            />
+        // Navigate to /success if at least one request succeeds
+        if (
+            (adminResponse.status === "fulfilled" && adminResponse.value.data.success) ||
+            (candidateResponse.status === "fulfilled" && candidateResponse.value.data.success) ||
+            (employerResponse.status === "fulfilled" && employerResponse.value.data.success)
 
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group"><label class="form-label" for="password"> Confirm Password</label>
-                                                        <div class="form-control-wrap"><a tabindex="-1" href="#"
-                                                            class="form-icon form-icon-right passcode-switch lg"
-                                                            data-target="confirmpassword"><em
-                                                                class="passcode-icon icon-show icon ni ni-eye"></em><em
-                                                                    class="passcode-icon icon-hide icon ni ni-eye-off"></em></a>
-                                                            <input
-                                                                id="confirmpassword"
-                                                                class="form-control form-control-lg"
-                                                                type="password"
+        ) {
+            navigate("/success");
+        }
 
-                                                                placeholder="Enter your password"
+    } catch (error) {
+        if (error.response && error.response.data) {
+            const errorData = error.response.data;
+            const errorMessage = errorData.message;
 
-                                                            />
+            setErrors(errorData.errors || {});
+            toast.error(errorMessage);
+        } else {
+            console.error("Error occurred:", error);
+            toast.error("An unexpected error occurred. Please try again.");
+        }
+    } finally {
+        setLoading(false);
+    }
+};
 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group"><button class="btn btn-lg btn-primary btn-block" type='submit' >Submit
-                                                </button></div>
-                                            </form>
-                                            <div class="form-note-s2 pt-5"><Link to="/"><strong>Return to
-                                                login</strong></Link></div>
-                                        </div>
-                                        <div class="nk-block nk-auth-footer">
-                                            <div class="nk-block-between justify-center">
-                                                <ul class="nav nav-sm">
-                                                    <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px" href="#">Terms & Condition</a></li>
-                                                    <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px" href="#">Privacy Policy</a></li>
-                                                    <li class="nav-item"><a class="link link-primary fw-normal py-2 px-3 fs-13px" href="#">Privacy Policy</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="justify-center mt-3">
-                                                <p>&copy; 2025 EduJobZ. All Rights Reserved.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nk-split-content nk-split-stretch bg-abstract"></div>
-                                </div>
-                            </div>
-                        </div>
+
+  const handleResendOTP = async () => {
+    setLoading(true);
+    setShowResendButton(false);
+    setTimer(60);
+
+    const isAdmin = sessionStorage.getItem("role") === "admin"; // Check if the role is admin
+    const apiEndpoint = isAdmin
+      ? `${import.meta.env.VITE_BASE_API_URL1}/api/admin/resendOtp`
+      : `${import.meta.env.VITE_BASE_API_URL1}/api/candidate/resendOtp`
+      || `${import.meta.env.VITE_BASE_API_URL1}/api/employer/resendOtp`;
+
+
+    try {
+      await axios.post(
+        apiEndpoint,
+        { email: email },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${bearerToken}`,
+          },
+        }
+      );
+
+      toast.success("OTP resent successfully!");
+    } catch (error) {
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message;
+        setErrors(error.response.data.errors || {});
+        toast.error(errorMessage);
+      } else {
+        console.error("Error occurred:", error);
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="nk-body bg-white npc-default pg-auth">
+      <div className="nk-app-root">
+        <div className="nk-wrap nk-wrap-nosidebar">
+          <div className="nk-content">
+            <div className="nk-split nk-split-page nk-split-lg">
+              <div className="nk-split-content nk-auth-container bg-white w-lg-45">
+                <div className="nk-auth-body mt-4">
+                  <div className="brand-logo justify-center pb-5">
+                    <Link to="/" className="logo-link">
+                      <img className="logo-img logo-img-lg" src={logo} alt="logo" />
+                    </Link>
+                  </div>
+                  <h5 className="nk-block-title">OTP Verification</h5>
+                  <p>Enter the OTP sent to your email/phone number.</p>
+                  <form onSubmit={handleSubmit}>
+                    <div className="digit-group">
+                      {[...Array(6)].map((_, index) => (
+                        <input
+                          key={index}
+                          type="text"
+                          maxLength={1}
+                          ref={(el) => (inputRefs.current[index] = el)}
+                          onKeyUp={(e) => handleKeyUp(e, index)}
+                          onChange={handleOtpChange}
+                        />
+                      ))}
                     </div>
+                    <div className="form-group mt-4">
+                      <label>Email</label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter your email"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>New Password</label>
+                      <input
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        placeholder="Enter new password"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Confirm Password</label>
+                      <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="Confirm new password"
+                        className="form-control"
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary btn-block">
+                      {loading ? "Submitting..." : "Confirm"}
+                    </button>
+                  </form>
+                  {showResendButton && (
+                    <button
+                      className="btn btn-secondary mt-3"
+                      onClick={handleResendOTP}
+                      disabled={loading}
+                    >
+                      Resend OTP
+                    </button>
+                  )}
+                  <p className="form-note-s2 pt-5">
+                    <Link to="/">Return to login</Link>
+                  </p>
                 </div>
-
-            </body>
-        </>
-    )
+              </div>
+              <div className="nk-split-stretch  bg-abstract"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
-export default ResetOTP
+
+export default ResetOTP;

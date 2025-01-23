@@ -13,6 +13,8 @@ const subjectRoutes = require("./subjectRoutes");
 const typeOfInstituteRoutes = require("./typeOfInstituteRoutes");
 const employerSubscriptionFeatureRoutes = require("./employerSubscriptionFeatureRoutes")
 const candidateSubscriptionFeatureRoutes = require("./candidateSubscriptionFeatureRoutes")
+const employerPlanRoutes = require("./employerPlanRoutes")
+const candidatePlanRoutes = require("./candidatePlanRoutes")
 
 router.use("/candidate", candidatesAuthRoutes);
 router.use("/employer", employersAuthRoutes);
@@ -26,7 +28,8 @@ router.use("/subjects", subjectRoutes);
 router.use("/types_of_institutes", typeOfInstituteRoutes);
 router.use("/employer_subscription_features", employerSubscriptionFeatureRoutes);
 router.use("/candidate_subscription_features", candidateSubscriptionFeatureRoutes);
-
+router.use("/employer_plans", employerPlanRoutes);
+router.use("/candidate_plans", candidatePlanRoutes);
 // router.use("/priorities", priorityRoutes);
 
 module.exports = router;

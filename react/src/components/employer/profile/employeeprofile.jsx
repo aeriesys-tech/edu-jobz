@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom"
-
-
-
-
 import EmployeeSideBar from "../employeesidebar"
-import DashHeader from "../../candidate/header"
+
 import DashFooter from "../../candidate/footer"
 import EmployeeMenuBar from "./employeeprofilemenu"
+import DashHeaderE from "../header"
 
 function EmployeeProfile() {
  
@@ -18,17 +15,17 @@ function EmployeeProfile() {
                         <EmployeeSideBar />
                         <div class="nk-wrap ">
 
-                            <DashHeader />
+                            <DashHeaderE/>
                            
                              <div class="nk-content">
-                    <div class="container-fluid">
-                        <div class="nk-content-inner">
-                            <div class="nk-content-body">
-                                <div class="nk-block">
-                                    <div class="card">
-                                        <div class="card-aside-wrap">
-                                            <div class="card-inner card-inner-lg">
-                                                <div class="nk-block-head">
+                    <div class="container-fluid" >
+                        <div class="nk-content-inner" >
+                            <div class="nk-content-body" >
+                                <div class="nk-block" >
+                                    <div class="card" >
+                                        <div class="card-aside-wrap" >
+                                            <div class="card-inner card-inner-lg" >
+                                                <div class="nk-block-head" >
                                                     <div class="nk-block-between d-flex justify-content-between">
                                                         <div class="nk-block-head-content">
                                                             <h4 class="nk-block-title">Personal Information</h4>
@@ -210,11 +207,7 @@ function EmployeeProfile() {
                                                                 for="address-state">State</label><select
                                                                 class="form-select js-select2" id="address-state">
                                                                 <option>Karnataka</option>
-                                                                <option>Tamilnaadu</option>
-                                                                <option>Keral</option>
-                                                                <option>Maharastra</option>
-                                                                <option>Delhi</option>
-                                                                <option>Rajastan</option>
+                                                              
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6">
@@ -222,11 +215,7 @@ function EmployeeProfile() {
                                                                 for="address-city">City</label><select
                                                                 class="form-select js-select2" id="address-city">
                                                                 <option>Banglore</option>
-                                                                <option>Mysore</option>
-                                                                <option>Belgavi</option>
-                                                                <option>Hubli</option>
-                                                                <option>Manglore</option>
-                                                                <option>Bidar</option>
+                                                          
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6">
@@ -234,11 +223,7 @@ function EmployeeProfile() {
                                                                 for="address-county">Country</label><select
                                                                 class="form-select js-select2" id="address-county">
                                                                 <option>India</option>
-                                                                <option>Canada</option>
-                                                                <option>United State</option>
-                                                                <option>United Kindom</option>
-                                                                <option>Australia</option>
-                                                                <option>Bangladesh</option>
+                                                          
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6">
