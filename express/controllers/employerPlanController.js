@@ -162,24 +162,24 @@ const getEmployerPlans = async (req, res) => {
       );
     }
 
-    const employerSubscriptionFeatures = await EmployerSubscriptionFeature.findAll({
+    const employerPlans = await EmployerPlan.findAll({
       where: {
         deletedAt: null, // Explicitly ensure we only fetch active Employer Subscription Features
       },
       order: [["employer_subscription_feature_id", "ASC"]],
     });
     // Cache the Employer Subscription Features
-    await redisClient.setEx("employerSubscriptionFeatures", 3600, JSON.stringify(employerSubscriptionFeatures));
+    await redisClient.setEx("employerSubscriptionFeatures", 3600, JSON.stringify(employerPlans));
     sendResponse(
       req,
       res,
       200,
       true,
-      "Employer Subscription Features fetched successfully",
-      employerSubscriptionFeatures
+      "Employer Plans fetched successfully",
+      employerPlans
     );
   } catch (error) {
-    console.error("Error in getEmployerSubscriptionFeatures function:", error);
+    console.error("Error in getEmployerPlans function:", error);
     sendResponse(req, res, 500, false, error.message);
   }
 };
@@ -208,28 +208,28 @@ const paginateEmployerPlans = async (req, res) => {
     };
 
     // Fetch Employer Subscription Features with pagination and searching
-    const employerSubscriptionFeatures = await EmployerSubscriptionFeature.findAndCountAll({
+    const employerPlans = await EmployerPlan.findAndCountAll({
       where,
       limit: parseInt(limit, 10),
       offset: parseInt(offset, 10),
       order: sort,
     });
     const responseData = {
-      data: employerSubscriptionFeatures.rows,
-      totalPages: Math.ceil(employerSubscriptionFeatures.count / limit),
+      data: employerPlans.rows,
+      totalPages: Math.ceil(employerPlans.count / limit),
       currentPage: parseInt(page, 10),
-      totalItems: employerSubscriptionFeatures.count,
+      totalItems: employerPlans.count,
     };
     sendResponse(
       req,
       res,
       200,
       true,
-      "Employer Subscription Features fetched successfully",
+      "Employer Plans fetched successfully",
       responseData
     );
   } catch (error) {
-    console.error("Error in paginateEmployerSubscriptionFeatures function:", error);
+    console.error("Error in paginateEmployerPlans function:", error);
     sendResponse(req, res, 500, false, error.message);
   }
 };

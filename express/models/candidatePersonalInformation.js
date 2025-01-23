@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const moment = require('moment');
 module.exports = (sequelize, DataTypes) => {
   const CandidatePersonalInformation = sequelize.define(
     "CandidatePersonalInformation",
@@ -25,7 +26,12 @@ module.exports = (sequelize, DataTypes) => {
       d_o_b: {
         type: DataTypes.DATE,
         allowNull: true,
+        get() {
+          const rawDate = this.getDataValue('d_o_b');
+          return rawDate ? moment(rawDate).format('DD-MM-YYYY') : null;
+        },
       },
+
       employer_type: {
         type: DataTypes.STRING(100),
         allowNull: true,
