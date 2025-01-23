@@ -5,9 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
+<<<<<<< HEAD
     "model:generate": "npx sequelize-cli model:generate",
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:down": "npx sequelize-cli db:migrate:undo",
+=======
+		"model:generate": "npx sequelize-cli model:generate",
+		"migrate:up": "npx sequelize-cli db:migrate",
+		"migrate:down": "npx sequelize-cli db:migrate:undo",
+>>>>>>> cef6f50 (verify email and verify mobile)
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -1,5 +1,9 @@
 const { Candidate, CandidateToken, CandidateOtp } = require("../../models");
+<<<<<<< HEAD
 const { sendResponse } = require("../../services/candidate/responseService");
+=======
+const { sendResponse } = require("../../services/responseService");
+>>>>>>> cef6f50 (verify email and verify mobile)
 const { sendOtp } = require("../../services/messageService");
 const { Op, Sequelize } = require("sequelize");
 const bcrypt = require("bcrypt");
@@ -75,10 +79,15 @@ const register = async (req, res) => {
       subject: "Your OTP for Email Verification",
       html: htmlContent, // Use the HTML content as email body
     };
-
     const mobile_otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
     const mobile_expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
 
+<<<<<<< HEAD
+    const mobile_otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
+    const mobile_expireAt = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
+
+=======
+>>>>>>> cef6f50 (verify email and verify mobile)
     await CandidateOtp.create({
       candidate_id: newCandidate.candidate_id,
       verification_type: "Mobile",
@@ -88,10 +97,24 @@ const register = async (req, res) => {
       expire_at: mobile_expireAt,
     });
 
+<<<<<<< HEAD
     // Send email
     await sendEmail(mailOptions);
 
     // Call a function to send mobile OTP (assume it's implemented elsewhere)
+=======
+    await verify_email(mailOptions);
+
+    // await userotp.sendOtp(newCandidate.mobile_no, mobile_otp);
+
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //   if (error) {
+    //     return sendResponse(res, 500, false, error.message);
+    //   }
+    //   sendResponse(res, 200, true, "Email verification email sent");
+    // });
+
+>>>>>>> cef6f50 (verify email and verify mobile)
     await send_mobile_otp(newCandidate.mobile_no, mobile_otp);
 
     return sendResponse(
@@ -230,6 +253,7 @@ const login = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 // const google_login = (req, res) => {
 //   app.get(
 //     "/auth/google",
@@ -246,6 +270,8 @@ const login = async (req, res) => {
 //   );
 // };
 
+=======
+>>>>>>> cef6f50 (verify email and verify mobile)
 // updatePassword
 const updatePassword = async (req, res) => {
   const candidateId = req.candidate.candidate_id; // Extract user ID from the authenticated user object
